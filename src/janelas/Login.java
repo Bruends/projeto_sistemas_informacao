@@ -1,12 +1,12 @@
 package janelas;
 
+import ClassesDAO.LoginDAO;
 import classes.*;
 
+
 import janelas.JanelaPrincipal;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-
-
-
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -38,24 +38,24 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField2 = new javax.swing.JTextField();
+        l_txt_email = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btn_login = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        l_txt_senha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        l_txt_email.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        l_txt_email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                l_txt_emailActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(150, 120, 240, 30);
+        getContentPane().add(l_txt_email);
+        l_txt_email.setBounds(150, 120, 240, 30);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel1.setText("Senha:");
@@ -81,23 +81,44 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setText("Setor Financeiro Login");
         getContentPane().add(jLabel4);
         jLabel4.setBounds(100, 20, 340, 80);
-        getContentPane().add(jPasswordField1);
-        jPasswordField1.setBounds(150, 170, 240, 30);
+        getContentPane().add(l_txt_senha);
+        l_txt_senha.setBounds(150, 170, 240, 30);
 
         setSize(new java.awt.Dimension(556, 346));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void l_txt_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_l_txt_emailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_l_txt_emailActionPerformed
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
         // Botão Login
-        Usuario usuario = new Usuario("brun", "123", 2);
-        JanelaPrincipal jan = new JanelaPrincipal();
-        jan.setUsuario(usuario);
-        jan.setVisible(true);
+        String email  = l_txt_email.getText();
+        String senha = l_txt_senha.getText();
+        
+        try{
+             LoginDAO login = new LoginDAO(email, senha);
+             //se confirmar o login
+             if(login.logar()){
+               
+               Usuario usuario =  login.getUsuario();
+                JOptionPane.showMessageDialog(null,"Bem vindo(a) " +  usuario.getNome() + " !");
+                JanelaPrincipal jan = new JanelaPrincipal(usuario);
+                jan.setVisible(true);
+
+                
+             
+             } else {
+                 JOptionPane.showMessageDialog(null, "Email ou senha invalido");
+                 
+             }
+             
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+            
+        }
+       
     }//GEN-LAST:event_btn_loginActionPerformed
 
     
@@ -142,7 +163,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField l_txt_email;
+    private javax.swing.JPasswordField l_txt_senha;
     // End of variables declaration//GEN-END:variables
 }

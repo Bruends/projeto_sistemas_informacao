@@ -13,20 +13,21 @@ import classes.*;
  * @author bruno
  */
 public class JanelaPrincipal extends javax.swing.JFrame {
-    private Usuario usuario;
+    private  Usuario usuario;
     /**
      * Creates new form JanelaPrincipal
      */
-    public JanelaPrincipal(){             
-        initComponents();   
-        modoJanela(1);        
+    public JanelaPrincipal(){        
+        initComponents();            
     } 
     
-    public JanelaPrincipal(Usuario usuario){             
+    public JanelaPrincipal(Usuario usuario){        
         initComponents();
         this.usuario = usuario;
-        modoJanela(this.usuario.getNivel_acesso());        
+        modoJanela(this.usuario.getNivel_acesso());
     }
+    
+    
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
@@ -40,11 +41,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
            case 1:
                //desabilitando tab adm
                tab_pane_principal.setEnabledAt(2,false);
-               //desabilitando botôes contas a receber
+               //desabilitando botões contas a receber
                r_btn_alterar.setEnabled(false);
                r_btn_registrar.setEnabled(false);
                r_btn_confirmar.setEnabled(false);
-               //desabilitando botôes contas a pagar
+               //desabilitando botões contas a pagar
                p_btn_alterar.setEnabled(false);
                p_btn_registrar.setEnabled(false);
                p_btn_confirmar.setEnabled(false);
@@ -413,9 +414,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JanelaPrincipal().setVisible(true);
-                
+            public void run() {              
+              new JanelaPrincipal().setVisible(true);
+              
             }
         });
     }
