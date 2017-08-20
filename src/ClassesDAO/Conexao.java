@@ -2,10 +2,10 @@ package ClassesDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 
 public class Conexao {
@@ -50,6 +50,25 @@ public class Conexao {
                if(state != null){
                   state.close();
                }                 
+                
+            } catch (SQLException ex) {
+                throw new RuntimeException("Erro ao fechar conexão: " + ex);                
+            }
+        }
+    }
+    
+     //fechando conexão + statement + resultset
+    public static void fecharConexao(Connection con, Statement state, ResultSet resultado){
+        if(con != null){
+            try {
+               con.close();                
+               if(state != null){
+                  state.close();
+               }
+               
+               if(resultado != null){
+                   resultado.close();
+               }
                 
             } catch (SQLException ex) {
                 throw new RuntimeException("Erro ao fechar conexão: " + ex);                

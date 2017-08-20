@@ -37,6 +37,8 @@ public class LoginDAO {
             
             //caso o email e senha não batam 
             if(!resultado.next()){
+                //fechando conexão
+                Conexao.fecharConexao(con, state);
                 return false;
              
              //caso o login seja efetuado com sucesso 
@@ -46,11 +48,18 @@ public class LoginDAO {
                  String nome = resultado.getString("nome");
                  this.usuario = new Usuario(this.email, this.senha, nivel_acesso);
                  this.usuario.setNome(nome);                 
-                 return true;
+                 
+                 //fechando conexão
+                Conexao.fecharConexao(con, state);
+                 
+                 return true;       
                 
             }
             
         } catch (SQLException ex) {
+            //fechando conexão
+            Conexao.fecharConexao(con, state);
+                
             throw new RuntimeException("Erro ao Logar: " + ex);
             
         }

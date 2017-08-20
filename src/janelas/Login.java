@@ -97,17 +97,23 @@ public class Login extends javax.swing.JFrame {
         String email  = l_txt_email.getText();
         String senha = l_txt_senha.getText();
         
+        //evento login
         try{
              LoginDAO login = new LoginDAO(email, senha);
              //se confirmar o login
              if(login.logar()){
                
-               Usuario usuario =  login.getUsuario();
+                Usuario usuario =  login.getUsuario();
+               
+                //mostrando mensagem de boas vindas
                 JOptionPane.showMessageDialog(null,"Bem vindo(a) " +  usuario.getNome() + " !");
+                
+                //abrindo janela principal e passando usuario
                 JanelaPrincipal jan = new JanelaPrincipal(usuario);
                 jan.setVisible(true);
-
                 
+                //fechando janela de login
+                this.dispose();
              
              } else {
                  JOptionPane.showMessageDialog(null, "Email ou senha invalido");
@@ -153,7 +159,7 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new Login().setVisible(true);                
             }
         });
     }
