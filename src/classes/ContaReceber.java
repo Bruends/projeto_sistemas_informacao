@@ -1,7 +1,6 @@
-
 package classes;
 
-import ClassesDAO.ContaReceberDAO;
+import classesDAO.ContaReceberDAO;
 import java.sql.Date;
 import java.util.ArrayList;
 import javax.swing.JTable;
@@ -12,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 public class ContaReceber {
     private int cod;
     private String cliente;
+    private int cod_cliente;
     private Date data_vencimento;
     private double valor;
     private int parcela_atual;
@@ -27,7 +27,7 @@ public class ContaReceber {
         
         ContaReceberDAO buscar_recebimentos = new ContaReceberDAO();       
         
-        recebimentos = buscar_recebimentos.buscarRecebimentos();
+        recebimentos = buscar_recebimentos.retornarTodosRecebimentos();
         
         if(recebimentos.size() > 0){
                     
@@ -45,7 +45,7 @@ public class ContaReceber {
                     recebimento_atual.getCliente(),
                     recebimento_atual.getData_vencimento(),
                     recebimento_atual.getValor(),
-                    recebimento_atual.getParecelas(),
+                    recebimento_atual.getParcela_total(),
                     recebimento_atual.getStatus()
                 };
                 
@@ -72,6 +72,14 @@ public class ContaReceber {
         this.cliente = cliente;
     }
 
+    public int getCod_cliente() {
+        return cod_cliente;
+    }
+
+    public void setCod_cliente(int cod_cliente) {
+        this.cod_cliente = cod_cliente;
+    }
+    
     public Date getData_vencimento() {
         return data_vencimento;
     }

@@ -1,4 +1,4 @@
-package ClassesDAO;
+package classesDAO;
 
 import classes.Usuario;
 import java.sql.Connection;

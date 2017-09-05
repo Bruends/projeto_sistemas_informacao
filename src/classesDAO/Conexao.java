@@ -1,4 +1,4 @@
-package ClassesDAO;
+package classesDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,11 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-
 public class Conexao {
     //Constantes de conexão
     private static final String USUARIO = "root";
-    private static final String SENHA = "";
+    private static final String SENHA = "root";
     private static final String BANCO = "projeto_si";
     private static final String DRIVER = "com.mysql.jdbc.Driver";    
     private static final String URL = "jdbc:mysql://localhost:3306/" + BANCO ;
@@ -71,7 +70,7 @@ public class Conexao {
                }
                 
             } catch (SQLException ex) {
-                throw new RuntimeException("Erro ao fechar conexão: " + ex);                
+                throw new RuntimeException("Erro ao fechar conexão: " + ex);
             }
         }
     }

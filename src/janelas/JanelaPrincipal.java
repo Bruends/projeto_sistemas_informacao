@@ -1,6 +1,12 @@
 package janelas;
 //importando classes
 import classes.*;
+import classesDAO.ContaReceberDAO;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -80,12 +86,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         r_tabela = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         r_btn_alterar = new javax.swing.JButton();
-        r_btn_calcular = new javax.swing.JButton();
+        r_btn_excluir = new javax.swing.JButton();
         r_btn_registrar = new javax.swing.JButton();
         r_btn_pesquisa = new javax.swing.JButton();
         r_txt_pesquisa = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         r_btn_confirmar = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         p_table = new javax.swing.JTable();
@@ -121,9 +128,16 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 "código", "Cliente", "Data Vencimento", "Valor", "Parcelas", "Status"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -132,58 +146,77 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jScrollPane3.setViewportView(r_tabela);
 
         jPanel4.add(jScrollPane3);
-        jScrollPane3.setBounds(40, 110, 650, 390);
+        jScrollPane3.setBounds(40, 140, 650, 390);
 
         jLabel7.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/contasReceber.png"))); // NOI18N
         jLabel7.setText("Contas a Receber");
         jPanel4.add(jLabel7);
-        jLabel7.setBounds(20, 40, 430, 80);
+        jLabel7.setBounds(30, 70, 430, 80);
 
         r_btn_alterar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         r_btn_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/contract.png"))); // NOI18N
         r_btn_alterar.setText("Alterar Recebimento");
         r_btn_alterar.setToolTipText("Para alterar registros selecione a linha correspondente e clique no botão alterar");
         r_btn_alterar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jPanel4.add(r_btn_alterar);
-        r_btn_alterar.setBounds(700, 210, 250, 90);
-
-        r_btn_calcular.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        r_btn_calcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/calculator.png"))); // NOI18N
-        r_btn_calcular.setText("Calcular recebimentos");
-        r_btn_calcular.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        r_btn_calcular.addActionListener(new java.awt.event.ActionListener() {
+        r_btn_alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                r_btn_calcularActionPerformed(evt);
+                r_btn_alterarActionPerformed(evt);
             }
         });
-        jPanel4.add(r_btn_calcular);
-        r_btn_calcular.setBounds(700, 110, 250, 90);
+        jPanel4.add(r_btn_alterar);
+        r_btn_alterar.setBounds(700, 240, 250, 90);
+
+        r_btn_excluir.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        r_btn_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/trash.png"))); // NOI18N
+        r_btn_excluir.setText("Excluir Recebimento");
+        r_btn_excluir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        r_btn_excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                r_btn_excluirActionPerformed(evt);
+            }
+        });
+        jPanel4.add(r_btn_excluir);
+        r_btn_excluir.setBounds(700, 340, 250, 90);
 
         r_btn_registrar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         r_btn_registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/add.png"))); // NOI18N
         r_btn_registrar.setText("Registrar Recebimento");
         r_btn_registrar.setActionCommand("");
         r_btn_registrar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        r_btn_registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                r_btn_registrarActionPerformed(evt);
+            }
+        });
         jPanel4.add(r_btn_registrar);
-        r_btn_registrar.setBounds(700, 310, 250, 90);
+        r_btn_registrar.setBounds(700, 140, 250, 90);
 
         r_btn_pesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/research.png"))); // NOI18N
         jPanel4.add(r_btn_pesquisa);
-        r_btn_pesquisa.setBounds(660, 70, 30, 30);
+        r_btn_pesquisa.setBounds(800, 40, 30, 30);
         jPanel4.add(r_txt_pesquisa);
-        r_txt_pesquisa.setBounds(480, 70, 180, 30);
+        r_txt_pesquisa.setBounds(620, 40, 180, 30);
 
         jLabel9.setText("Busca por cliente");
         jPanel4.add(jLabel9);
-        jLabel9.setBounds(480, 50, 110, 20);
+        jLabel9.setBounds(620, 20, 140, 20);
 
         r_btn_confirmar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         r_btn_confirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/dollar-symbol.png"))); // NOI18N
         r_btn_confirmar.setText("Confirmar Recebimento");
         r_btn_confirmar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jPanel4.add(r_btn_confirmar);
-        r_btn_confirmar.setBounds(700, 410, 250, 90);
+        r_btn_confirmar.setBounds(700, 440, 250, 90);
+
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/refresh.png"))); // NOI18N
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnRefresh);
+        btnRefresh.setBounds(650, 110, 40, 30);
 
         tab_pane_principal.addTab("Contas a Receber", jPanel4);
 
@@ -239,7 +272,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/contasPagar.png"))); // NOI18N
         jLabel13.setText("Contas a Pagar");
         jPanel6.add(jLabel13);
-        jLabel13.setBounds(20, 50, 440, 70);
+        jLabel13.setBounds(30, 50, 440, 70);
 
         p_btn_calcular.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         p_btn_calcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/calculator.png"))); // NOI18N
@@ -363,13 +396,56 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void r_btn_calcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_btn_calcularActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r_btn_calcularActionPerformed
+    private void r_btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_btn_excluirActionPerformed
+        int linhaSelecionada = this.r_tabela.getSelectedRow();
+        if(linhaSelecionada >  -1){
+            int resp = JOptionPane.showConfirmDialog(null, "Excluir Recebimento ?");
+             if(resp == 0){
+                int id = Integer.parseInt(this.r_tabela.getValueAt(linhaSelecionada, 0).toString());
+
+                try {
+                    ContaReceberDAO.excluirRecebimento(id);
+                    JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+                    
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao excluir!");
+                }
+          }
+        }else {
+            JOptionPane.showMessageDialog(null, "Escolha um registro para excluir !");
+        } 
+    }//GEN-LAST:event_r_btn_excluirActionPerformed
 
     private void p_btn_calcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_btn_calcularActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_p_btn_calcularActionPerformed
+
+    private void r_btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_btn_registrarActionPerformed
+        NovaContaReceber jan = new NovaContaReceber();
+        jan.show();
+    }//GEN-LAST:event_r_btn_registrarActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        SwingUtilities.updateComponentTreeUI(this);
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void r_btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_btn_alterarActionPerformed
+        int linhaSelecionada = this.r_tabela.getSelectedRow();
+        if(linhaSelecionada >  -1){
+           ContaReceber recebimento = new ContaReceber();
+           recebimento.setCod(Integer.parseInt(this.r_tabela.getValueAt(linhaSelecionada , 0).toString()));
+           recebimento.setCliente(this.r_tabela.getValueAt(linhaSelecionada , 1).toString());
+           recebimento.setValor(Double.parseDouble(this.r_tabela.getValueAt(linhaSelecionada , 3).toString()));
+           recebimento.setParcela_total(Integer.parseInt(this.r_tabela.getValueAt(linhaSelecionada , 4).toString()));
+           recebimento.setStatus(this.r_tabela.getValueAt(linhaSelecionada , 5).toString());
+           
+           AlterarContaReceber jan = new AlterarContaReceber(recebimento);
+           jan.show();          
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Escolha um registro para alterar!");
+        }
+    }//GEN-LAST:event_r_btn_alterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -414,6 +490,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton adm_btn_cadastrar_usuario;
     private javax.swing.JButton adm_btn_reprovar;
     private javax.swing.JTable adm_table;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
@@ -436,8 +513,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable p_table;
     private javax.swing.JTextField p_txt_pesquisa;
     private javax.swing.JButton r_btn_alterar;
-    private javax.swing.JButton r_btn_calcular;
     private javax.swing.JButton r_btn_confirmar;
+    private javax.swing.JButton r_btn_excluir;
     private javax.swing.JButton r_btn_pesquisa;
     private javax.swing.JButton r_btn_registrar;
     private javax.swing.JTable r_tabela;

@@ -1,6 +1,6 @@
 package janelas;
 
-import ClassesDAO.LoginDAO;
+import classesDAO.LoginDAO;
 import classes.*;
 
 
