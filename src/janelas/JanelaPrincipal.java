@@ -426,7 +426,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_r_btn_registrarActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        SwingUtilities.updateComponentTreeUI(this);
+       //        
+        ContaReceber conta = new ContaReceber();
+        conta.dadosTabela(this.r_tabela);
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void r_btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_btn_alterarActionPerformed
@@ -477,8 +479,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {              
-              new JanelaPrincipal().setVisible(true);
-              
+              new JanelaPrincipal().setVisible(true);             
             }
         });
     }

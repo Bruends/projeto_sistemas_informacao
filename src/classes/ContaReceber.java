@@ -25,13 +25,12 @@ public class ContaReceber {
         
         ArrayList<ContaReceber> recebimentos;
         
-        ContaReceberDAO buscar_recebimentos = new ContaReceberDAO();       
-        
-        recebimentos = buscar_recebimentos.retornarTodosRecebimentos();
+        recebimentos = ContaReceberDAO.retornarTodosRecebimentos();
         
         if(recebimentos.size() > 0){
                     
             DefaultTableModel tbl = (DefaultTableModel) table.getModel();
+            tbl.setRowCount(0);
             //ordem das colunas na tabela recebimentos:
             // cod, cliente, data_venc, valor, parcela, status
             for (int i = 0; i < recebimentos.size(); i++) {
@@ -50,7 +49,7 @@ public class ContaReceber {
                 };
                 
                 //adicionando linha na tabela
-                tbl.addRow(dados);
+                tbl.addRow(dados);                
             }
         } 
     }

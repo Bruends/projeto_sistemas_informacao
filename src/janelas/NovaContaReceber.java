@@ -52,7 +52,7 @@ private ArrayList<Cliente> clientesArray;
         btnRegistrar1 = new javax.swing.JButton();
         numParcelas = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/add.png"))); // NOI18N
@@ -65,7 +65,7 @@ private ArrayList<Cliente> clientesArray;
         jLabel2.setBounds(30, 130, 60, 20);
 
         getContentPane().add(cbCliente);
-        cbCliente.setBounds(30, 150, 220, 27);
+        cbCliente.setBounds(30, 150, 220, 20);
 
         jLabel3.setText("Valor total:");
         getContentPane().add(jLabel3);
@@ -75,7 +75,7 @@ private ArrayList<Cliente> clientesArray;
         getContentPane().add(jLabel4);
         jLabel4.setBounds(250, 190, 90, 30);
         getContentPane().add(txtValorTotal1);
-        txtValorTotal1.setBounds(30, 220, 150, 27);
+        txtValorTotal1.setBounds(30, 220, 150, 20);
 
         jLabel5.setText("Data Vencimento:");
         getContentPane().add(jLabel5);
@@ -107,7 +107,7 @@ private ArrayList<Cliente> clientesArray;
         getContentPane().add(btnRegistrar1);
         btnRegistrar1.setBounds(40, 370, 140, 40);
         getContentPane().add(numParcelas);
-        numParcelas.setBounds(250, 220, 70, 27);
+        numParcelas.setBounds(250, 220, 70, 20);
 
         setSize(new java.awt.Dimension(404, 469));
         setLocationRelativeTo(null);

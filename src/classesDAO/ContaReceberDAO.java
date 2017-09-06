@@ -14,13 +14,13 @@ public class ContaReceberDAO
     private static ResultSet resultado = null;
     
     //retorna todas contas a receber
-    public static ArrayList<ContaReceber> retornarTodosRecebimentos(){
-        
+    public static ArrayList<ContaReceber> retornarTodosRecebimentos(){        
         ArrayList<ContaReceber> recebimentos = new ArrayList();
+        Connection con = Conexao.getConexao();
         
         String sql = "SELECT r.id, c.nome, r.data_vencimento ,r.valor, r.status, r.total_parcelas"
                 + "  FROM conta_receber as r, cliente as c "
-                + " WHERE r.id_cliente = c.id; ";
+                + " WHERE r.id_cliente = c.id ORDER BY r.id; ";
         
         try {
             state = con.prepareStatement(sql);
@@ -32,7 +32,7 @@ public class ContaReceberDAO
                 receber.setCod(resultado.getInt("id"));
                 receber.setCliente(resultado.getString("nome"));
                 receber.setData_vencimento(resultado.getDate("data_vencimento"));
-               receber.setParcela_total(resultado.getInt("total_parcelas"));
+                receber.setParcela_total(resultado.getInt("total_parcelas"));
                 receber.setValor(resultado.getDouble("valor"));
                 receber.setStatus(resultado.getString("status"));
                 
@@ -86,8 +86,7 @@ public class ContaReceberDAO
            return true;
         }
        
-       //excluir recebimento
-       //altera recebimento
+       //excluir recebimento       
        public static boolean excluirRecebimento(int id) throws SQLException {
            con = Conexao.getConexao();
            String sql = "DELETE FROM conta_receber WHERE id = ? "; 
