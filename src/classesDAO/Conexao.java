@@ -13,7 +13,7 @@ public class Conexao {
     private static final String SENHA = "root";
     private static final String BANCO = "projeto_si";
     private static final String DRIVER = "com.mysql.jdbc.Driver";    
-    private static final String URL = "jdbc:mysql://localhost:3306/" + BANCO ;
+    private static final String URL = "jdbc:mysql://localhost:3306/" + BANCO  + "?useUnicode=true&amp;amp;characterEncoding =UTF-8";
     
     //criando conexão
     public static Connection getConexao(){
@@ -22,8 +22,7 @@ public class Conexao {
              return DriverManager.getConnection(URL, USUARIO, SENHA);
              
         } catch (ClassNotFoundException | SQLException ex) {
-             throw new RuntimeException("Erro: " + ex);
-        
+             throw new RuntimeException("Erro: " + ex);        
         }
          
     }

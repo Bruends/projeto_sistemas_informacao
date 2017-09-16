@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/classesDAO/ContaReceberDAO.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>115</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/projeto_sistemas_informacao/src/classesDAO/Conexao.java</file>
-            <file>file:/E:/projeto_sistemas_informacao/src/classesDAO/ContaReceberDAO.java</file>
-            <file>file:/E:/projeto_sistemas_informacao/src/classes/ContaReceber.java</file>
-            <file>file:/E:/projeto_sistemas_informacao/src/janelas/JanelaPrincipal.java</file>
-            <file>file:/E:/projeto_sistemas_informacao/src/janelas/AlterarContaReceber.java</file>
-            <file>file:/E:/projeto_sistemas_informacao/src/janelas/NovaContaReceber.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janela_gerenciar_contas/AlterarContaReceber.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/classesDAO/ContaReceberDAO.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/classesDAO/Conexao.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janela_gerenciar_contas/NovaContaReceber.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janela_gerenciar_contas/JanelaPrincipal.java</file>
         </group>
     </open-files>
 </project-private>

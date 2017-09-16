@@ -1,0 +1,21 @@
+Observações para n complicar na hora de juntar as partes do projeto:
+
+
+- NÃO CRIAR MAIS PACOTES
+
+- colocar as classes que usam o banco de dados no pacote "classesDAO"
+
+- e as que não usam no pacote classes
+
+- tem um pacote para as janelas de cada função do menu, então coloquem todas no msm pacote, ex: as janelas alterar usuário, adicionar usuário e a janela principal de gerenciamento de usuário vão no pacote "janela_gerenciar_usuario"
+
+- icones no pacote "imgs"
+
+- imagens de background no pacote "imgs_background"  
+
+
+
+
+
+
+
