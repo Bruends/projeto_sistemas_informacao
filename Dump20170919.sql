@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `projeto_si` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `projeto_si`;
 -- MySQL dump 10.13  Distrib 5.7.19, for Linux (x86_64)
 --
 -- Host: localhost    Database: projeto_si
@@ -30,8 +28,10 @@ CREATE TABLE `cliente` (
   `email` varchar(80) NOT NULL,
   `cnpj` varchar(45) NOT NULL,
   `endereco` varchar(45) DEFAULT NULL,
+  `telefone` varchar(45) DEFAULT NULL,
+  `cep` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,8 +40,39 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'Empresa1','contato@enterprisesa.com','54642133','rua. alguma coisa - SP'),(2,'Empresa2','evilcorp@email.com','54156154','rua. random - NY'),(3,'empresa3','empresa3@email.com','2323232','Rua3 - MG'),(4,'E. Corp','empresa3@email.com','2323232','Rua3 - MG');
+INSERT INTO `cliente` VALUES (1,'Empresa1','contato@enterprisesa.com','54642133','rua. alguma coisa - SP',NULL,NULL),(2,'Empresa2','evilcorp@email.com','54156154','rua. random - NY',NULL,NULL),(4,'E. Corp','empresa3@email.com','2323232','Rua3 - MG',NULL,NULL);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `conta_pagar`
+--
+
+DROP TABLE IF EXISTS `conta_pagar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `conta_pagar` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Titulo` varchar(45) NOT NULL,
+  `valor` decimal(10,2) NOT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `data_vencimento` varchar(11) DEFAULT NULL,
+  `data_pagamento` date DEFAULT NULL,
+  `parcela_atual` int(11) DEFAULT '0',
+  `total_parcelas` int(11) DEFAULT '0',
+  `obs` mediumtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `conta_pagar`
+--
+
+LOCK TABLES `conta_pagar` WRITE;
+/*!40000 ALTER TABLE `conta_pagar` DISABLE KEYS */;
+INSERT INTO `conta_pagar` VALUES (2,'energia',222.00,'Confirmado','13/03/1996',NULL,0,2,''),(3,'Luz',193.00,'pendente','13/07/2017',NULL,0,1,''),(4,'Concerto Computadores',2000.00,'pendente','12/02/2017',NULL,0,3,'');
+/*!40000 ALTER TABLE `conta_pagar` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -56,14 +87,16 @@ CREATE TABLE `conta_receber` (
   `id_cliente` int(11) NOT NULL,
   `valor` decimal(10,2) NOT NULL,
   `status` varchar(45) DEFAULT NULL,
-  `data_vencimento` date DEFAULT NULL,
-  `data_pagamento` date DEFAULT NULL,
+  `data_vencimento` varchar(45) DEFAULT NULL,
+  `data_pagamento` varchar(45) DEFAULT NULL,
   `parcela_atual` int(11) DEFAULT '0',
   `total_parcelas` int(11) DEFAULT '0',
+  `modo_pagamento` varchar(45) CHARACTER SET big5 NOT NULL,
+  `obs` mediumtext,
   PRIMARY KEY (`id`),
   KEY `fk_id_cliente_idx` (`id_cliente`),
   CONSTRAINT `fk_id_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +105,7 @@ CREATE TABLE `conta_receber` (
 
 LOCK TABLES `conta_receber` WRITE;
 /*!40000 ALTER TABLE `conta_receber` DISABLE KEYS */;
-INSERT INTO `conta_receber` VALUES (3,1,2500.00,'cancelado',NULL,NULL,1,2),(4,1,188.00,'pendente',NULL,NULL,2,2),(6,2,500.00,'pendente',NULL,NULL,1,2),(8,1,100.00,'pendente',NULL,NULL,0,1),(9,1,222.00,'pendente',NULL,NULL,0,5),(10,2,100.00,'pendente',NULL,NULL,0,2),(11,2,1000.00,'pendente',NULL,NULL,0,10),(12,2,2000.00,'pendente',NULL,NULL,0,10),(14,4,5000.00,'pendente',NULL,NULL,0,3);
+INSERT INTO `conta_receber` VALUES (15,4,222.00,'pendente','16/05/1966',NULL,0,2,'Debito Automatico',''),(16,1,2000.00,'Pendente','13/01/2017',NULL,0,2,'Debito Automatico',''),(17,4,1000.00,'Pendente','13/01/2017',NULL,0,2,'Dinheiro','');
 /*!40000 ALTER TABLE `conta_receber` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,13 +123,16 @@ CREATE TABLE `usuario` (
   `nivel_acesso` int(1) NOT NULL,
   `nome` varchar(80) DEFAULT NULL,
   `cpf` varchar(80) DEFAULT NULL,
-  `ano_nascimento` varchar(45) DEFAULT NULL,
+  `ano_nascimento` int(4) NOT NULL,
   `cargo` varchar(45) DEFAULT NULL,
   `departamento` varchar(45) DEFAULT NULL,
   `salario` float DEFAULT NULL,
+  `telefone` varchar(13) NOT NULL,
+  `endereco` varchar(950) NOT NULL,
+  `email_contato` varchar(80) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +141,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (2,'adm@email.com','123',3,'adm','',NULL,NULL,NULL,NULL),(3,'operador@email.com','123',2,'fulano',NULL,NULL,NULL,NULL,NULL),(4,'basico@email.com','123',1,'ciclano',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `usuario` VALUES (2,'adm@email.com','123',3,'adm','12332110890',1980,'Adm do Sistema','TI',2500,'0000000000','Rua dos bobos, nº 0',''),(3,'operador@email.com','123',2,'fulano','12332110898',1970,'Operador Financeiro','Financeiro',2500,'00000000000','Rua dos Boitacazes nº 100',''),(7,'lucas@email.com','123',1,'Lucas','0',1998,'programador','Lucas',0,'000','rua, nº n  - c, b, e - c','lucas@email.com');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -118,4 +154,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-09-05 20:26:39
+-- Dump completed on 2017-09-19 19:27:44

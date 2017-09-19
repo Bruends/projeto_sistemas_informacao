@@ -1,5 +1,6 @@
 package classes;
 
+import classesDAO.ContaPagarDAO;
 import classesDAO.ContaReceberDAO;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -12,10 +13,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
-public class ContaReceber {
+public class ContaPagar {
     private int cod; 
     private int cod_cliente;
-    private String cliente;
+    private String titulo;
     private String data_vencimento;
     private double valor;
     private int parcela_atual;
@@ -27,41 +28,40 @@ public class ContaReceber {
     private String obs;
       
     //criando tabela com os dados necessários
-    public void makeTable(JTable table, ArrayList<ContaReceber> recebimentos){
+    public void makeTable(JTable table, ArrayList<ContaPagar> pagamentos){
          DefaultTableModel tbl = (DefaultTableModel) table.getModel();
             tbl.setRowCount(0);
             //ordem das colunas na tabela recebimentos:
             // cod, cliente, data_venc, valor, parcela, status
-            for (int i = 0; i < recebimentos.size(); i++) {
+            for (int i = 0; i < pagamentos.size(); i++) {
                 
-                ContaReceber recebimento_atual = recebimentos.get(i);
+                ContaPagar pagamento = pagamentos.get(i);
                 
                                 
                 //colocando os recebimentos na tabela
                 Object[] dados = {
-                    recebimento_atual.getCod(),
-                    recebimento_atual.getCliente(),                    
-                    recebimento_atual.getValor(),
-                    recebimento_atual.getData_vencimento(),
-                    recebimento_atual.getParcela_total(),
-                    recebimento_atual.getModo_pagamento(),
-                    recebimento_atual.getStatus(),                                    
+                    pagamento.getCod(),
+                    pagamento.getTitulo(),
+                    pagamento.getValor(),
+                    pagamento.getData_vencimento(),
+                    pagamento.getParcela_total(),                    
+                    pagamento.getStatus(),
                 };
                 
                 //adicionando linha na tabela
-                tbl.addRow(dados);                
+                tbl.addRow(dados);
             }
     }
     
     //faz tabela com todos os recebimentos
-    public void todosRecebimentosTabela(JTable table){
+    public void todosPagamentosTabela(JTable table){
         
-        ArrayList<ContaReceber> recebimentos;
+        ArrayList<ContaPagar> pagamentos;
         
         try {
-            recebimentos = ContaReceberDAO.retornarTodosRecebimentos();
-             if(recebimentos.size() > 0){
-            this.makeTable(table, recebimentos);           
+            pagamentos = ContaPagarDAO.retornarTodosPagamentos();
+             if(pagamentos.size() > 0){
+            this.makeTable(table, pagamentos);           
         } 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -71,12 +71,12 @@ public class ContaReceber {
     }
     
     public void pesquisarTabela(JTable table, String pesquisa){
-        ArrayList<ContaReceber> recebimentos;
+        ArrayList<ContaPagar> pagamentos;
         
-        recebimentos = ContaReceberDAO.pesquisarRecebimentos(pesquisa);
+        pagamentos = ContaPagarDAO.pesquisarPagamentos(pesquisa);
         
-        if(recebimentos.size() > 0){
-           this.makeTable(table, recebimentos);          
+        if(pagamentos.size() > 0){
+           this.makeTable(table, pagamentos);          
         
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum registro encontrado");
@@ -94,34 +94,27 @@ public class ContaReceber {
         this.cod = cod;
     }
 
-    public String getCliente() {
-        return cliente;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
+    public String getTitulo() {
+        return titulo;
     }
+    
+    
 
     public int getCod_cliente() {
         return cod_cliente;
     }
 
-    public void setCod_cliente(int cod_cliente) {
-        this.cod_cliente = cod_cliente;
-    }
-
+   
     public String getData_vencimento() {
         return data_vencimento;
     }
 
     public void setData_vencimento(String data_vencimento) {
         this.data_vencimento = data_vencimento;
-    }
-    
-     
-    //Data em formato string
-    public void setData_vencimentoString(String data)  {
-       
     }
     
     public double getValor() {

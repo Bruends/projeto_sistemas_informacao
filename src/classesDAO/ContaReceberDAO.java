@@ -94,7 +94,7 @@ public class ContaReceberDAO
     //----------iINSERIR RECEBIMENTO
        public static boolean inserirRecebimento(ContaReceber recebimento) throws SQLException {
             Connection  con = Conexao.getConexao();
-           String sql = "INSERT INTO conta_receber(id_cliente, valor, status , total_parcelas, modo_pagamento, obs ) values( ?, ?, ?, ?, ?, ?);"; 
+           String sql = "INSERT INTO conta_receber(id_cliente, valor, status , total_parcelas, modo_pagamento, data_vencimento ,obs ) values( ?, ?, ?, ?, ?, ?, ?);"; 
            state = con.prepareStatement(sql);
            
            state.setInt( 1,  recebimento.getCod_cliente() );
@@ -102,7 +102,8 @@ public class ContaReceberDAO
            state.setString( 3,  "pendente" );
            state.setInt( 4,  recebimento.getParcela_total() );
            state.setString( 5,  recebimento.getModo_pagamento() );
-           state.setString( 6,  recebimento.getObs());
+           state.setString( 6,  recebimento.getData_vencimento());
+           state.setString( 7,  recebimento.getObs());
                                  
            state.execute();
            Conexao.fecharConexao(con, state);

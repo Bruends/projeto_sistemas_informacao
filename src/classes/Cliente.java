@@ -11,21 +11,39 @@ package classes;
  */
 public class Cliente {
     private int cod;
-   
+    private String telefone;
+    private String cep;
     private String nome;
     private String email;
     private String endereco;
     private String cnpj;
     
     public Cliente(){ }
-    
-    public Cliente(int cod,String n, String e, String en, String c){
-        this.cod = cod;
-        this.nome = n;
-        this.email = e;
-        this.endereco = en;
-        this.cnpj = c;        
+
+    public Cliente(String telefone, String cep, String nome, String email, String endereco, String cnpj) {        
+        this.telefone = telefone;
+        this.cep = cep;
+        this.nome = nome;
+        this.email = email;
+        this.endereco = endereco;
+        this.cnpj = cnpj;
     }
+
+    public Cliente(int cod, String telefone, String cep, String nome, String email, String endereco, String cnpj) {
+        this.cod = cod;
+        this.telefone = telefone;
+        this.cep = cep;
+        this.nome = nome;
+        this.email = email;
+        this.endereco = endereco;
+        this.cnpj = cnpj;
+    }
+
+    public Cliente(int cod) {
+        this.cod = cod;
+    }
+    
+   
     
      public int getCod() {
         return cod;
@@ -66,5 +84,23 @@ public class Cliente {
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }  
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+    
+    
     
 }

@@ -1,13 +1,12 @@
 package janela_gerenciar_contas;
 //importando classes
 import classes.*;
+import classesDAO.ContaPagarDAO;
 import classesDAO.ContaReceberDAO;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -35,7 +34,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         modoJanela(this.usuario.getNivel_acesso());
         //funções conta a receber
         ContaReceber cr = new ContaReceber(); 
-        cr.todosRecebimentosTabela(r_tabela);        
+        cr.todosRecebimentosTabela(r_tabela);     
+        ContaPagar cp = new ContaPagar();
+        cp.todosPagamentosTabela(p_tabela); 
     }
     
     public void setUsuario(Usuario usuario) {
@@ -71,19 +72,19 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         r_btn_excluir = new javax.swing.JButton();
         r_btn_confirmar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         p_tabela = new javax.swing.JTable();
         p_txt_pesquisa = new javax.swing.JTextField();
-        p_btn_pesquisa = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
+        p_btn_pesquisa = new javax.swing.JButton();
         jToolBar2 = new javax.swing.JToolBar();
         p_btn_registrar = new javax.swing.JButton();
         p_btn_alterar = new javax.swing.JButton();
         p_btn_excluir = new javax.swing.JButton();
         p_btn_confirmar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
         jPanel4.setLayout(null);
@@ -112,6 +113,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(r_tabela);
+        if (r_tabela.getColumnModel().getColumnCount() > 0) {
+            r_tabela.getColumnModel().getColumn(5).setHeaderValue("modo pagamento");
+        }
 
         jPanel4.add(jScrollPane3);
         jScrollPane3.setBounds(10, 160, 940, 400);
@@ -192,25 +196,19 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jPanel6.setLayout(null);
 
-        jLabel8.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/contasReceber.png"))); // NOI18N
-        jLabel8.setText("Gerenciar Contas a Pagar");
-        jPanel6.add(jLabel8);
-        jLabel8.setBounds(10, 90, 430, 80);
-
         p_tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "código", "Titulo", "Valor", "Vencimento", "Parcelas", "modo pagamento", "Status"
+                "código", "Título", "Valor", "Vencimento", "Parcelas", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -221,12 +219,17 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        p_tabela.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(p_tabela);
 
         jPanel6.add(jScrollPane4);
         jScrollPane4.setBounds(10, 160, 940, 400);
         jPanel6.add(p_txt_pesquisa);
         p_txt_pesquisa.setBounds(730, 130, 180, 30);
+
+        jLabel10.setText("Pesquisar");
+        jPanel6.add(jLabel10);
+        jLabel10.setBounds(730, 110, 140, 20);
 
         p_btn_pesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/research.png"))); // NOI18N
         p_btn_pesquisa.addActionListener(new java.awt.event.ActionListener() {
@@ -236,10 +239,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         });
         jPanel6.add(p_btn_pesquisa);
         p_btn_pesquisa.setBounds(910, 130, 30, 30);
-
-        jLabel10.setText("Pesquisar");
-        jPanel6.add(jLabel10);
-        jLabel10.setBounds(730, 110, 140, 20);
 
         jToolBar2.setFloatable(false);
 
@@ -292,6 +291,12 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jPanel6.add(jToolBar2);
         jToolBar2.setBounds(2, 2, 970, 60);
 
+        jLabel8.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/contasPagar.png"))); // NOI18N
+        jLabel8.setText("Gerenciar Contas a Pagar");
+        jPanel6.add(jLabel8);
+        jLabel8.setBounds(10, 90, 430, 80);
+
         tab_pane_principal.addTab("Contas a Pagar", jPanel6);
 
         getContentPane().add(tab_pane_principal);
@@ -311,7 +316,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 try {
                     ContaReceberDAO.excluirRecebimento(id);
                     JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
-                     refreshTable(this.r_tabela);
+                     refreshTableReceber(this.r_tabela);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao excluir!");
                 }
@@ -321,16 +326,18 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_r_btn_excluirActionPerformed
 
+    //-----BTN ALTERAR Recebimento
     private void r_btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_btn_alterarActionPerformed
         int linhaSelecionada = this.r_tabela.getSelectedRow();
         if(linhaSelecionada >  -1){
             ContaReceber recebimento = new ContaReceber();
-            recebimento.setCod(Integer.parseInt(this.r_tabela.getValueAt(linhaSelecionada , 0).toString()));
-            recebimento.setCliente(this.r_tabela.getValueAt(linhaSelecionada , 1).toString());
-            recebimento.setValor(Double.parseDouble(this.r_tabela.getValueAt(linhaSelecionada , 2).toString()));
-            recebimento.setParcela_total(Integer.parseInt(this.r_tabela.getValueAt(linhaSelecionada , 4).toString()));     
-            recebimento.setModo_pagamento(this.r_tabela.getValueAt(linhaSelecionada , 5).toString());
-            recebimento.setStatus(this.r_tabela.getValueAt(linhaSelecionada , 6).toString());
+            recebimento.setCod(Integer.parseInt(this.r_tabela.getValueAt(linhaSelecionada ,  0).toString()));
+            recebimento.setCliente(this.r_tabela.getValueAt(linhaSelecionada ,  1).toString());
+            recebimento.setValor(Double.parseDouble(this.r_tabela.getValueAt(linhaSelecionada ,  2).toString()));
+             recebimento.setData_vencimento(this.r_tabela.getValueAt(linhaSelecionada ,  3).toString());
+            recebimento.setParcela_total(Integer.parseInt(this.r_tabela.getValueAt(linhaSelecionada ,  4).toString()));     
+            recebimento.setModo_pagamento(this.r_tabela.getValueAt(linhaSelecionada ,  5).toString());
+            recebimento.setStatus(this.r_tabela.getValueAt(linhaSelecionada ,  6).toString());
             
             AlterarContaReceber jan = new AlterarContaReceber(recebimento, this);
             jan.show();
@@ -340,11 +347,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_r_btn_alterarActionPerformed
 
+    //---REGISTRAR RECEBIMENTO
     private void r_btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_btn_registrarActionPerformed
         NovaContaReceber jan = new NovaContaReceber(this);
         jan.show();
     }//GEN-LAST:event_r_btn_registrarActionPerformed
 
+    //PESQUISAR RECEBIMENTO
     private void r_btn_pesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_btn_pesquisaActionPerformed
        ContaReceber conta = new ContaReceber();
        conta.pesquisarTabela(this.r_tabela, this.r_txt_pesquisa.getText());
@@ -352,7 +361,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     //---CONFIRMAR RECEBIMENTO
     private void r_btn_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_btn_confirmarActionPerformed
-         int linhaSelecionada = this.r_tabela.getSelectedRow();
+        int linhaSelecionada = this.r_tabela.getSelectedRow();
         if(linhaSelecionada >  -1){
             int resp = JOptionPane.showConfirmDialog(null, "Confirmar Recebimento ?");
             if(resp == 0){
@@ -361,7 +370,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 try {
                     ContaReceberDAO.confirmarRecebimento(id);
                     JOptionPane.showMessageDialog(null, "Confirmado com sucesso!");
-                     refreshTable(this.r_tabela);
+                     refreshTableReceber(this.r_tabela);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao Confirmar!");
                 }
@@ -371,24 +380,78 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_r_btn_confirmarActionPerformed
 
+    //PESQUISAR PAGAMENTO
     private void p_btn_pesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_btn_pesquisaActionPerformed
-        // TODO add your handling code here:
+        ContaPagar conta = new ContaPagar();
+       conta.pesquisarTabela(this.p_tabela, this.p_txt_pesquisa.getText());
     }//GEN-LAST:event_p_btn_pesquisaActionPerformed
 
+    //--REGISTRAR PAGAMENTO
     private void p_btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_btn_registrarActionPerformed
-        // TODO add your handling code here:
+        NovaContaPagar jan = new NovaContaPagar(this);
+        jan.show();
     }//GEN-LAST:event_p_btn_registrarActionPerformed
 
+    //ALTERAR PAGAMENTO
     private void p_btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_btn_alterarActionPerformed
-        // TODO add your handling code here:
+        int linhaSelecionada = this.p_tabela.getSelectedRow();
+        if(linhaSelecionada >  -1){
+            ContaPagar pagar = new ContaPagar();
+            pagar.setCod(Integer.parseInt(this.p_tabela.getValueAt(linhaSelecionada ,  0).toString()));
+            pagar.setTitulo(this.p_tabela.getValueAt(linhaSelecionada ,  1).toString());
+            pagar.setValor(Double.parseDouble(this.p_tabela.getValueAt(linhaSelecionada ,  2).toString()));
+             pagar.setData_vencimento(this.p_tabela.getValueAt(linhaSelecionada ,  3).toString());
+            pagar.setParcela_total(Integer.parseInt(this.p_tabela.getValueAt(linhaSelecionada ,  4).toString()));            
+            pagar.setStatus(this.p_tabela.getValueAt(linhaSelecionada ,  5).toString());
+            
+            AlterarContaPagar jan = new AlterarContaPagar(pagar, this);
+            jan.show();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para alterar!");
+        }
     }//GEN-LAST:event_p_btn_alterarActionPerformed
 
+//EXCLUIR PAGAMENTO
     private void p_btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_btn_excluirActionPerformed
-        // TODO add your handling code here:
+        int linhaSelecionada = this.p_tabela.getSelectedRow();
+        if(linhaSelecionada >  -1){
+            int resp = JOptionPane.showConfirmDialog(null, "Excluir Pagamento ?");
+            if(resp == 0){
+                int id = Integer.parseInt(this.p_tabela.getValueAt(linhaSelecionada, 0).toString());
+
+                try {
+                    ContaPagarDAO.excluirPagamento(id);
+                    JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+                     refreshTablePagar(this.p_tabela);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao excluir!");
+                }
+            }
+        }else {
+            JOptionPane.showMessageDialog(null, "Escolha um registro para excluir !");
+        }
     }//GEN-LAST:event_p_btn_excluirActionPerformed
 
+//CONFIRMAR PAGAMENTO
     private void p_btn_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_btn_confirmarActionPerformed
-        // TODO add your handling code here:
+        int linhaSelecionada = this.p_tabela.getSelectedRow();
+        if(linhaSelecionada >  -1){
+            int resp = JOptionPane.showConfirmDialog(null, "Confirmar Pagamento ?");
+            if(resp == 0){
+                int id = Integer.parseInt(this.p_tabela.getValueAt(linhaSelecionada, 0).toString());
+
+                try {
+                    ContaPagarDAO.confirmarPagamento(id);
+                    JOptionPane.showMessageDialog(null, "Confirmado com sucesso!");
+                     refreshTablePagar(this.p_tabela);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao Confirmar!");
+                }
+            }
+        }else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para Confirmar !");
+        }
     }//GEN-LAST:event_p_btn_confirmarActionPerformed
 
     /**
@@ -426,9 +489,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         });
     }
     
-    public void refreshTable(JTable table ){
+    public void refreshTableReceber(JTable table ){
         ContaReceber conta = new ContaReceber();
         conta.todosRecebimentosTabela(table);
+    }
+    
+     public void refreshTablePagar(JTable table ){
+        ContaPagar conta = new ContaPagar();
+        conta.todosPagamentosTabela(table);
     }
 
     public JTable getP_tabela() {

@@ -5,18 +5,26 @@
             <url>src/classesDAO/ContaReceberDAO.java</url>
             <bookmark id="1">
                 <name/>
-                <line>115</line>
+                <line>116</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/classesDAO/ClienteDAO.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/classesDAO/UsuarioDAO.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janela_gerenciar_clientes/JanelaAlteraCliente.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/classesDAO/ContaPagarDAO.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janelas_iniciais/MenuPrincipal.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janela_gerenciar_usuarios/JanelaPrincipalUsuarios.java</file>
             <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janela_gerenciar_contas/AlterarContaReceber.java</file>
-            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/classesDAO/ContaReceberDAO.java</file>
-            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/classesDAO/Conexao.java</file>
-            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janela_gerenciar_contas/NovaContaReceber.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/classes/ContaPagar.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/classes/Usuario.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janela_gerenciar_clientes/JanelaPrincipalClientes.java</file>
             <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janela_gerenciar_contas/JanelaPrincipal.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janela_gerenciar_contas/AlterarContaPagar.java</file>
+            <file>file:/home/bruno/NetBeansProjects/projeto_sistemas_informacao/src/janela_gerenciar_contas/NovaContaPagar.java</file>
         </group>
     </open-files>
 </project-private>

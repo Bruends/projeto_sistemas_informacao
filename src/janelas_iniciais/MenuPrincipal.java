@@ -7,6 +7,8 @@ package janelas_iniciais;
 
 import classes.Usuario;
 import janela_gerenciar_contas.JanelaPrincipal;
+import janela_gerenciar_usuarios.JanelaPrincipalUsuarios;
+import janela_gerenciar_clientes.JanelaPrincipalClientes;
 
 /**
  *
@@ -71,6 +73,11 @@ private Usuario usuario;
         btnGerenciarClientes.setText("Gerenciar Clientes");
         btnGerenciarClientes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnGerenciarClientes.setIconTextGap(10);
+        btnGerenciarClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerenciarClientesActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnGerenciarClientes);
         btnGerenciarClientes.setBounds(330, 270, 205, 60);
 
@@ -85,6 +92,11 @@ private Usuario usuario;
         btnGerenciarUsuarios.setText("Gerenciar Usuários");
         btnGerenciarUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnGerenciarUsuarios.setIconTextGap(10);
+        btnGerenciarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerenciarUsuariosActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnGerenciarUsuarios);
         btnGerenciarUsuarios.setBounds(328, 188, 205, 60);
 
@@ -123,6 +135,16 @@ private Usuario usuario;
         JanelaPrincipal gerenConta = new JanelaPrincipal(this.usuario);
         gerenConta.setVisible(true);
     }//GEN-LAST:event_btnGerenciarContasActionPerformed
+
+    private void btnGerenciarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarUsuariosActionPerformed
+        JanelaPrincipalUsuarios  jan = new JanelaPrincipalUsuarios();
+        jan.setVisible(true);
+    }//GEN-LAST:event_btnGerenciarUsuariosActionPerformed
+
+    private void btnGerenciarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarClientesActionPerformed
+        JanelaPrincipalClientes jan = new JanelaPrincipalClientes();
+        jan.setVisible(true);
+    }//GEN-LAST:event_btnGerenciarClientesActionPerformed
 
     /**
      * @param args the command line arguments

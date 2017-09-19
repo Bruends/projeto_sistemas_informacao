@@ -167,13 +167,14 @@ JanelaPrincipal jan;
             recebimento.setValor(Double.parseDouble(this.txtValorTotal1.getText()));
             recebimento.setParcela_total(Integer.parseInt(this.numParcelas.getText()));        
             recebimento.setModo_pagamento(this.cbModoPagamento.getItemAt(this.cbModoPagamento.getSelectedIndex()));
+            recebimento.setData_vencimento(this.txtfDataVencimento.getText());
             recebimento.setObs(this.taObs.getText());
-           ContaReceberDAO.inserirRecebimento(recebimento);       
+           ContaReceberDAO.inserirRecebimento( recebimento );    
            
            JOptionPane.showMessageDialog(null, "Registrado com sucesso!");
            
           //refresh tabela
-          jan.refreshTable(jan.getR_tabela());
+          jan.refreshTableReceber(jan.getR_tabela());
           
         } catch (NumberFormatException | SQLException ex) {
             JOptionPane.showMessageDialog(null, "erro: \n" + ex.getMessage());

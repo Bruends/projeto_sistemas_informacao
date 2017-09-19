@@ -6,6 +6,7 @@
 package janela_gerenciar_contas;
 import classes.ContaReceber;
 import classes.Cliente;
+import classes.ContaPagar;
 import classesDAO.ClienteDAO;
 import classesDAO.ContaReceberDAO;
 import java.sql.SQLException;
@@ -15,24 +16,24 @@ import javax.swing.JOptionPane;
  *
  * @author bruno
  */
-public class AlterarContaReceber extends javax.swing.JFrame {
-private ContaReceber recebimentoAntigo;
+public class AlterarContaPagar extends javax.swing.JFrame {
+private ContaPagar pagamentoAntigo;
 JanelaPrincipal jan;
     /**
      * Creates new form NovaContaReceber
      */
-    public AlterarContaReceber(){
+    public AlterarContaPagar(){
         initComponents();        
     }
     
-    public AlterarContaReceber(ContaReceber recebimentoAntigo){
+    public AlterarContaPagar(ContaPagar pagamentoAntigo){
         initComponents();
-        carregarDados( recebimentoAntigo);
+        carregarDados( pagamentoAntigo);
         
         
     }
     
-      public AlterarContaReceber(ContaReceber recebimentoAntigo, JanelaPrincipal jan){
+      public AlterarContaPagar(ContaPagar recebimentoAntigo, JanelaPrincipal jan){
         initComponents();
         carregarDados( recebimentoAntigo);
         this.jan = jan;
@@ -56,23 +57,21 @@ JanelaPrincipal jan;
         btnAlterar = new javax.swing.JButton();
         btnRegistrar1 = new javax.swing.JButton();
         numParcelas = new javax.swing.JTextField();
-        txtDataVencimento = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtCliente = new javax.swing.JTextField();
-        cbModoPagamento = new javax.swing.JComboBox<>();
+        txtTitulo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         taObs = new javax.swing.JTextArea();
         cbStatus = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        txtfDataVencimento = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/contract.png"))); // NOI18N
-        jLabel1.setText("Alterar Conta a receber");
+        jLabel1.setText("Alterar Conta a Pagar");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(130, 0, 280, 90);
+        jLabel1.setBounds(130, 0, 190, 90);
 
         jLabel2.setText("Cliente:");
         getContentPane().add(jLabel2);
@@ -100,7 +99,7 @@ JanelaPrincipal jan;
             }
         });
         getContentPane().add(btnAlterar);
-        btnAlterar.setBounds(230, 510, 140, 40);
+        btnAlterar.setBounds(260, 510, 140, 40);
 
         btnRegistrar1.setText("Cancelar");
         btnRegistrar1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -114,19 +113,11 @@ JanelaPrincipal jan;
         getContentPane().add(numParcelas);
         numParcelas.setBounds(30, 230, 70, 27);
 
-        txtDataVencimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
-        getContentPane().add(txtDataVencimento);
-        txtDataVencimento.setBounds(30, 320, 150, 30);
-
         jLabel6.setText("Status:");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(200, 290, 70, 30);
-        getContentPane().add(txtCliente);
-        txtCliente.setBounds(30, 150, 150, 27);
-
-        cbModoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Debito Automático", "Depósito", "Dinheiro", "Cartão" }));
-        getContentPane().add(cbModoPagamento);
-        cbModoPagamento.setBounds(190, 230, 190, 30);
+        jLabel6.setBounds(240, 290, 70, 30);
+        getContentPane().add(txtTitulo);
+        txtTitulo.setBounds(30, 150, 150, 27);
 
         taObs.setColumns(20);
         taObs.setRows(5);
@@ -137,17 +128,17 @@ JanelaPrincipal jan;
 
         cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Confirmado ", "Cancelado", "Outro" }));
         getContentPane().add(cbStatus);
-        cbStatus.setBounds(200, 320, 180, 30);
-
-        jLabel7.setText("Modo de Recebimento");
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(190, 207, 250, 20);
+        cbStatus.setBounds(240, 320, 180, 30);
 
         jLabel8.setText("Obs:");
         getContentPane().add(jLabel8);
         jLabel8.setBounds(40, 370, 70, 30);
 
-        setSize(new java.awt.Dimension(455, 613));
+        txtfDataVencimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        getContentPane().add(txtfDataVencimento);
+        txtfDataVencimento.setBounds(30, 320, 180, 30);
+
+        setSize(new java.awt.Dimension(470, 613));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -158,11 +149,11 @@ JanelaPrincipal jan;
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         try{
             ContaReceber recebimento = new ContaReceber();                                   
-            recebimento.setCod(this.recebimentoAntigo.getCod());
+            recebimento.setCod(this.pagamentoAntigo.getCod());
             recebimento.setValor(Double.parseDouble(this.txtValorTotal.getText()));
             recebimento.setParcela_total(Integer.parseInt(this.numParcelas.getText()));
             recebimento.setStatus(this.cbStatus.getItemAt(this.cbStatus.getSelectedIndex()));
-            recebimento.setModo_pagamento(this.cbModoPagamento.getItemAt(this.cbModoPagamento.getSelectedIndex()));
+            recebimento.setData_vencimento(this.txtfDataVencimento.getText());            
             recebimento.setObs( this.taObs.getText() );
             
            ContaReceberDAO.alterarRecebimento(recebimento);    
@@ -170,7 +161,7 @@ JanelaPrincipal jan;
            JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
            
            //refresh tabela
-          jan.refreshTable(jan.getR_tabela());
+          jan.refreshTablePagar(jan.getP_tabela());
           this.dispose();
           
         } catch (NumberFormatException | SQLException ex) {
@@ -197,48 +188,46 @@ JanelaPrincipal jan;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlterarContaReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarContaPagar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlterarContaReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarContaPagar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlterarContaReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarContaPagar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AlterarContaReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarContaPagar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AlterarContaReceber().setVisible(true);
+                new AlterarContaPagar().setVisible(true);
             }
         });
     }
 
-    public void setRecebimento(ContaReceber recebimento) {
-        this.recebimentoAntigo = recebimento;
+    public void setPagamento(ContaPagar pagamento) {
+        this.pagamentoAntigo = pagamento;
     }
     
-    public void carregarDados(ContaReceber recebimentoAntigo){
-        this.recebimentoAntigo = recebimentoAntigo;
-        
-        this.txtCliente.enable(false);
+    public void carregarDados(ContaPagar pagamentoAntigo){
+        this.pagamentoAntigo = pagamentoAntigo;       
         
        // colocando valores selecionados nos campos
-        this.txtCliente.setText(recebimentoAntigo.getCliente());
-        this.txtValorTotal.setText(recebimentoAntigo.getValor() + "");
-        this.numParcelas.setText(recebimentoAntigo.getParcela_total() + "");
-        this.cbModoPagamento.addItem(recebimentoAntigo.getModo_pagamento());
-        this.cbModoPagamento.setSelectedIndex(4);
-        this.taObs.setText(recebimentoAntigo.getObs());
+        this.txtTitulo.setText(pagamentoAntigo.getTitulo());
+        this.txtValorTotal.setText(pagamentoAntigo.getValor() + "");
+        this.numParcelas.setText(pagamentoAntigo.getParcela_total() + "");        
+        this.txtfDataVencimento.setText(pagamentoAntigo.getData_vencimento());
+        this.taObs.setText(pagamentoAntigo.getObs());
     }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnRegistrar1;
-    private javax.swing.JComboBox<String> cbModoPagamento;
     private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -246,13 +235,12 @@ JanelaPrincipal jan;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField numParcelas;
     private javax.swing.JTextArea taObs;
-    private javax.swing.JTextField txtCliente;
-    private javax.swing.JFormattedTextField txtDataVencimento;
+    private javax.swing.JTextField txtTitulo;
     private javax.swing.JTextField txtValorTotal;
+    private javax.swing.JFormattedTextField txtfDataVencimento;
     // End of variables declaration//GEN-END:variables
 }

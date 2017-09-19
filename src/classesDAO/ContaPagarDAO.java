@@ -1,13 +1,13 @@
 package classesDAO;
 
+import classes.ContaPagar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import classes.ContaReceber;
 import java.util.ArrayList;
 
-public class ContaReceberDAO 
+public class ContaPagarDAO 
 {          
    
     private static PreparedStatement state = null;
@@ -15,14 +15,14 @@ public class ContaReceberDAO
     
     
     //-----PESQUISAR
-    public static ArrayList<ContaReceber> pesquisarRecebimentos(String pesquisa){        
+    public static ArrayList<ContaPagar> pesquisarPagamentos(String pesquisa){        
         
-        ArrayList<ContaReceber> recebimentos = new ArrayList();
+        ArrayList<ContaPagar> pagamentos = new ArrayList();
         Connection con = Conexao.getConexao();
         
-        String sql = "SELECT r.id, c.nome, r.data_vencimento ,r.valor, r.status, r.total_parcelas, r.modo_pagamento"
-                + "  FROM conta_receber as r, cliente as c "
-                + " WHERE r.id_cliente = c.id AND ( c.nome LIKE(?) OR status LIKE(?) OR modo_pagamento LIKE(?) );";
+        String sql = "SELECT p.id, p.titulo, p.data_vencimento, p.valor, p.status, p.total_parcelas, p.modo_pagamento"
+                + "  FROM conta_pagar as p "
+                + " WHERE  c.titulo LIKE(?) OR status LIKE(?);";
         
         try {
             state = con.prepareStatement(sql);
@@ -34,21 +34,20 @@ public class ContaReceberDAO
             
             while( resultado.next() ){
                 // cod, cliente, data_venc, valor, parcela, status
-                ContaReceber receber = new ContaReceber();
-                receber.setCod(resultado.getInt("id"));
-                receber.setCliente(resultado.getString("nome"));
-                receber.setData_vencimento(resultado.getString("data_vencimento"));
-                receber.setParcela_total(resultado.getInt("total_parcelas"));
-                receber.setValor(resultado.getDouble("valor"));
-                receber.setModo_pagamento(resultado.getString("modo_pagamento"));
-                receber.setStatus(resultado.getString("status"));
+                ContaPagar pagar = new ContaPagar();
+                pagar.setCod(resultado.getInt("id"));
+                pagar.setTitulo(resultado.getString("titulo"));
+                pagar.setData_vencimento(resultado.getString("data_vencimento"));
+                pagar.setParcela_total(resultado.getInt("total_parcelas"));
+                pagar.setValor(resultado.getDouble("valor"));                
+                pagar.setStatus(resultado.getString("status"));
                 
-                recebimentos.add(receber);                
+                pagamentos.add(pagar);                
             }
             
             Conexao.fecharConexao(con, state, resultado);
             
-            return recebimentos;
+            return pagamentos;
             
         } catch (SQLException ex) {
             Conexao.fecharConexao(con, state, resultado);
@@ -58,51 +57,48 @@ public class ContaReceberDAO
     }
     
     //-----SELECT ALL
-    public static ArrayList<ContaReceber> retornarTodosRecebimentos() throws SQLException{        
-        ArrayList<ContaReceber> recebimentos = new ArrayList();
+    public static ArrayList<ContaPagar> retornarTodosPagamentos() throws SQLException{        
+        ArrayList<ContaPagar> pagamentos = new ArrayList();
         Connection con = Conexao.getConexao();
         
-        String sql = "SELECT r.id, c.nome, r.data_vencimento ,r.valor, r.status, r.total_parcelas, r.modo_pagamento"
-                + "  FROM conta_receber as r, cliente as c "
-                + " WHERE r.id_cliente = c.id ORDER BY r.id; ";
-        
-       
+        String sql = "SELECT p.id, p.titulo, p.data_vencimento, p.valor, p.status, p.total_parcelas "
+                + "  FROM conta_pagar as p; ";
+                      
             state = con.prepareStatement(sql);
-            resultado = state.executeQuery();
+            resultado = state.executeQuery(  );
             
             while(resultado.next()){
-                // cod, cliente, data_venc, valor, parcela, status
-                ContaReceber receber = new ContaReceber();
-                receber.setCod(resultado.getInt("id"));
-                receber.setCliente(resultado.getString("nome"));
-                receber.setData_vencimento( resultado.getString("data_vencimento") );
-                receber.setParcela_total(resultado.getInt("total_parcelas"));
-                receber.setValor(resultado.getDouble("valor"));
-                receber.setModo_pagamento(resultado.getString("modo_pagamento"));
-                receber.setStatus(resultado.getString("status"));
+                // cod, titulo, data_venc, valor, parcela, status
+                ContaPagar pagar = new ContaPagar();
+                pagar.setCod( resultado.getInt("id") );
+                pagar.setTitulo( resultado.getString("titulo") );
+                pagar.setData_vencimento( resultado.getString("data_vencimento") );
+                pagar.setParcela_total( resultado.getInt("total_parcelas") );
+                pagar.setValor( resultado.getDouble("valor") );
+                pagar.setStatus( resultado.getString("status") );
                 
-                recebimentos.add(receber);                
+                pagamentos.add(pagar);                
             }
             
-            Conexao.fecharConexao(con, state, resultado);
+            Conexao.fecharConexao( con,  state,  resultado );
             
-            return recebimentos;
+            return pagamentos;
             
              
     }
     
-    //----------iINSERIR RECEBIMENTO
-       public static boolean inserirRecebimento(ContaReceber recebimento) throws SQLException {
+    //----------iINSERIR Pagamento
+       public static boolean inserirPagamento(ContaPagar pagamento) throws SQLException {
             Connection  con = Conexao.getConexao();
-           String sql = "INSERT INTO conta_receber(id_cliente, valor, status , total_parcelas, modo_pagamento, obs ) values( ?, ?, ?, ?, ?, ?);"; 
+           String sql = "INSERT INTO conta_pagar(titulo, valor, status , total_parcelas, data_vencimento ,obs ) values( ?, ?, ?, ?, ?, ?);"; 
            state = con.prepareStatement(sql);
            
-           state.setInt( 1,  recebimento.getCod_cliente() );
-           state.setDouble( 2,  recebimento.getValor() );
+           state.setString( 1,  pagamento.getTitulo() );
+           state.setDouble( 2,  pagamento.getValor() );
            state.setString( 3,  "pendente" );
-           state.setInt( 4,  recebimento.getParcela_total() );
-           state.setString( 5,  recebimento.getModo_pagamento() );
-           state.setString( 6,  recebimento.getObs());
+           state.setInt( 4,  pagamento.getParcela_total() );
+           state.setString( 5,  pagamento.getData_vencimento());
+           state.setString( 6,  pagamento.getObs() );
                                  
            state.execute();
            Conexao.fecharConexao(con, state);
@@ -110,19 +106,19 @@ public class ContaReceberDAO
            return true;
         }
        
-       //----------ALTERAR RECEBIMENTO
-       public static boolean alterarRecebimento(ContaReceber recebimento) throws SQLException {
+       //----------ALTERAR
+       public static boolean alterarPagamento(ContaPagar pagamento) throws SQLException {
             Connection  con = Conexao.getConexao();
-           String sql = "UPDATE conta_receber SET valor = ? , total_parcelas = ? ,  status = ?,  modo_pagamento = ?, obs = ? "
+           String sql = "UPDATE conta_pagar SET titulo = ?, valor = ? , total_parcelas = ? ,  status = ?,   obs = ? "
                    + "WHERE id = ? ;"; 
            state = con.prepareStatement(sql);
            
-           state.setDouble( 1,  recebimento.getValor() );
-           state.setInt( 2,  recebimento.getParcela_total() );
-           state.setString( 3, recebimento.getStatus() );
-           state.setString( 4, recebimento.getModo_pagamento() );
-           state.setString( 5, recebimento.getObs() );
-           state.setInt( 6,  recebimento.getCod() );
+           state.setString(1, pagamento.getTitulo()  );
+           state.setDouble(2 ,pagamento.getValor() );
+           state.setInt(3,  pagamento.getParcela_total() );
+           state.setString(4, pagamento.getStatus() );
+           state.setString(6, pagamento.getObs() );
+           state.setInt(7,  pagamento.getCod() );
            
                                  
            state.execute();
@@ -132,9 +128,9 @@ public class ContaReceberDAO
         }
        
        //------EXCLUIR    
-       public static boolean excluirRecebimento(int id) throws SQLException {
+       public static boolean excluirPagamento(int id) throws SQLException {
             Connection  con = Conexao.getConexao();
-           String sql = "DELETE FROM conta_receber WHERE id = ? "; 
+           String sql = "DELETE FROM conta_pagar WHERE id = ? "; 
            state = con.prepareStatement(sql);           
            
            state.setInt( 1,  id );
@@ -145,10 +141,10 @@ public class ContaReceberDAO
            return true;
         }
        
-       //-------CONFIRMAR RECEBIMENTO
-       public static boolean confirmarRecebimento(int cod) throws SQLException {
+       //-------CONFIRMAR
+       public static boolean confirmarPagamento(int cod) throws SQLException {
            Connection  con = Conexao.getConexao();
-           String sql = "UPDATE conta_receber SET  status = 'Confirmado'  WHERE id = ? ;";
+           String sql = "UPDATE conta_pagar SET  status = 'Confirmado'  WHERE id = ? ;";
            
            state = con.prepareStatement(sql);
            state.setInt(1, cod);

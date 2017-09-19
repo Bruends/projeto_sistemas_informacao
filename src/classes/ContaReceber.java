@@ -118,12 +118,6 @@ public class ContaReceber {
         this.data_vencimento = data_vencimento;
     }
     
-     
-    //Data em formato string
-    public void setData_vencimentoString(String data)  {
-       
-    }
-    
     public double getValor() {
         return valor;
     }

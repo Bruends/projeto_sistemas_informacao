@@ -56,7 +56,6 @@ JanelaPrincipal jan;
         btnAlterar = new javax.swing.JButton();
         btnRegistrar1 = new javax.swing.JButton();
         numParcelas = new javax.swing.JTextField();
-        txtDataVencimento = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
         txtCliente = new javax.swing.JTextField();
         cbModoPagamento = new javax.swing.JComboBox<>();
@@ -65,6 +64,7 @@ JanelaPrincipal jan;
         cbStatus = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        txtfDataVencimento = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -100,7 +100,7 @@ JanelaPrincipal jan;
             }
         });
         getContentPane().add(btnAlterar);
-        btnAlterar.setBounds(230, 510, 140, 40);
+        btnAlterar.setBounds(260, 510, 140, 40);
 
         btnRegistrar1.setText("Cancelar");
         btnRegistrar1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -114,19 +114,15 @@ JanelaPrincipal jan;
         getContentPane().add(numParcelas);
         numParcelas.setBounds(30, 230, 70, 27);
 
-        txtDataVencimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
-        getContentPane().add(txtDataVencimento);
-        txtDataVencimento.setBounds(30, 320, 150, 30);
-
         jLabel6.setText("Status:");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(200, 290, 70, 30);
+        jLabel6.setBounds(240, 290, 70, 30);
         getContentPane().add(txtCliente);
         txtCliente.setBounds(30, 150, 150, 27);
 
         cbModoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Debito Automático", "Depósito", "Dinheiro", "Cartão" }));
         getContentPane().add(cbModoPagamento);
-        cbModoPagamento.setBounds(190, 230, 190, 30);
+        cbModoPagamento.setBounds(230, 230, 190, 30);
 
         taObs.setColumns(20);
         taObs.setRows(5);
@@ -137,17 +133,21 @@ JanelaPrincipal jan;
 
         cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Confirmado ", "Cancelado", "Outro" }));
         getContentPane().add(cbStatus);
-        cbStatus.setBounds(200, 320, 180, 30);
+        cbStatus.setBounds(240, 320, 180, 30);
 
         jLabel7.setText("Modo de Recebimento");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(190, 207, 250, 20);
+        jLabel7.setBounds(230, 210, 250, 20);
 
         jLabel8.setText("Obs:");
         getContentPane().add(jLabel8);
         jLabel8.setBounds(40, 370, 70, 30);
 
-        setSize(new java.awt.Dimension(455, 613));
+        txtfDataVencimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        getContentPane().add(txtfDataVencimento);
+        txtfDataVencimento.setBounds(30, 320, 180, 30);
+
+        setSize(new java.awt.Dimension(470, 613));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -162,6 +162,7 @@ JanelaPrincipal jan;
             recebimento.setValor(Double.parseDouble(this.txtValorTotal.getText()));
             recebimento.setParcela_total(Integer.parseInt(this.numParcelas.getText()));
             recebimento.setStatus(this.cbStatus.getItemAt(this.cbStatus.getSelectedIndex()));
+            recebimento.setData_vencimento(this.txtfDataVencimento.getText());
             recebimento.setModo_pagamento(this.cbModoPagamento.getItemAt(this.cbModoPagamento.getSelectedIndex()));
             recebimento.setObs( this.taObs.getText() );
             
@@ -170,7 +171,7 @@ JanelaPrincipal jan;
            JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
            
            //refresh tabela
-          jan.refreshTable(jan.getR_tabela());
+          jan.refreshTableReceber(jan.getR_tabela());
           this.dispose();
           
         } catch (NumberFormatException | SQLException ex) {
@@ -231,6 +232,7 @@ JanelaPrincipal jan;
         this.numParcelas.setText(recebimentoAntigo.getParcela_total() + "");
         this.cbModoPagamento.addItem(recebimentoAntigo.getModo_pagamento());
         this.cbModoPagamento.setSelectedIndex(4);
+        this.txtfDataVencimento.setText(recebimentoAntigo.getData_vencimento());
         this.taObs.setText(recebimentoAntigo.getObs());
     }
     
@@ -252,7 +254,7 @@ JanelaPrincipal jan;
     private javax.swing.JTextField numParcelas;
     private javax.swing.JTextArea taObs;
     private javax.swing.JTextField txtCliente;
-    private javax.swing.JFormattedTextField txtDataVencimento;
     private javax.swing.JTextField txtValorTotal;
+    private javax.swing.JFormattedTextField txtfDataVencimento;
     // End of variables declaration//GEN-END:variables
 }
