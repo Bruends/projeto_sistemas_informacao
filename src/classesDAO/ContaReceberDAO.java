@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import classes.ContaReceber;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class ContaReceberDAO 
 {          
@@ -86,9 +87,46 @@ public class ContaReceberDAO
             
             Conexao.fecharConexao(con, state, resultado);
             
-            return recebimentos;
+            return recebimentos;             
+    }
+    
+    //-----------SELECT AVANÇADO
+    public static ArrayList<ContaReceber>  pesquisaAvancada(String whereArguments) throws SQLException{
+        ArrayList<ContaReceber> recebimentos = new ArrayList();
+        Connection con = Conexao.getConexao();
+        
+        String sql = "SELECT r.id, c.nome, r.data_vencimento ,r.valor, r.status, r.total_parcelas, r.modo_pagamento"
+                + "  FROM conta_receber as r, cliente as c "
+                + " WHERE  r.id_cliente = c.id ";
+        
+        if(whereArguments != null && whereArguments != " ")
+            sql += " AND " + whereArguments;        
             
-             
+        sql += ";";        
+        
+        JOptionPane.showMessageDialog(null,  sql);
+        
+        state = con.prepareStatement(sql);
+        resultado = state.executeQuery();
+        
+        while(resultado.next()){
+                // cod, cliente, data_venc, valor, parcela, status
+                ContaReceber receber = new ContaReceber();
+                receber.setCod(resultado.getInt("id"));
+                receber.setCliente(resultado.getString("nome"));
+                receber.setData_vencimento( resultado.getString("data_vencimento") );
+                receber.setParcela_total(resultado.getInt("total_parcelas"));
+                receber.setValor(resultado.getDouble("valor"));
+                receber.setModo_pagamento(resultado.getString("modo_pagamento"));
+                receber.setStatus(resultado.getString("status"));
+                
+                recebimentos.add(receber);                
+            }
+            
+            Conexao.fecharConexao(con, state, resultado);
+            
+            return recebimentos;             
+        
     }
     
     //----------iINSERIR RECEBIMENTO

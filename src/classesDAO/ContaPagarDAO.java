@@ -87,6 +87,45 @@ public class ContaPagarDAO
              
     }
     
+    
+    //-----SELECT AVANÇADO
+    public static ArrayList<ContaPagar> pesquisaAvancada(String whereArguments) throws SQLException{        
+        ArrayList<ContaPagar> pagamentos = new ArrayList();
+        Connection con = Conexao.getConexao();
+        
+        String sql = "SELECT p.id, p.titulo, p.data_vencimento, p.valor, p.status, p.total_parcelas "
+                + "  FROM conta_pagar as p ";
+                      
+        
+            if(whereArguments != null && whereArguments != " ")
+               sql += " WHERE " + whereArguments;        
+            
+            sql += ";";                
+        
+            state = con.prepareStatement(sql);
+            resultado = state.executeQuery(  );
+            
+            while(resultado.next()){
+                // cod, titulo, data_venc, valor, parcela, status
+                ContaPagar pagar = new ContaPagar();
+                pagar.setCod( resultado.getInt("id") );
+                pagar.setTitulo( resultado.getString("titulo") );
+                pagar.setData_vencimento( resultado.getString("data_vencimento") );
+                pagar.setParcela_total( resultado.getInt("total_parcelas") );
+                pagar.setValor( resultado.getDouble("valor") );
+                pagar.setStatus( resultado.getString("status") );
+                
+                pagamentos.add(pagar);                
+            }
+            
+            Conexao.fecharConexao( con,  state,  resultado );
+            
+            return pagamentos;
+            
+             
+    }
+    
+    
     //----------iINSERIR Pagamento
        public static boolean inserirPagamento(ContaPagar pagamento) throws SQLException {
             Connection  con = Conexao.getConexao();

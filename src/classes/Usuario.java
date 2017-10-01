@@ -1,6 +1,5 @@
 package classes;
 
-
 public class Usuario {    
     private int cod;
     private String email;

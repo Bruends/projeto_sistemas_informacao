@@ -77,7 +77,7 @@ public class ContaReceber {
         
         if(recebimentos.size() > 0){
            this.makeTable(table, recebimentos);          
-        
+           
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum registro encontrado");
         } 

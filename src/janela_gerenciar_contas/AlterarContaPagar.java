@@ -8,6 +8,7 @@ import classes.ContaReceber;
 import classes.Cliente;
 import classes.ContaPagar;
 import classesDAO.ClienteDAO;
+import classesDAO.ContaPagarDAO;
 import classesDAO.ContaReceberDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ JanelaPrincipal jan;
         getContentPane().add(jLabel1);
         jLabel1.setBounds(130, 0, 190, 90);
 
-        jLabel2.setText("Cliente:");
+        jLabel2.setText("Titulo:");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(30, 130, 60, 20);
 
@@ -148,15 +149,15 @@ JanelaPrincipal jan;
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         try{
-            ContaReceber recebimento = new ContaReceber();                                   
-            recebimento.setCod(this.pagamentoAntigo.getCod());
-            recebimento.setValor(Double.parseDouble(this.txtValorTotal.getText()));
-            recebimento.setParcela_total(Integer.parseInt(this.numParcelas.getText()));
-            recebimento.setStatus(this.cbStatus.getItemAt(this.cbStatus.getSelectedIndex()));
-            recebimento.setData_vencimento(this.txtfDataVencimento.getText());            
-            recebimento.setObs( this.taObs.getText() );
+            ContaPagar pagamento = new ContaPagar();                                   
+            pagamento.setCod(this.pagamentoAntigo.getCod());
+            pagamento.setValor(Double.parseDouble(this.txtValorTotal.getText()));
+            pagamento.setParcela_total(Integer.parseInt(this.numParcelas.getText()));
+            pagamento.setStatus(this.cbStatus.getItemAt(this.cbStatus.getSelectedIndex()));
+            pagamento.setData_vencimento(this.txtfDataVencimento.getText());            
+            pagamento.setObs( this.taObs.getText() );
             
-           ContaReceberDAO.alterarRecebimento(recebimento);    
+           ContaPagarDAO.alterarPagamento(pagamento);    
            
            JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
            

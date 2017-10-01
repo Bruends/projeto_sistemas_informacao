@@ -9,6 +9,7 @@ import classes.Usuario;
 import janela_gerenciar_contas.JanelaPrincipal;
 import janela_gerenciar_usuarios.JanelaPrincipalUsuarios;
 import janela_gerenciar_clientes.JanelaPrincipalClientes;
+import janela_pesquisar.JanelaPesquisarPrincipal;
 
 /**
  *
@@ -128,7 +129,8 @@ private Usuario usuario;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        // TODO add your handling code here:
+        JanelaPesquisarPrincipal jan = new JanelaPesquisarPrincipal();
+        jan.setVisible(true);
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnGerenciarContasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarContasActionPerformed
