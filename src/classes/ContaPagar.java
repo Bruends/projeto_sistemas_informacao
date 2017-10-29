@@ -26,7 +26,18 @@ public class ContaPagar {
     private String status;
     private String modo_pagamento;
     private String obs;
+
+    public ContaPagar(String titulo, double valor) {
+        this.titulo = titulo;
+        this.valor = valor;
+    }
+
+    public ContaPagar() {
+    }
       
+    
+    
+    
     //criando tabela com os dados necessários
     public void makeTable(JTable table, ArrayList<ContaPagar> pagamentos){
          DefaultTableModel tbl = (DefaultTableModel) table.getModel();
