@@ -64,7 +64,13 @@ JanelaPrincipal jan;
         taObs = new javax.swing.JTextArea();
         cbStatus = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        txtfDataVencimento = new javax.swing.JFormattedTextField();
+        txtfDataVencimento = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("##/##/####");
+            this.txtfDataVencimento = new javax.swing.JFormattedTextField(data);
+        }
+        catch (Exception e){
+        }
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -86,7 +92,7 @@ JanelaPrincipal jan;
         getContentPane().add(jLabel4);
         jLabel4.setBounds(30, 200, 90, 30);
         getContentPane().add(txtValorTotal);
-        txtValorTotal.setBounds(230, 150, 150, 27);
+        txtValorTotal.setBounds(230, 150, 150, 20);
 
         jLabel5.setText("Data Vencimento:");
         getContentPane().add(jLabel5);
@@ -112,20 +118,20 @@ JanelaPrincipal jan;
         getContentPane().add(btnRegistrar1);
         btnRegistrar1.setBounds(40, 510, 140, 40);
         getContentPane().add(numParcelas);
-        numParcelas.setBounds(30, 230, 70, 27);
+        numParcelas.setBounds(30, 230, 70, 20);
 
         jLabel6.setText("Status:");
         getContentPane().add(jLabel6);
         jLabel6.setBounds(240, 290, 70, 30);
         getContentPane().add(txtTitulo);
-        txtTitulo.setBounds(30, 150, 150, 27);
+        txtTitulo.setBounds(30, 150, 150, 20);
 
         taObs.setColumns(20);
         taObs.setRows(5);
         jScrollPane1.setViewportView(taObs);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(40, 400, 330, 87);
+        jScrollPane1.setBounds(40, 400, 330, 96);
 
         cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Confirmado ", "Cancelado", "Outro" }));
         getContentPane().add(cbStatus);
@@ -135,7 +141,7 @@ JanelaPrincipal jan;
         getContentPane().add(jLabel8);
         jLabel8.setBounds(40, 370, 70, 30);
 
-        txtfDataVencimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        txtfDataVencimento.setToolTipText("Exemplo: 12/07/2017");
         getContentPane().add(txtfDataVencimento);
         txtfDataVencimento.setBounds(30, 320, 180, 30);
 
@@ -151,6 +157,7 @@ JanelaPrincipal jan;
         try{
             ContaPagar pagamento = new ContaPagar();                                   
             pagamento.setCod(this.pagamentoAntigo.getCod());
+            pagamento.setTitulo(this.txtTitulo.getText());
             pagamento.setValor(Double.parseDouble(this.txtValorTotal.getText()));
             pagamento.setParcela_total(Integer.parseInt(this.numParcelas.getText()));
             pagamento.setStatus(this.cbStatus.getItemAt(this.cbStatus.getSelectedIndex()));
@@ -242,6 +249,6 @@ JanelaPrincipal jan;
     private javax.swing.JTextArea taObs;
     private javax.swing.JTextField txtTitulo;
     private javax.swing.JTextField txtValorTotal;
-    private javax.swing.JFormattedTextField txtfDataVencimento;
+    private javax.swing.JTextField txtfDataVencimento;
     // End of variables declaration//GEN-END:variables
 }

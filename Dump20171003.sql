@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `projeto_si` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `projeto_si`;
 -- MySQL dump 10.13  Distrib 5.7.19, for Linux (x86_64)
 --
 -- Host: localhost    Database: projeto_si
@@ -31,7 +33,7 @@ CREATE TABLE `cliente` (
   `telefone` varchar(45) DEFAULT NULL,
   `cep` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +42,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'Empresa1','contato@enterprisesa.com','54642133','rua. alguma coisa - SP',NULL,NULL),(2,'Empresa2','evilcorp@email.com','54156154','rua. random - NY',NULL,NULL),(4,'E. Corp','empresa3@email.com','2323232','Rua3 - MG',NULL,NULL);
+INSERT INTO `cliente` VALUES (1,'Empresa1','contato@enterprisesa.com','54642133','rua. alguma coisa - SP',NULL,NULL),(2,'Empresa2','evilcorp@email.com','54156154','rua. random - NY',NULL,NULL),(4,'E. Corp','empresa3@email.com','2323232','Rua3 - MG',NULL,NULL),(6,'Wayne Enterprises','example@email.com','158151','B2, nº 5 - , gothan, gt - gt','12321312','8888');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +64,7 @@ CREATE TABLE `conta_pagar` (
   `total_parcelas` int(11) DEFAULT '0',
   `obs` mediumtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +73,7 @@ CREATE TABLE `conta_pagar` (
 
 LOCK TABLES `conta_pagar` WRITE;
 /*!40000 ALTER TABLE `conta_pagar` DISABLE KEYS */;
-INSERT INTO `conta_pagar` VALUES (2,'energia',222.00,'Confirmado','13/03/1996',NULL,0,2,''),(3,'Luz',193.00,'pendente','13/07/2017',NULL,0,1,''),(4,'Concerto Computadores',2000.00,'pendente','12/02/2017',NULL,0,3,'');
+INSERT INTO `conta_pagar` VALUES (2,'energia',222.00,'Confirmado','13/03/1996',NULL,0,2,''),(3,'Luz',193.00,'Pendente','13/07/2017',NULL,0,1,''),(4,'Concerto Computadores',2000.00,'Confirmado','12/02/2017',NULL,0,3,''),(5,'Itens de escritorio',200.00,'Confirmado','16/05/2017',NULL,0,1,''),(6,'Internet',600.00,'Confirmado','16/05/2017',NULL,0,1,''),(7,'gastos gerais',600.00,'Confirmado','06/05/2017',NULL,0,1,''),(9,'internet',600.00,'Pendente','06/08/2017',NULL,0,1,''),(10,'internet',600.00,'Pendente','06/09/2017',NULL,0,1,''),(11,'internet',600.00,'Pendente','06/10/2017',NULL,0,1,''),(12,'2 computadores',6000.00,'Pendente','06/11/2017',NULL,0,2,'');
 /*!40000 ALTER TABLE `conta_pagar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +98,7 @@ CREATE TABLE `conta_receber` (
   PRIMARY KEY (`id`),
   KEY `fk_id_cliente_idx` (`id_cliente`),
   CONSTRAINT `fk_id_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +107,7 @@ CREATE TABLE `conta_receber` (
 
 LOCK TABLES `conta_receber` WRITE;
 /*!40000 ALTER TABLE `conta_receber` DISABLE KEYS */;
-INSERT INTO `conta_receber` VALUES (15,4,222.00,'pendente','16/05/1966',NULL,0,2,'Debito Automatico',''),(16,1,2000.00,'Pendente','13/01/2017',NULL,0,2,'Debito Automatico',''),(17,4,1000.00,'Pendente','13/01/2017',NULL,0,2,'Dinheiro','');
+INSERT INTO `conta_receber` VALUES (18,6,5000.00,'Pendente','16/05/2018',NULL,0,1,'Deposito',''),(19,1,5800.00,'Confirmado','16/05/2017',NULL,0,1,'Debito Automatico',''),(20,2,5800.00,'Confirmado','06/08/2017',NULL,0,1,'Debito Automatico',''),(21,4,580.00,'Confirmado','26/08/2017',NULL,0,1,'Dinheiro',''),(22,6,580.00,'Pendente','26/08/2017',NULL,0,1,'Dinheiro',''),(23,1,5780.00,'Pendente','26/08/2017',NULL,0,1,'Dinheiro',''),(24,1,5780.00,'Pendente','26/09/2017',NULL,0,2,'Dinheiro',''),(25,1,5780.00,'Pendente','06/09/2017',NULL,0,2,'Dinheiro',''),(26,2,780.00,'Pendente','06/09/2017',NULL,0,2,'Debito Automatico',''),(27,6,7880.00,'Pendente','06/09/2017',NULL,0,1,'Deposito',''),(28,6,880.00,'Pendente','06/09/2019',NULL,0,1,'Deposito',''),(29,4,500.00,'pendente','16/07/2018',NULL,0,1,'Debito Automatico','');
 /*!40000 ALTER TABLE `conta_receber` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,4 +156,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-09-19 19:27:44
+-- Dump completed on 2017-10-03 18:30:04

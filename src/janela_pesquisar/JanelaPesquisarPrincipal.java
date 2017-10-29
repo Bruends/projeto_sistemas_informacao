@@ -5,8 +5,10 @@
  */
 package janela_pesquisar;
 
+import classes.Cliente;
 import classes.ContaPagar;
 import classes.ContaReceber;
+import classesDAO.ClienteDAO;
 import classesDAO.ContaPagarDAO;
 import classesDAO.ContaReceberDAO;
 import java.sql.SQLException;
@@ -24,10 +26,26 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
      * Creates new form JanelaPesquisarPrincipal
      */
     public JanelaPesquisarPrincipal() {
-        initComponents();
+        initComponents();      
+        
         
        receber.todosRecebimentosTabela(this.r_tabela);
        pagar .todosPagamentosTabela(this.p_tabela);
+       
+       
+       //---------------------
+       
+       //colocando os clientes no combo box
+        ArrayList<Cliente>  clientesArray = ClienteDAO.retornarTodosClientes();
+        
+        this.r_cbCliente.addItem(" ");
+        
+        for( int i = 0; i < clientesArray.size(); i++ ){
+             this.r_cbCliente.addItem(clientesArray.get(i).getNome());  
+        }
+    
+       
+       //-------------------
         
     }
 
@@ -44,21 +62,30 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        r_txtMesDe = new javax.swing.JTextField();
-        r_txtMesAte = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         r_txtAno = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         r_txtData = new javax.swing.JTextField();
-        r_txtMes = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("##/##/####");
+            this.r_txtData = new javax.swing.JFormattedTextField(data);
+        }
+        catch (Exception e){
+        }
         r_cbDataExata = new javax.swing.JRadioButton();
         r_cbEntreMeses = new javax.swing.JRadioButton();
         r_cbMes = new javax.swing.JRadioButton();
+        r_txtMesAte = new javax.swing.JComboBox<>();
+        r_txtMes = new javax.swing.JComboBox<>();
+        r_txtMesDe = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         r_cbStatus = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         r_cbCliente = new javax.swing.JComboBox<>();
+        cbModoPagamento = new javax.swing.JComboBox<>();
+        r_cbModoPagamento = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         r_tabela = new javax.swing.JTable();
         r_btnPesquisa = new javax.swing.JButton();
@@ -70,16 +97,22 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         p_txtTitulo = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
-        p_txtMesDe = new javax.swing.JTextField();
-        p_txtMesAte = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         p_txtAno = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         p_txtData = new javax.swing.JTextField();
-        p_txtMes = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("##/##/####");
+            this.p_txtData = new javax.swing.JFormattedTextField(data);
+        }
+        catch (Exception e){
+        }
         p_cbDataExata = new javax.swing.JRadioButton();
-        r_cbEntreMeses1 = new javax.swing.JRadioButton();
+        p_cbEntreMeses = new javax.swing.JRadioButton();
         p_cbMes = new javax.swing.JRadioButton();
+        p_txtMesDe = new javax.swing.JComboBox<>();
+        p_txtMesAte = new javax.swing.JComboBox<>();
+        p_txtMes = new javax.swing.JComboBox<>();
         p_btnLimpar = new javax.swing.JButton();
         p_btnPesquisa = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -91,26 +124,29 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisar Por Datas"));
         jPanel3.setLayout(null);
-        jPanel3.add(r_txtMesDe);
-        r_txtMesDe.setBounds(230, 140, 82, 30);
-        jPanel3.add(r_txtMesAte);
-        r_txtMesAte.setBounds(340, 140, 74, 30);
 
         jLabel3.setText("e");
         jLabel3.setToolTipText("");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel3.add(jLabel3);
         jLabel3.setBounds(320, 140, 20, 28);
+
+        r_txtAno.setToolTipText("exemplo: 2017");
         jPanel3.add(r_txtAno);
         r_txtAno.setBounds(30, 50, 110, 30);
 
         jLabel6.setText("Ano: ");
         jPanel3.add(jLabel6);
         jLabel6.setBounds(30, 20, 120, 30);
+
+        r_txtData.setToolTipText("Exemplo: 10/05/2017 ");
+        r_txtData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                r_txtDataActionPerformed(evt);
+            }
+        });
         jPanel3.add(r_txtData);
         r_txtData.setBounds(230, 50, 130, 30);
-        jPanel3.add(r_txtMes);
-        r_txtMes.setBounds(30, 140, 130, 30);
 
         buttonGroup1.add(r_cbDataExata);
         r_cbDataExata.setText("Data Exata");
@@ -143,6 +179,18 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         jPanel3.add(r_cbMes);
         r_cbMes.setBounds(30, 110, 120, 30);
 
+        r_txtMesAte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" }));
+        jPanel3.add(r_txtMesAte);
+        r_txtMesAte.setBounds(340, 140, 90, 30);
+
+        r_txtMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" }));
+        jPanel3.add(r_txtMes);
+        r_txtMes.setBounds(30, 140, 120, 30);
+
+        r_txtMesDe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" }));
+        jPanel3.add(r_txtMesDe);
+        r_txtMesDe.setBounds(220, 140, 90, 30);
+
         jPanel1.add(jPanel3);
         jPanel3.setBounds(10, 40, 520, 210);
 
@@ -156,14 +204,31 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
 
         r_cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Pendente", "Confirmado", "Cancelado", "Atrasado" }));
         jPanel4.add(r_cbStatus);
-        r_cbStatus.setBounds(18, 63, 123, 27);
+        r_cbStatus.setBounds(18, 63, 123, 20);
 
         jLabel5.setText("Cliente:");
         jPanel4.add(jLabel5);
         jLabel5.setBounds(18, 102, 63, 26);
 
+        r_cbCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                r_cbClienteActionPerformed(evt);
+            }
+        });
         jPanel4.add(r_cbCliente);
-        r_cbCliente.setBounds(18, 134, 123, 27);
+        r_cbCliente.setBounds(18, 134, 123, 20);
+
+        cbModoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Debito Automatico", "Deposito", "Dinheiro", "Cartão", " ", " " }));
+        jPanel4.add(cbModoPagamento);
+        cbModoPagamento.setBounds(250, 250, 190, 30);
+
+        r_cbModoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Debito Automatico", "Deposito", "Dinheiro", "Cartão", " ", " " }));
+        jPanel4.add(r_cbModoPagamento);
+        r_cbModoPagamento.setBounds(170, 60, 190, 30);
+
+        jLabel1.setText("Modo Pagamento: ");
+        jPanel4.add(jLabel1);
+        jLabel1.setBounds(170, 30, 180, 30);
 
         jPanel1.add(jPanel4);
         jPanel4.setBounds(560, 40, 390, 210);
@@ -206,7 +271,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         jPanel1.add(r_btnPesquisa);
         r_btnPesquisa.setBounds(10, 270, 130, 30);
 
-        r_btnLimpar.setText("Limpar");
+        r_btnLimpar.setText("Resetar busca");
         r_btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 r_btnLimparActionPerformed(evt);
@@ -229,39 +294,37 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
 
         p_cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Pendente", "Confirmado", "Cancelado", "Atrasado" }));
         jPanel5.add(p_cbStatus);
-        p_cbStatus.setBounds(18, 63, 123, 27);
+        p_cbStatus.setBounds(18, 63, 123, 20);
 
         jLabel8.setText("Titulo:");
         jPanel5.add(jLabel8);
         jLabel8.setBounds(18, 102, 63, 26);
         jPanel5.add(p_txtTitulo);
-        p_txtTitulo.setBounds(20, 140, 120, 30);
+        p_txtTitulo.setBounds(20, 130, 120, 30);
 
         jPanel2.add(jPanel5);
         jPanel5.setBounds(560, 40, 390, 210);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisar Por Datas"));
         jPanel6.setLayout(null);
-        jPanel6.add(p_txtMesDe);
-        p_txtMesDe.setBounds(230, 140, 82, 30);
-        jPanel6.add(p_txtMesAte);
-        p_txtMesAte.setBounds(340, 140, 74, 30);
 
         jLabel9.setText("e");
         jLabel9.setToolTipText("");
         jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel6.add(jLabel9);
         jLabel9.setBounds(320, 140, 20, 28);
+
+        p_txtAno.setToolTipText("Exemplo: 2017");
         jPanel6.add(p_txtAno);
         p_txtAno.setBounds(30, 50, 110, 30);
 
         jLabel10.setText("Ano: ");
         jPanel6.add(jLabel10);
         jLabel10.setBounds(30, 20, 120, 30);
+
+        p_txtData.setToolTipText("Exemplo: 17/08/2017");
         jPanel6.add(p_txtData);
         p_txtData.setBounds(230, 50, 130, 30);
-        jPanel6.add(p_txtMes);
-        p_txtMes.setBounds(30, 140, 130, 30);
 
         buttonGroup1.add(p_cbDataExata);
         p_cbDataExata.setText("Data Exata");
@@ -273,15 +336,15 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         jPanel6.add(p_cbDataExata);
         p_cbDataExata.setBounds(230, 20, 200, 30);
 
-        buttonGroup1.add(r_cbEntreMeses1);
-        r_cbEntreMeses1.setText("Entre Meses");
-        r_cbEntreMeses1.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(p_cbEntreMeses);
+        p_cbEntreMeses.setText("Entre Meses");
+        p_cbEntreMeses.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                r_cbEntreMeses1ActionPerformed(evt);
+                p_cbEntreMesesActionPerformed(evt);
             }
         });
-        jPanel6.add(r_cbEntreMeses1);
-        r_cbEntreMeses1.setBounds(230, 110, 220, 30);
+        jPanel6.add(p_cbEntreMeses);
+        p_cbEntreMeses.setBounds(230, 110, 220, 30);
 
         buttonGroup1.add(p_cbMes);
         p_cbMes.setText("Mês");
@@ -293,10 +356,22 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         jPanel6.add(p_cbMes);
         p_cbMes.setBounds(30, 110, 120, 30);
 
+        p_txtMesDe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" }));
+        jPanel6.add(p_txtMesDe);
+        p_txtMesDe.setBounds(220, 140, 90, 30);
+
+        p_txtMesAte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" }));
+        jPanel6.add(p_txtMesAte);
+        p_txtMesAte.setBounds(340, 140, 90, 30);
+
+        p_txtMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" }));
+        jPanel6.add(p_txtMes);
+        p_txtMes.setBounds(30, 140, 120, 30);
+
         jPanel2.add(jPanel6);
         jPanel6.setBounds(10, 40, 520, 210);
 
-        p_btnLimpar.setText("Limpar");
+        p_btnLimpar.setText("Resetar Busca");
         p_btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 p_btnLimparActionPerformed(evt);
@@ -366,8 +441,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
       ArrayList<ContaReceber> contasArray = new ArrayList<>(); 
         try {
            contasArray  = ContaReceberDAO.pesquisaAvancada( this.montarWhereRecebimento() );
-           receber.makeTable(this.r_tabela,  contasArray);
-           JOptionPane.showMessageDialog(null, contasArray.toString());
+           receber.makeTable(this.r_tabela,  contasArray);           
                     
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,  ex);
@@ -379,8 +453,8 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         //habilitando campos necessários
         this.r_txtData.setEnabled(true);
         //desabilitando outros campos
-        this.r_txtMes.setEnabled(false);
         this.r_txtMesDe.setEnabled(false);
+        this.r_txtMes.setEnabled(false);
         this.r_txtMesAte.setEnabled(false);
         this.r_txtAno.setEnabled(false);
     }//GEN-LAST:event_r_cbDataExataActionPerformed
@@ -408,20 +482,35 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_r_cbMesActionPerformed
 
     private void r_btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_btnLimparActionPerformed
+        //resetando tabela e limpando campos
+        
         receber.todosRecebimentosTabela(this.r_tabela);
+        
+        this.r_txtAno.setText("");
+        this.r_txtData.setText("");
+        
+        this.r_txtMes.setSelectedIndex(0);
+        this.r_txtMesDe.setSelectedIndex(0);
+        this.r_txtMesAte.setSelectedIndex(0);
+        
+        this.r_cbModoPagamento.setSelectedIndex(0);
+        this.r_cbCliente.setSelectedIndex(0);
+        this.r_cbStatus.setSelectedIndex(0);
+        
+        
     }//GEN-LAST:event_r_btnLimparActionPerformed
 
     private void p_cbDataExataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_cbDataExataActionPerformed
         //habilitando campos necessários
         this.p_txtData.setEnabled(true);
         //desabilitando outros campos
-        this.p_txtMes.setEnabled(false);
+        this.p_txtMesDe.setEnabled(false);
         this.p_txtMesDe.setEnabled(false);
         this.p_txtMesAte.setEnabled(false);
         this.p_txtAno.setEnabled(false);
     }//GEN-LAST:event_p_cbDataExataActionPerformed
 
-    private void r_cbEntreMeses1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_cbEntreMeses1ActionPerformed
+    private void p_cbEntreMesesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_cbEntreMesesActionPerformed
          //habilitando campos necessários
         this.p_txtMesDe.setEnabled(true);
         this.p_txtMesAte.setEnabled(true);
@@ -429,11 +518,11 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         //desabilitando outros campos
         this.p_txtData.setEnabled(false);
         this.p_txtMes.setEnabled(false);
-    }//GEN-LAST:event_r_cbEntreMeses1ActionPerformed
+    }//GEN-LAST:event_p_cbEntreMesesActionPerformed
 
     private void p_cbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_cbMesActionPerformed
         //habilitando campos necessários
-        this.p_txtMes.setEnabled(true);
+        this.p_txtMesDe.setEnabled(true);
         this.p_txtAno.setEnabled(true);
         
         //desabilitando outros campos
@@ -450,13 +539,20 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         ArrayList<ContaPagar> pagarArray = new ArrayList<>(); 
         try {
            pagarArray  = ContaPagarDAO.pesquisaAvancada( this.montarWherePagamento() );
-           pagar.makeTable(this.p_tabela,  pagarArray);
-           JOptionPane.showMessageDialog(null, pagarArray.toString());
+           pagar.makeTable(this.p_tabela,  pagarArray);           
                     
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,  ex);
         }
     }//GEN-LAST:event_p_btnPesquisaActionPerformed
+
+    private void r_cbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_cbClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_r_cbClienteActionPerformed
+
+    private void r_txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_txtDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_r_txtDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -493,32 +589,75 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         });
     }
     
-   public String montarWhereRecebimento(){
-       String whereArguments = "";
-       
+    
+//  -----------------WHERE RECEBER
+   public String montarWhereRecebimento(){            
        //pegando os campos
         String ano = this.r_txtAno.getText();
-        String mes = this.r_txtMes.getText();
-        String mesDe = this.r_txtMesDe.getText();
-        String mesAte = this.r_cbCliente.getItemAt( this.r_cbCliente.getSelectedIndex() );
+        int mes = this.r_txtMes.getSelectedIndex();
+        int mesDe = this.r_txtMesDe.getSelectedIndex();
+        int mesAte = this.r_txtMesAte.getSelectedIndex();
         String  dataExata = this.r_txtData.getText();
+         String modoPag = this.r_cbModoPagamento.getItemAt( this.r_cbModoPagamento.getSelectedIndex() );
+        
         
         String where = null;
         //montando where Data Exata
-        if(this.r_txtData.isEnabled() && !dataExata.isEmpty()){
-            JOptionPane.showMessageDialog(null , dataExata);
-            where =  " r.data_vencimento = '" + dataExata+ "'";
+        if(this.r_txtData.isEnabled() && this.p_cbDataExata.isSelected()){
+            if(dataExata == "  /  /    "){
+                JOptionPane.showMessageDialog(null, "Só é possivel utilizar essa função com a data preenchida");
+                return null;
+            }
+            
+            //JOptionPane.showMessageDialog(null , dataExata);
+            where =  " r.data_vencimento = '" + dataExata + "'";            
         }
         
         //where Mes
-        if(this.r_cbMes.isSelected() && !mes.isEmpty()){            
-            if(ano.isEmpty()){
-              where =  " r.data_vencimento LIKE '___" + mes + "_____'";
+        if(this.r_cbMes.isSelected()){            
+            if(ano.isEmpty()  && mes != 0){
+              if(mes <= 9){
+                  where =  " r.data_vencimento LIKE '___0" + mes + "_____'";
+              } else {
+                  where =  " r.data_vencimento LIKE '___" + mes + "_____'";
+              }
+            }            
+            else if(!ano.isEmpty() && mes != 0) {
+               if(mes <= 9){
+                   where =  " r.data_vencimento LIKE '___0" + mes + "_" + ano + "' ";
+               } else {
+                   where =  " r.data_vencimento LIKE '___" + mes + "_" + ano + "' ";
+               }
+            }   
+            else if(!ano.isEmpty() && mes != 0){
+                    where =  " r.data_vencimento LIKE '%" + ano + "' ";
+                
+            }  
+        }
+        
+        //-----where entre meses
+        if(this.r_cbEntreMeses.isSelected()){
+            if(mesDe == 0 || mesAte == 0 ){
+                JOptionPane.showMessageDialog(null, "Preencha os dois campos de meses \n para utilizar essa opção");
+               // JOptionPane.showMessageDialog(null, mesDe);
+               // JOptionPane.showMessageDialog(null, mesAte);
+                return null;
+            }                
+                
+            String mesAtual;
+            where = "( ";
+            for(int i = mesDe; i <= mesAte; i++){
+                if(i >= 10) mesAtual = i+""; 
+                else mesAtual = "0" + i;
+                                
+                if(i == mesDe) where +=  " r.data_vencimento LIKE '___" + mesAtual + "_____'";
+                else {
+                    where +=  " OR r.data_vencimento LIKE '___" +  mesAtual + "_____'";
+                }
             }
-            
-            else {
-                where =  " r.data_vencimento LIKE '___" + mes + "_" + ano + "' ";
-            }           
+           
+           where += ")";
+           
         }
         
         //adicionando filtros extras
@@ -531,41 +670,82 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         
         if(this.r_cbCliente.getSelectedIndex() >  0) {
             if(where != null)
-                where += " AND c.nome = " + this.r_cbStatus.getItemAt(this.r_cbStatus.getSelectedIndex());
+                where += " AND c.nome = '" + this.r_cbCliente.getItemAt( this.r_cbCliente.getSelectedIndex() ) + "' ";
             else
-                where = " c.nome= "  +  this.r_cbCliente.getItemAt(this.r_cbCliente.getSelectedIndex());
+                where = " c.nome= '"  +  this.r_cbCliente.getItemAt(this.r_cbCliente.getSelectedIndex()) + "' ";
+        }
+        
+        if(this.r_cbModoPagamento.getSelectedIndex() >  0){           
+            if(where != null)
+                where += " AND r.modo_pagamento = '" + modoPag + "' ";
+            else
+                where = "r.modo_pagamento = '" + modoPag + "' ";                        
         }
               
        return where;
    }
 
-   public String montarWherePagamento(){
-       String whereArguments = "";
-       
-       //pegando os campos
+   
+   //-------------------WHERE PAGAR
+   public String montarWherePagamento(){       
+       // pegando os campos
         String ano = this.p_txtAno.getText();
-        String mes = this.p_txtMes.getText();
-        String mesDe = this.p_txtMesDe.getText();
-        String mesAte = this.p_txtTitulo.getText();
+       int mes = this.p_txtMes.getSelectedIndex();
+        int mesDe = this.p_txtMesDe.getSelectedIndex();
+        int mesAte = this.p_txtMesAte.getSelectedIndex();
         String  dataExata = this.p_txtData.getText();
         String titulo = this.p_txtTitulo.getText();
         
         String where = null;
-        //montando where Data Exata
+        // montando where Data Exata
         if(this.p_txtData.isEnabled() && !dataExata.isEmpty()){
-            JOptionPane.showMessageDialog(null , dataExata);
+          //  JOptionPane.showMessageDialog(null , dataExata);
             where =  " p.data_vencimento = '" + dataExata+ "'";
         }
         
-        //where Mes
-        if(this.p_cbMes.isSelected() && !mes.isEmpty()){            
-            if(ano.isEmpty()){
-              where =  " p.data_vencimento LIKE '___" + mes + "_____'";
+        // where Mes
+                 
+            if(this.p_cbMes.isSelected()){            
+            if(ano.isEmpty()  && mes != 0){
+              if(mes <= 9){
+                  where =  " p.data_vencimento LIKE '___0" + mes + "_____'";
+              } else {
+                  where =  " p.data_vencimento LIKE '___" + mes + "_____'";
+              }
+            }            
+            else if(!ano.isEmpty() && mes != 0) {
+               if(mes <= 9){
+                   where =  " p.data_vencimento LIKE '___0" + mes + "_" + ano + "' ";
+               } else {
+                   where =  " p.data_vencimento LIKE '___" + mes + "_" + ano + "' ";
+               }
+            }   
+            else if(!ano.isEmpty() && mes != 0){
+                    where =  " p.data_vencimento LIKE '%" + ano + "' ";
+                
+            }  
+        }
+        
+        //-----where entre meses
+        if(this.p_cbEntreMeses.isSelected()){
+            if(mesDe == 0  || mesAte == 0){
+                JOptionPane.showMessageDialog(null, "Selecione um mes nos dois campos  \n  para utilizar essa opção");
+                return null;
             }
             
-            else {
-                where =  " p.data_vencimento LIKE '___" + mes + "_" + ano + "' ";
-            }           
+           String mesAtual;
+            where = "( ";
+            for(int i = mesDe; i <= mesAte; i++){
+                if(i >= 10) mesAtual = i+""; 
+                else mesAtual = "0" + i;
+                                
+                if(i == mesDe) where +=  " p.data_vencimento LIKE '___" + mesAtual + "_____'";
+                else {
+                    where +=  " OR p.data_vencimento LIKE '___" +  mesAtual + "_____'";
+                }
+            }
+           
+           where += ")";
         }
         
         //adicionando filtros extras
@@ -578,17 +758,17 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         
         if( !titulo.isEmpty() ) {
             if(where != null)
-                where += " AND p.titulo = '" +  titulo + "'" ;
+                where += " AND p.titulo = '" +  titulo + "' " ;
             else
-                where = "p.titulo = '" +  titulo + "'" ;
-        }
-              
-       return where;
+                where = "p.titulo = '" +  titulo + "' " ;
+        }       
+        return where;   
    }
-   
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cbModoPagamento;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -609,28 +789,29 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton p_btnLimpar;
     private javax.swing.JButton p_btnPesquisa;
     private javax.swing.JRadioButton p_cbDataExata;
+    private javax.swing.JRadioButton p_cbEntreMeses;
     private javax.swing.JRadioButton p_cbMes;
     private javax.swing.JComboBox<String> p_cbStatus;
     private javax.swing.JTable p_tabela;
     private javax.swing.JTextField p_txtAno;
     private javax.swing.JTextField p_txtData;
-    private javax.swing.JTextField p_txtMes;
-    private javax.swing.JTextField p_txtMesAte;
-    private javax.swing.JTextField p_txtMesDe;
+    private javax.swing.JComboBox<String> p_txtMes;
+    private javax.swing.JComboBox<String> p_txtMesAte;
+    private javax.swing.JComboBox<String> p_txtMesDe;
     private javax.swing.JTextField p_txtTitulo;
     private javax.swing.JButton r_btnLimpar;
     private javax.swing.JButton r_btnPesquisa;
     private javax.swing.JComboBox<String> r_cbCliente;
     private javax.swing.JRadioButton r_cbDataExata;
     private javax.swing.JRadioButton r_cbEntreMeses;
-    private javax.swing.JRadioButton r_cbEntreMeses1;
     private javax.swing.JRadioButton r_cbMes;
+    private javax.swing.JComboBox<String> r_cbModoPagamento;
     private javax.swing.JComboBox<String> r_cbStatus;
     private javax.swing.JTable r_tabela;
     private javax.swing.JTextField r_txtAno;
     private javax.swing.JTextField r_txtData;
-    private javax.swing.JTextField r_txtMes;
-    private javax.swing.JTextField r_txtMesAte;
-    private javax.swing.JTextField r_txtMesDe;
+    private javax.swing.JComboBox<String> r_txtMes;
+    private javax.swing.JComboBox<String> r_txtMesAte;
+    private javax.swing.JComboBox<String> r_txtMesDe;
     // End of variables declaration//GEN-END:variables
 }

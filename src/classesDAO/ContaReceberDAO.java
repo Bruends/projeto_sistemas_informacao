@@ -104,7 +104,7 @@ public class ContaReceberDAO
             
         sql += ";";        
         
-        JOptionPane.showMessageDialog(null,  sql);
+        //JOptionPane.showMessageDialog(null,  sql);
         
         state = con.prepareStatement(sql);
         resultado = state.executeQuery();

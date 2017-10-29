@@ -156,8 +156,8 @@ public class ContaPagarDAO
            state.setDouble(2 ,pagamento.getValor() );
            state.setInt(3,  pagamento.getParcela_total() );
            state.setString(4, pagamento.getStatus() );
-           state.setString(6, pagamento.getObs() );
-           state.setInt(7,  pagamento.getCod() );
+           state.setString(5, pagamento.getObs() );
+           state.setInt(6,  pagamento.getCod() );
            
                                  
            state.execute();
