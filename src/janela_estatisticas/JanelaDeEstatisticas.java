@@ -612,7 +612,8 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
 
     private void btnExportPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportPdfActionPerformed
         // btn gerar pdf
-        
+        JanelaExportarPdf janExportarPdf = new JanelaExportarPdf();
+        janExportarPdf.setVisible(true);
     }//GEN-LAST:event_btnExportPdfActionPerformed
 
     /**

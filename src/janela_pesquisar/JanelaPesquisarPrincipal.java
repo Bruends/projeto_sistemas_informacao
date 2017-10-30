@@ -537,13 +537,14 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
 
     private void p_btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_btnPesquisaActionPerformed
         ArrayList<ContaPagar> pagarArray = new ArrayList<>(); 
+        /*
         try {
            pagarArray  = ContaPagarDAO.pesquisaAvancada( this.montarWherePagamento() );
            pagar.makeTable(this.p_tabela,  pagarArray);           
                     
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,  ex);
-        }
+        }*/
     }//GEN-LAST:event_p_btnPesquisaActionPerformed
 
     private void r_cbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_cbClienteActionPerformed

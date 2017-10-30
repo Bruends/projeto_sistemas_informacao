@@ -5,16 +5,25 @@
  */
 package janela_estatisticas;
 
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.text.Text;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -25,7 +34,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableModel;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleConstants.FontConstants;
 
 /**
  *
@@ -33,6 +45,7 @@ import javax.swing.table.TableModel;
  */
 public class JanelaExportarPdf extends javax.swing.JFrame {
     ArrayList<File> imagens = new ArrayList<>();
+    ArrayList<JButton> botoes = new ArrayList<>();
     /**
      * Creates new form JanelaExportarPdf
      */
@@ -61,12 +74,14 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAreaConclusao = new javax.swing.JTextArea();
+        jPanel2 = new javax.swing.JPanel();
         lblEndereco = new javax.swing.JLabel();
         btnSelecionarImgs = new javax.swing.JButton();
         pnlImagens = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 153, 255));
@@ -78,7 +93,7 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
         txtAreaRelato.setRows(5);
         jScrollPane1.setViewportView(txtAreaRelato);
 
-        jLabel2.setText("Relato dos períodos:  ");
+        jLabel2.setText("Relato:");
 
         jLabel3.setForeground(new java.awt.Color(153, 153, 153));
         jLabel3.setText("(opcional)");
@@ -92,6 +107,8 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
         txtAreaConclusao.setRows(5);
         jScrollPane2.setViewportView(txtAreaConclusao);
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Anexar gráficos"));
+
         lblEndereco.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lblEndereco.setEnabled(false);
 
@@ -102,7 +119,58 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
             }
         });
 
-        pnlImagens.setLayout(new javax.swing.BoxLayout(pnlImagens, javax.swing.BoxLayout.LINE_AXIS));
+        pnlImagens.setPreferredSize(new java.awt.Dimension(0, 100));
+
+        javax.swing.GroupLayout pnlImagensLayout = new javax.swing.GroupLayout(pnlImagens);
+        pnlImagens.setLayout(pnlImagensLayout);
+        pnlImagensLayout.setHorizontalGroup(
+            pnlImagensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 329, Short.MAX_VALUE)
+        );
+        pnlImagensLayout.setVerticalGroup(
+            pnlImagensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 125, Short.MAX_VALUE)
+        );
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/question16px.png"))); // NOI18N
+        jLabel6.setToolTipText("Você pode gerar os gráficos na janela anterior");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSelecionarImgs)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6))
+                    .addComponent(pnlImagens, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSelecionarImgs)
+                    .addComponent(lblEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addComponent(pnlImagens, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/pdf-file34px.png"))); // NOI18N
+        jButton1.setText("Exportar PDF");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -111,6 +179,10 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -124,13 +196,8 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(pnlImagens, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblEndereco, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSelecionarImgs)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -150,17 +217,16 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnSelecionarImgs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlImagens, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(22, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addContainerGap())))
         );
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/pdf-file32px.png"))); // NOI18N
-        jButton1.setText("Exportar PDF");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -169,15 +235,9 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,28 +245,38 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1))
+                .addGap(32, 32, 32))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(861, 649));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelecionarImgsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarImgsActionPerformed
         // btn selecionar imgs
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));        
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home"))); 
+        
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Arquivos de imagem PNG","png"));
         String absolutePath="";
         String fileName="";
         JButton btnNovaImagem=null;
-        ArrayList<JButton> botoes = new ArrayList<>();
+        
         if( fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION ) {
             absolutePath = fileChooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileChooser.getSelectedFile().getName();
             fileName = fileChooser.getSelectedFile().getName();
             
             lblEndereco.setText(absolutePath);
             imagens.add( new File(absolutePath) );
-            btnNovaImagem = new JButton(fileName);                                        
+            btnNovaImagem = new JButton(fileName);             
+            try {
+               Image img = ImageIO.read(getClass().getResource("/imgs/delete16px.png"));
+               btnNovaImagem.setIcon(new ImageIcon(img));
+            } catch (IOException ex) {
+                Logger.getLogger(JanelaExportarPdf.class.getName()).log(Level.SEVERE, null, ex);
+            }            
+            btnNovaImagem.setToolTipText("Remover imagem");
+            btnNovaImagem.setHorizontalTextPosition(SwingConstants.LEFT);
             btnNovaImagem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
@@ -220,44 +290,74 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
                     }
                     
                 }
-            });
-            botoes.add(btnNovaImagem);                        
+            });            
+            if ( botoes.size() < 5 ) {
+                botoes.add(btnNovaImagem); 
+                System.out.println(botoes.size());
+            }else{
+                JOptionPane.showMessageDialog(null, "Não é possível adicionar mais do que 5 gráficos!");
+            }
+                       
         }
                                                                 
-         for (int i = 0; i < botoes.size(); i++) {
-            pnlImagens.add(botoes.get(i));
-            pnlImagens.revalidate();
+         for (int i = 0; i < botoes.size(); i++) {           
+                pnlImagens.add(botoes.get(i));
+                pnlImagens.revalidate();
+                pnlImagens.repaint();                                         
         }
         
            
     }//GEN-LAST:event_btnSelecionarImgsActionPerformed
-    
-    /**
-     *
-     * @param btnNovaImagem
-     */
-    public void carregaListaDeImagens(String nomeBotao){
-        
-        pnlImagens.removeAll();    
-        pnlImagens.revalidate();
-        try {
-            JButton btnNovaImagem = null;
-                for (int i = 0; i < imagens.size(); i++){ 
-                    System.out.println("novo btn");
-                     btnNovaImagem = new JButton(nomeBotao);
-                    Image icone = ImageIO.read( getClass().getResource("/imgs/remove-symbol.png") );
-                    btnNovaImagem.setIcon(new ImageIcon(icone) );
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // btn gerar PDF
+        Document document = new Document();
+        JFileChooser fileChooser = new JFileChooser();
+        String absolutePath="";
+        if ( fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION ) {
+            absolutePath = fileChooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileChooser.getSelectedFile().getName()+".pdf";
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(absolutePath));
+                document.open();
+                document.setPageSize(PageSize.A3);
+                if(!txtAreaRelato.getText().equals("")){
+                    Paragraph paragrafoHeader = new Paragraph("Relato: \n");                    
+                    document.add(new Paragraph(txtAreaRelato.getText()));                      
                 }
-                if(btnNovaImagem!=null){
-                    pnlImagens.add(btnNovaImagem);    
-                    pnlImagens.revalidate();                
+                if(!txtAreaConclusao.getText().equals("")){
+                    Paragraph paragrafoHeader = new Paragraph("Considerações finais: \n");                    
+                    document.add(new Paragraph(txtAreaConclusao.getText()));                    
                 }
-            } catch (IOException ex) {
+                
+                //É preciso adicionar pelo menos um paragrafo p criar um pagina
+                if(txtAreaConclusao.getText().equals("") && txtAreaRelato.getText().equals("")){
+                    document.add(new Paragraph(""));                                
+                }
+                for (int i = 0; i < imagens.size(); i++) {
+                    try {
+                        com.lowagie.text.Image image = com.lowagie.text.Image.getInstance(imagens.get(i).getPath());                        
+                        
+                        document.add(image);
+                    } catch (BadElementException ex) {
+                        Logger.getLogger(JanelaExportarPdf.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(JanelaExportarPdf.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+               }
+                JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!");
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "Erro de Geração de relatorio: "+ ex.getMessage());
+                Logger.getLogger(JanelaExportarPdf.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                JOptionPane.showMessageDialog(null, "Erro de Geração de relatorio: "+ ex.getMessage());
                 Logger.getLogger(JanelaExportarPdf.class.getName()).log(Level.SEVERE, null, ex);
             }
-                        
-            
-    }
+            document.close();
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -301,7 +401,9 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblEndereco;
