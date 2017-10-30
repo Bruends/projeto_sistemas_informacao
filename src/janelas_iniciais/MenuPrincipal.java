@@ -6,6 +6,7 @@
 package janelas_iniciais;
 
 import classes.Usuario;
+import janela_estatisticas.JanelaDeEstatisticas;
 import janela_gerenciar_contas.JanelaPrincipal;
 import janela_gerenciar_usuarios.JanelaPrincipalUsuarios;
 import janela_gerenciar_clientes.JanelaPrincipalClientes;
@@ -55,6 +56,11 @@ private Usuario usuario;
         btnEstatisticas.setText("Estatisticas");
         btnEstatisticas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnEstatisticas.setIconTextGap(10);
+        btnEstatisticas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstatisticasActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnEstatisticas);
         btnEstatisticas.setBounds(49, 110, 205, 60);
 
@@ -147,6 +153,12 @@ private Usuario usuario;
         JanelaPrincipalClientes jan = new JanelaPrincipalClientes();
         jan.setVisible(true);
     }//GEN-LAST:event_btnGerenciarClientesActionPerformed
+
+    private void btnEstatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstatisticasActionPerformed
+        // 
+        JanelaDeEstatisticas janEstats = new JanelaDeEstatisticas();
+        janEstats.setVisible(true);
+    }//GEN-LAST:event_btnEstatisticasActionPerformed
 
     /**
      * @param args the command line arguments
