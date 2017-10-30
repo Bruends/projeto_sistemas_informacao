@@ -57,7 +57,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
      */
     public JanelaDeEstatisticas() {
         initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
+        //this.setExtendedState(MAXIMIZED_BOTH);
         this.pnlGrafico1.setLayout( new BorderLayout() );
         this.pnlGrafico2.setLayout( new BorderLayout() );
         cmbAnoMes.setEnabled(true);
@@ -143,25 +143,29 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         jMenuBar2.add(jMenu3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/finances (1).png"))); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 30, 64, 64);
+        jLabel1.setBounds(0, 10, 64, 64);
 
         jLabel2.setBackground(new java.awt.Color(102, 255, 102));
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 102, 102));
         jLabel2.setText("ESTATÍSTICAS");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(70, 50, 177, 29);
+        jLabel2.setBounds(70, 30, 177, 29);
 
         jTabbedPane2.setBackground(new java.awt.Color(204, 204, 204));
         jTabbedPane2.setForeground(new java.awt.Color(0, 153, 153));
 
-        jSplitPane1.setDividerLocation(623);
-        jSplitPane1.setDividerSize(8);
+        jSplitPane1.setBackground(new java.awt.Color(0, 102, 102));
+        jSplitPane1.setDividerLocation(500);
+        jSplitPane1.setDividerSize(50);
+        jSplitPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jSplitPane1.setResizeWeight(1.0);
         jSplitPane1.setPreferredSize(new java.awt.Dimension(200, 522));
 
         pnlGrafico1.setBackground(new java.awt.Color(229, 229, 229));
@@ -170,11 +174,11 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         pnlGrafico1.setLayout(pnlGrafico1Layout);
         pnlGrafico1Layout.setHorizontalGroup(
             pnlGrafico1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
+            .addGap(0, 499, Short.MAX_VALUE)
         );
         pnlGrafico1Layout.setVerticalGroup(
             pnlGrafico1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+            .addGap(0, 478, Short.MAX_VALUE)
         );
 
         jSplitPane1.setLeftComponent(pnlGrafico1);
@@ -190,22 +194,22 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
             .addGroup(pnlGrafico2Layout.createSequentialGroup()
                 .addGap(108, 108, 108)
                 .addComponent(lblCrescimento, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         pnlGrafico2Layout.setVerticalGroup(
             pnlGrafico2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlGrafico2Layout.createSequentialGroup()
                 .addGap(97, 97, 97)
                 .addComponent(lblCrescimento, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(299, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(pnlGrafico2);
 
-        jTabbedPane2.addTab("Contas a pagar", jSplitPane1);
+        jTabbedPane2.addTab("Contas a pagar", new javax.swing.ImageIcon(getClass().getResource("/imgs/cash16px.png")), jSplitPane1); // NOI18N
 
         getContentPane().add(jTabbedPane2);
-        jTabbedPane2.setBounds(0, 120, 1300, 510);
+        jTabbedPane2.setBounds(10, 160, 1100, 510);
 
         jToolBar1.setBackground(new java.awt.Color(229, 229, 229));
         jToolBar1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Exportar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(153, 153, 153))); // NOI18N
@@ -236,7 +240,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         jToolBar1.add(btnExportPdf);
 
         getContentPane().add(jToolBar1);
-        jToolBar1.setBounds(280, 40, 130, 60);
+        jToolBar1.setBounds(850, 100, 130, 60);
 
         jToolBar2.setBackground(new java.awt.Color(229, 229, 229));
         jToolBar2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gerar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(153, 153, 153))); // NOI18N
@@ -342,7 +346,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         jToolBar2.add(btnCres);
 
         getContentPane().add(jToolBar2);
-        jToolBar2.setBounds(440, 40, 830, 60);
+        jToolBar2.setBounds(10, 100, 830, 60);
 
         jMenu2.setText("Sobre");
 
@@ -353,7 +357,8 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(1311, 694));
+        setSize(new java.awt.Dimension(1147, 745));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCresActionPerformed
@@ -381,10 +386,10 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
             this.pnlGrafico2.removeAll();
             this.pnlGrafico2.add( graficoDeLinha.criarGraficoCrescimentoAnual(percentuais));
             this.pnlGrafico2.revalidate();
+            this.pnlGrafico2.repaint();
         }else if( rbMes.isSelected() ){            
             ArrayList<PercentualCrescimentoMes> percentuais = new ArrayList<>();
-            
-            
+                        
             for (int i = 0; i < mesesIntervalo.size(); i++) {
                 System.out.println(i);
                 if( i+1 < mesesIntervalo.size() ){
@@ -397,8 +402,10 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
             }
             GraficoDeLinha graficoDeLinha = new GraficoDeLinha();
             this.pnlGrafico2.removeAll();
-            this.pnlGrafico2.add( graficoDeLinha.criarGraficoCrescimentoPorMes(percentuais));
+            //this.pnlGrafico2.add( graficoDeLinha.criarGraficoCrescimentoPorMes(percentuais));
+            this.pnlGrafico2.add( graficoDeLinha.criarGraficoCrescimentoPorMes(percentuais) );
             this.pnlGrafico2.revalidate();
+            this.pnlGrafico2.repaint();
         }
         
     }//GEN-LAST:event_btnCresActionPerformed
@@ -411,6 +418,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         ArrayList<AnoContaPagar> anos=null;
 
         if( rbMes.isSelected() ){
+            mesesIntervalo.clear();
             int mesDe = 0;
             int mesAte = 0;
             GraficoDeBarra graficoDeBarra = new GraficoDeBarra();
@@ -519,6 +527,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
             this.pnlGrafico1.removeAll();
             this.pnlGrafico1.add( graficoDeBarra.criarGrafico( mesesIntervalo ));
             this.pnlGrafico1.revalidate();
+            this.pnlGrafico1.repaint();
 
         }else if( rbAno.isSelected() ){
             int deAno = cmbDeAnual.getSelectedIndex();
@@ -530,6 +539,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
                 this.pnlGrafico1.removeAll();
                 this.pnlGrafico1.add( graficoDeBarra.criarGraficoAnual(anos ) );
                 this.pnlGrafico1.revalidate();
+                this.pnlGrafico1.repaint();
             }else if( Integer.parseInt( cmbDeAnual.getItemAt( cmbDeAnual.getSelectedIndex() ) ) < Integer.parseInt( cmbAteAnual.getItemAt( cmbAteAnual.getSelectedIndex() ) )){
                 ArrayList<AnoContaPagar> anosContaPagar=null;
                 int anoDeNome = Integer.parseInt( cmbDeAnual.getItemAt( cmbDeAnual.getSelectedIndex() ) );
@@ -569,6 +579,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
                     this.pnlGrafico1.removeAll();
                     this.pnlGrafico1.add( graficoDeBarra.criarGraficoAnualIntervalo( anosContaPagargraf ) );
                     this.pnlGrafico1.revalidate();
+                    this.pnlGrafico1.repaint();
                     //}
             }
 
