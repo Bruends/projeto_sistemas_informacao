@@ -412,6 +412,7 @@ public class JanelaAlteraUsuario extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         if ( validaCampoVazio() ) {
             
+            int codCliente = Integer.parseInt( tabelaUsuarios.getValueAt(this.tabelaUsuarios.getSelectedRow() , 0).toString());
             String nome = txtNome.getText();
             String cpf= txtCpf.getText();
             int anoNascimento= Integer.parseInt (txtAnoNascimento.getText() );
@@ -431,7 +432,7 @@ public class JanelaAlteraUsuario extends javax.swing.JFrame {
             }else{
                 nivelAcesso = 3;
             }
-            Usuario usuario = new Usuario(email, senha, nivelAcesso, nome, cpf, anoNascimento, cargo, departamento, salario, telefone, endereco,emailDeAcesso);            
+            Usuario usuario = new Usuario(email, senha, nivelAcesso, nome, cpf, anoNascimento, cargo, departamento, salario, telefone, endereco,emailDeAcesso,codCliente);            
             if ( UsuarioDAO.update(usuario) ) {                
                 JOptionPane.showMessageDialog(null, "Usuário atualizado com sucesso!");
                 JanelaPrincipalUsuarios.carregaTabelaUsuarios(this.tabelaUsuarios);

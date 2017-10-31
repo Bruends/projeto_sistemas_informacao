@@ -89,23 +89,24 @@ public class UsuarioDAO {
     
     public static boolean update(Usuario usuario) {
         con = Conexao.getConexao();
+        PreparedStatement pstmt = null;
         String sql = "UPDATE usuario SET  email = ?,senha = ?,nivel_acesso = ?,nome = ?, cpf = ?, ano_nascimento = ?, cargo = ?, departamento = ?, salario = ?, telefone = ?, endereco = ? WHERE id = ?";                       
-        try {
-            preparedStatement = con.prepareStatement(sql);
-            preparedStatement.setString(1, usuario.getEmail());
-            preparedStatement.setString(2, usuario.getSenha());
-            preparedStatement.setInt(3, usuario.getNivel_acesso());
-            preparedStatement.setString(4, usuario.getNome());
-            preparedStatement.setString(5, usuario.getCpf());
-            preparedStatement.setInt(6, usuario.getAno_nascimento());                                  
-            preparedStatement.setString(7, usuario.getCargo());                                  
-            preparedStatement.setString(8, usuario.getDepartamento());                                  
-            preparedStatement.setFloat(9, usuario.getSalario());                                  
-            preparedStatement.setString(10, usuario.getTelefone());                                  
-            preparedStatement.setString(11, usuario.getEndereco());                                  
-            preparedStatement.setInt(12, usuario.getCod());                                  
-            preparedStatement.executeUpdate();  
-            System.out.println(sql);
+        try {            
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, usuario.getEmail());
+            pstmt.setString(2, usuario.getSenha());
+            pstmt.setInt(3, usuario.getNivel_acesso());
+            pstmt.setString(4, usuario.getNome());
+            pstmt.setString(5, usuario.getCpf());
+            pstmt.setInt(6, usuario.getAno_nascimento());                                  
+            pstmt.setString(7, usuario.getCargo());                                  
+            pstmt.setString(8, usuario.getDepartamento());                                  
+            pstmt.setFloat(9, usuario.getSalario());                                  
+            pstmt.setString(10, usuario.getTelefone());                                  
+            pstmt.setString(11, usuario.getEndereco());                                  
+            pstmt.setInt(12, usuario.getCod());  
+           
+            pstmt.executeUpdate();              
             return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Erro ao atualizar usuario! ERRO: " + ex);
@@ -148,20 +149,17 @@ public class UsuarioDAO {
     public static ArrayList<Usuario> selectUsuarios(String campo, String valor){        
         con = Conexao.getConexao();
         String sql = "";                               
-        ArrayList<Usuario> usuarios = new ArrayList<>();       
-                            
-        try{    
-            if( valor != null ){
+        ArrayList<Usuario> usuarios = new ArrayList<>();                                   
+        try{                
             if ( "todos".equals(campo) ) {
-                 sql = "SELECT * FROM usuario WHERE nome LIKE '%"+valor+"%' OR email LIKE '%"+valor+"%' OR cpf LIKE '%"+valor+"%' OR endereco LIKE '%"+valor+"%' OR telefone LIKE '%"+valor+"%'" ;                 
+                 sql = "SELECT * FROM usuario WHERE id = "+valor+" OR nome LIKE '%"+valor+"%' OR email LIKE '%"+valor+"%' OR cpf LIKE '%"+valor+"%' OR endereco LIKE '%"+valor+"%' OR telefone LIKE '%"+valor+"%' OR cargo LIKE '%"+valor+"%' OR departamento LIKE '%"+valor+"%' OR salario = "+valor+"" ;                 
             }else{
                 sql = "SELECT * FROM usuario WHERE " + campo + " LIKE '%"+valor+"%'";                                        
             }
             preparedStatement = con.prepareStatement(sql);                        
             resultSet = preparedStatement.executeQuery();
-                
-            if ( resultSet.next() ) {   
-                while( resultSet.next() ){                
+                            
+            while( resultSet.next() ){                
                 Usuario usuario = new Usuario();
                 usuario.setCod(resultSet.getInt("id"));
                 usuario.setEmail(resultSet.getString("email"));                
@@ -176,19 +174,16 @@ public class UsuarioDAO {
                 usuario.setEndereco(resultSet.getString("endereco")); 
                         
                 usuarios.add(usuario);                                
-                } 
-            }else{
-                return null;
-            }
-            return usuarios;
-            }else{                
-                return null;
-            }
+            } 
+            
+            
+            
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null,"Erro ao pesquisar usuarios!" + ex);
             return null;
         }finally{
             Conexao.fecharConexao(con,preparedStatement,resultSet);
         }
+        return usuarios;
     }
 }

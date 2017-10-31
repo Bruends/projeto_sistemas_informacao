@@ -105,13 +105,13 @@ public class Login extends javax.swing.JFrame {
                
                 Usuario usuario =  login.getUsuario();
                
-                //mostrando mensagem de boas vindas
-                JOptionPane.showMessageDialog(null,"Bem vindo(a) " +  usuario.getNome() + " !");
+                
                 
                 //abrindo janela menu e passando o usuário
                 MenuPrincipal menu = new MenuPrincipal(usuario);
                 menu.setVisible(true);
-                
+                //mostrando mensagem de boas vindas
+                JOptionPane.showMessageDialog(null,"Bem vindo(a) " +  usuario.getNome() + " !");
                 //fechando janela de login
                 this.dispose();
              
