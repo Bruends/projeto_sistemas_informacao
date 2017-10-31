@@ -50,12 +50,12 @@ public class GraficoDeLinha {
     //criar o grafico de barras
     
     
-    public JFreeChart createLineChartCrescimentoAnoIntervalo(CategoryDataset dataSet){
+    public JFreeChart createBarChartCrescimentoAnoIntervalo(CategoryDataset dataSet){
         JFreeChart graficoBarras = ChartFactory.createBarChart3D("Crescimento de gastos anuais", "", "Porcentual %", dataSet,PlotOrientation.VERTICAL,true,true,false);                
         return graficoBarras;
     }
     
-    public JFreeChart createLineChartCrescimentoMesIntervalo(CategoryDataset dataSet){
+    public JFreeChart createBarChartCrescimentoMesIntervalo(CategoryDataset dataSet){
         JFreeChart graficoBarras = ChartFactory.createBarChart3D("Crescimento de gastos por mês", "", "Porcentual %", dataSet,PlotOrientation.VERTICAL,true,true,false);                
         return graficoBarras;
     }
@@ -69,7 +69,7 @@ public class GraficoDeLinha {
     public ChartPanel criarGraficoCrescimentoAnual(ArrayList<PercentualCrescimentoAno> percentuais ){
         CategoryDataset dataset = this.createDataSetCrescimentoAnos(percentuais);
         
-        JFreeChart grafico = this.createLineChartCrescimentoAnoIntervalo(dataset);
+        JFreeChart grafico = this.createBarChartCrescimentoAnoIntervalo(dataset);
         
         ChartPanel painelDoGrafico = new ChartPanel(grafico);
         painelDoGrafico.setPreferredSize( new Dimension(400, 600) );
@@ -81,11 +81,11 @@ public class GraficoDeLinha {
     public ChartPanel criarGraficoCrescimentoPorMes(ArrayList<PercentualCrescimentoMes> percentuais ){
         CategoryDataset dataset = this.createDataSetCrescimentoMeses(percentuais);
         
-        JFreeChart grafico = this.createLineChartCrescimentoAnoIntervalo(dataset);
+        JFreeChart grafico = this.createBarChartCrescimentoMesIntervalo(dataset);
         
         ChartPanel painelDoGrafico = new ChartPanel(grafico);
         painelDoGrafico.setPreferredSize( new Dimension(400, 600) );
-        
+         
         
         return painelDoGrafico;
     }
