@@ -439,15 +439,11 @@ public class JanelaPrincipalClientes extends javax.swing.JFrame {
                     break;    
                 case "Cep": filtroDeBusca = "cep";
                     break;                     
-        }        
-        int qtdRegistros=0;
-        if ( ClienteDAO.selectClientes(filtroDeBusca, campoPesquisa) != null ) {
-                 qtdRegistros = ClienteDAO.selectClientes(filtroDeBusca, campoPesquisa).size();
-        }else{
-            qtdRegistros=0;
-        }            
-        carregaTabelaClientes(this.tabelaClientes, ClienteDAO.selectClientes(filtroDeBusca, campoPesquisa));        
-                lblNumResultados.setText("Registros retornados na ultima pesquisa: " + qtdRegistros);
+        }         
+        ArrayList<Cliente> clientesPesquisa = new ArrayList<>();
+        clientesPesquisa = ClienteDAO.selectClientes(filtroDeBusca, campoPesquisa);
+        carregaTabelaClientes(this.tabelaClientes, clientesPesquisa);        
+                lblNumResultados.setText("Registros retornados na ultima pesquisa: " + clientesPesquisa.size());
             
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed

@@ -319,25 +319,29 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
             try {
                 PdfWriter.getInstance(document, new FileOutputStream(absolutePath));
                 document.open();
-                document.setPageSize(PageSize.A3);
-                if(!txtAreaRelato.getText().equals("")){
-                    Paragraph paragrafoHeader = new Paragraph("Relato: \n");                    
-                    document.add(new Paragraph(txtAreaRelato.getText()));                      
+                
+                if(!txtAreaRelato.getText().equals("")){                    
+                    Paragraph paragrafoHeader = new Paragraph("Relato: \n\n");                    
+                    document.add(paragrafoHeader);
+                    document.add(new Paragraph(txtAreaRelato.getText()+"\n\n"));                      
                 }
-                if(!txtAreaConclusao.getText().equals("")){
-                    Paragraph paragrafoHeader = new Paragraph("Considerações finais: \n");                    
-                    document.add(new Paragraph(txtAreaConclusao.getText()));                    
-                }
+                if(!txtAreaConclusao.getText().equals("")){                    
+                    Paragraph paragrafoHeader = new Paragraph("Considerações finais: \n\n"); 
+                    document.add(paragrafoHeader);
+                    document.add(new Paragraph(txtAreaConclusao.getText()+"\n\n"));                                        
+                }                
                 
                 //É preciso adicionar pelo menos um paragrafo p criar um pagina
-                if(txtAreaConclusao.getText().equals("") && txtAreaRelato.getText().equals("")){
+                if(txtAreaConclusao.getText().equals("") && txtAreaRelato.getText().equals("")){                    
                     document.add(new Paragraph(""));                                
                 }
+                document.newPage();
+               //adiciona as imagens escolhidas pelo usuario no documento
                 for (int i = 0; i < imagens.size(); i++) {
                     try {
-                        com.lowagie.text.Image image = com.lowagie.text.Image.getInstance(imagens.get(i).getPath());                        
-                        
+                        com.lowagie.text.Image image = com.lowagie.text.Image.getInstance(imagens.get(i).getPath());                                                
                         document.add(image);
+                        document.newPage();
                     } catch (BadElementException ex) {
                         Logger.getLogger(JanelaExportarPdf.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (IOException ex) {

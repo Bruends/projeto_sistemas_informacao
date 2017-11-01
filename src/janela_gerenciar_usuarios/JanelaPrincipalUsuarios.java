@@ -380,7 +380,7 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
                     break;    
                 case "E-mail": filtroDeBusca = "email";
                     break;
-                case "CPF": filtroDeBusca = "cnpj";
+                case "CPF": filtroDeBusca = "cpf";
                     break;    
                 case "Endereço": filtroDeBusca = "endereco";
                     break;   
@@ -390,20 +390,15 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
                     break;                     
                 case "Ano de nascimento": filtroDeBusca = "ano_nascimento";
                     break;  
-                case "Departamento ": filtroDeBusca = "depaertamento";
+                case "Departamento ": filtroDeBusca = "departamento";
                     break;    
                 case "Salário": filtroDeBusca = "salario";
                     break;                         
-        }        
-        int qtdRegistros=0;
-        if ( UsuarioDAO.selectUsuarios(filtroDeBusca, campoPesquisa) != null ) {
-                 qtdRegistros = UsuarioDAO.selectUsuarios(filtroDeBusca, campoPesquisa).size();
-        }else{
-            qtdRegistros=0;
-        }            
-        carregaTabelaUsuarios(this.tabelaUsuarios, UsuarioDAO.selectUsuarios(filtroDeBusca, campoPesquisa));        
-                lblNumResultados.setText("Registros retornados na ultima pesquisa: " + qtdRegistros);
-            
+        }                
+        ArrayList<Usuario> usuariosPesquisa = new ArrayList<>();
+        usuariosPesquisa = UsuarioDAO.selectUsuarios(filtroDeBusca, campoPesquisa);
+        carregaTabelaUsuarios(this.tabelaUsuarios, usuariosPesquisa);        
+                lblNumResultados.setText("Registros retornados na ultima pesquisa: " + usuariosPesquisa.size());            
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 

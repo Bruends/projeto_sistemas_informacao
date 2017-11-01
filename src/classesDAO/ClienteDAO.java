@@ -30,36 +30,26 @@ public class ClienteDAO {
         con = Conexao.getConexao();
         String sql = "";                               
         ArrayList<Cliente> clientes = new ArrayList<>();       
-                            
-        try{    
-            if( valor != null ){
+                          
+        try{                
             if ( "todos".equals(campo) ) {
-                 sql = "SELECT id,nome,email,cnpj,endereco,telefone,cep FROM CLIENTE WHERE nome LIKE '%"+valor+"%' OR email LIKE '%"+valor+"%' OR cnpj LIKE '%"+valor+"%' OR endereco LIKE '%"+valor+"%' OR telefone LIKE '%"+valor+"%' OR cep LIKE '%"+valor+"%'" ;                 
+                 sql = "SELECT * FROM CLIENTE WHERE id = "+valor+" nome LIKE '%"+valor+"%' OR email LIKE '%"+valor+"%' OR cnpj LIKE '%"+valor+"%' OR endereco LIKE '%"+valor+"%' OR telefone LIKE '%"+valor+"%' OR cep LIKE '%"+valor+"%'" ;                                  
             }else{
-                sql = "SELECT id,nome,email,cnpj,endereco,telefone,cep FROM cliente WHERE " + campo + " LIKE '%"+valor+"%'";                                        
+                 sql = "SELECT * FROM cliente WHERE " + campo +  "LIKE '%"+valor+"%'";                                                        
             }
             state = con.prepareStatement(sql);                        
-            resultado = state.executeQuery();
-                
-            if ( resultado.next() ) {   
-                while( resultado.next() ){                
-                Cliente cliente = new Cliente();
-                cliente.setCod(resultado.getInt("id"));
-                cliente.setNome(resultado.getString("nome"));                
-                cliente.setEmail(resultado.getString("email"));
-                cliente.setCnpj(resultado.getString("cnpj"));
-                cliente.setEndereco(resultado.getString("endereco"));   
-                cliente.setTelefone(resultado.getString("telefone"));                   
-                cliente.setCep(resultado.getString("cep")); 
+            resultado = state.executeQuery();                               
+            while( resultado.next() ){                
+            Cliente cliente = new Cliente();
+            cliente.setCod(resultado.getInt("id"));
+            cliente.setNome(resultado.getString("nome"));                
+            cliente.setEmail(resultado.getString("email"));
+            cliente.setCnpj(resultado.getString("cnpj"));
+            cliente.setEndereco(resultado.getString("endereco"));   
+            cliente.setTelefone(resultado.getString("telefone"));                   
+            cliente.setCep(resultado.getString("cep")); 
                         
-                clientes.add(cliente);                                
-                } 
-            }else{
-                return null;
-            }
-            return clientes;
-            }else{                
-                return null;
+            clientes.add(cliente);      
             }
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null,"Erro ao pesquisar!" + ex);
@@ -67,6 +57,8 @@ public class ClienteDAO {
         }finally{
             Conexao.fecharConexao(con,state,resultado);
         }
+        return clientes;
+    
     }
     
             
