@@ -68,6 +68,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -357,7 +358,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         jPanel6.add(p_txtData);
         p_txtData.setBounds(230, 50, 130, 30);
 
-        buttonGroup1.add(p_cbDataExata);
+        buttonGroup2.add(p_cbDataExata);
         p_cbDataExata.setText("Data Exata");
         p_cbDataExata.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -367,7 +368,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         jPanel6.add(p_cbDataExata);
         p_cbDataExata.setBounds(230, 20, 200, 30);
 
-        buttonGroup1.add(p_cbEntreMeses);
+        buttonGroup2.add(p_cbEntreMeses);
         p_cbEntreMeses.setText("Entre Meses");
         p_cbEntreMeses.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -377,7 +378,8 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         jPanel6.add(p_cbEntreMeses);
         p_cbEntreMeses.setBounds(230, 110, 220, 30);
 
-        buttonGroup1.add(p_cbMes);
+        buttonGroup2.add(p_cbMes);
+        p_cbMes.setSelected(true);
         p_cbMes.setText("Mês");
         p_cbMes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -895,6 +897,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cbModoPagamento;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
