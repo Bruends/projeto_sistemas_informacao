@@ -207,9 +207,7 @@ public class ExportarExcel extends javax.swing.JFrame {
                 out.close();
             } catch (IOException ex) {                
                 Logger.getLogger(ExportarExcel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-             
+            }             
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

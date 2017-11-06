@@ -522,7 +522,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
 
     private void p_cbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_cbMesActionPerformed
         //habilitando campos necessários
-        this.p_txtMesDe.setEnabled(true);
+        this.p_txtMes.setEnabled(true);
         this.p_txtAno.setEnabled(true);
         
         //desabilitando outros campos
