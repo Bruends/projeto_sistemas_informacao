@@ -11,9 +11,18 @@ import classes.ContaReceber;
 import classesDAO.ClienteDAO;
 import classesDAO.ContaPagarDAO;
 import classesDAO.ContaReceberDAO;
+import janela_estatisticas.ExportarExcel;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -90,6 +99,8 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         r_tabela = new javax.swing.JTable();
         r_btnPesquisa = new javax.swing.JButton();
         r_btnLimpar = new javax.swing.JButton();
+        jToolBar2 = new javax.swing.JToolBar();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -117,6 +128,8 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         p_btnPesquisa = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         p_tabela = new javax.swing.JTable();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -192,7 +205,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         r_txtMesDe.setBounds(220, 140, 90, 30);
 
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(10, 40, 520, 210);
+        jPanel3.setBounds(10, 50, 520, 210);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("filtros Adicionais"));
         jPanel4.setToolTipText("");
@@ -204,7 +217,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
 
         r_cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Pendente", "Confirmado", "Cancelado", "Atrasado" }));
         jPanel4.add(r_cbStatus);
-        r_cbStatus.setBounds(18, 63, 123, 20);
+        r_cbStatus.setBounds(18, 63, 123, 27);
 
         jLabel5.setText("Cliente:");
         jPanel4.add(jLabel5);
@@ -216,7 +229,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
             }
         });
         jPanel4.add(r_cbCliente);
-        r_cbCliente.setBounds(18, 134, 123, 20);
+        r_cbCliente.setBounds(18, 134, 123, 27);
 
         cbModoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Debito Automatico", "Deposito", "Dinheiro", "Cartão", " ", " " }));
         jPanel4.add(cbModoPagamento);
@@ -231,7 +244,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         jLabel1.setBounds(170, 30, 180, 30);
 
         jPanel1.add(jPanel4);
-        jPanel4.setBounds(560, 40, 390, 210);
+        jPanel4.setBounds(560, 50, 390, 210);
 
         r_tabela.setAutoCreateRowSorter(true);
         r_tabela.setModel(new javax.swing.table.DefaultTableModel(
@@ -280,6 +293,24 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         jPanel1.add(r_btnLimpar);
         r_btnLimpar.setBounds(160, 270, 130, 30);
 
+        jToolBar2.setRollover(true);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/addNewFile32px.png"))); // NOI18N
+        jButton2.setText("Exportar Excel");
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jButton2.setIconTextGap(8);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButton2);
+
+        jPanel1.add(jToolBar2);
+        jToolBar2.setBounds(0, 0, 960, 40);
+
         jTabbedPane1.addTab("Pesquisar Recebimentos", jPanel1);
 
         jPanel2.setLayout(null);
@@ -294,7 +325,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
 
         p_cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Pendente", "Confirmado", "Cancelado", "Atrasado" }));
         jPanel5.add(p_cbStatus);
-        p_cbStatus.setBounds(18, 63, 123, 20);
+        p_cbStatus.setBounds(18, 63, 123, 27);
 
         jLabel8.setText("Titulo:");
         jPanel5.add(jLabel8);
@@ -303,7 +334,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         p_txtTitulo.setBounds(20, 130, 120, 30);
 
         jPanel2.add(jPanel5);
-        jPanel5.setBounds(560, 40, 390, 210);
+        jPanel5.setBounds(560, 50, 390, 210);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisar Por Datas"));
         jPanel6.setLayout(null);
@@ -369,7 +400,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         p_txtMes.setBounds(30, 140, 120, 30);
 
         jPanel2.add(jPanel6);
-        jPanel6.setBounds(10, 40, 520, 210);
+        jPanel6.setBounds(10, 50, 520, 210);
 
         p_btnLimpar.setText("Resetar Busca");
         p_btnLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -417,6 +448,24 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane4);
         jScrollPane4.setBounds(10, 320, 940, 280);
+
+        jToolBar1.setRollover(true);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/addNewFile32px.png"))); // NOI18N
+        jButton1.setText("Exportar Excel");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jButton1.setIconTextGap(8);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
+
+        jPanel2.add(jToolBar1);
+        jToolBar1.setBounds(0, 0, 960, 40);
 
         jTabbedPane1.addTab("pesquisar Pagamentos", jPanel2);
 
@@ -553,6 +602,86 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
     private void r_txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_txtDataActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_r_txtDataActionPerformed
+    
+    //EXPORTAR EXCEL Pagar
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));        
+        String absolutePath="";
+        
+        if( fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION ) {
+            absolutePath = fileChooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileChooser.getSelectedFile().getName()+".xls";
+        }
+            
+            File file = new File(absolutePath);
+            FileWriter out=null;
+            try {
+                TableModel model = this.p_tabela.getModel();
+                out = new FileWriter(file);
+                for(int i=0; i < model.getColumnCount(); i++) {
+                    out.write(model.getColumnName(i) + "\t");
+                }
+                out.write("\n");
+
+                for(int i=0; i< model.getRowCount(); i++) {
+                    for(int j=0; j < model.getColumnCount(); j++) {
+                        out.write(model.getValueAt(i,j).toString()+"\t");
+                    }
+                    out.write("\n");
+            }
+                JOptionPane.showMessageDialog(null, "Documento gerado com sucesso!");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Falha ao gerar documento!");
+                Logger.getLogger(ExportarExcel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+
+            try {
+                out.close();
+            } catch (IOException ex) {                
+                Logger.getLogger(ExportarExcel.class.getName()).log(Level.SEVERE, null, ex);
+            }        
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    //exportar Excel receber
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));        
+        String absolutePath="";
+        
+        if( fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION ) {
+            absolutePath = fileChooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileChooser.getSelectedFile().getName()+".xls";
+        }
+            
+            File file = new File(absolutePath);
+            FileWriter out=null;
+            try {
+                TableModel model = this.r_tabela.getModel();
+                out = new FileWriter(file);
+                for(int i=0; i < model.getColumnCount(); i++) {
+                    out.write(model.getColumnName(i) + "\t");
+                }
+                out.write("\n");
+
+                for(int i=0; i< model.getRowCount(); i++) {
+                    for(int j=0; j < model.getColumnCount(); j++) {
+                        out.write(model.getValueAt(i,j).toString()+"\t");
+                    }
+                    out.write("\n");
+            }
+                JOptionPane.showMessageDialog(null, "Documento gerado com sucesso!");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Falha ao gerar documento!");
+                Logger.getLogger(ExportarExcel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+
+            try {
+                out.close();
+            } catch (IOException ex) {                
+                Logger.getLogger(ExportarExcel.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -762,9 +891,13 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         return where;   
    }
    
+   
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbModoPagamento;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -783,6 +916,8 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JButton p_btnLimpar;
     private javax.swing.JButton p_btnPesquisa;
     private javax.swing.JRadioButton p_cbDataExata;

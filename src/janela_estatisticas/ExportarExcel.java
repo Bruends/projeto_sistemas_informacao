@@ -70,9 +70,7 @@ public class ExportarExcel extends javax.swing.JFrame {
     }
     
     public ExportarExcel() {
-        initComponents();
-        
-        
+        initComponents();        
     }
 
     /**
