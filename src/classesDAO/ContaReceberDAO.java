@@ -82,7 +82,7 @@ public class ContaReceberDAO
                 receber.setModo_pagamento(resultado.getString("modo_pagamento"));
                 receber.setStatus(resultado.getString("status"));
                 
-                recebimentos.add(receber);                
+                recebimentos.add(receber);               
             }
             
             Conexao.fecharConexao(con, state, resultado);

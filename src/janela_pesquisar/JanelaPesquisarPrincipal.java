@@ -536,15 +536,14 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_p_btnLimparActionPerformed
 
     private void p_btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_btnPesquisaActionPerformed
-        ArrayList<ContaPagar> pagarArray = new ArrayList<>(); 
-        /*
+        ArrayList<ContaPagar> pagarArray = new ArrayList<>();         
         try {
            pagarArray  = ContaPagarDAO.pesquisaAvancada( this.montarWherePagamento() );
            pagar.makeTable(this.p_tabela,  pagarArray);           
                     
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,  ex);
-        }*/
+        }
     }//GEN-LAST:event_p_btnPesquisaActionPerformed
 
     private void r_cbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_cbClienteActionPerformed
@@ -604,15 +603,13 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
         
         String where = null;
         //montando where Data Exata
-        if(this.r_txtData.isEnabled() && this.p_cbDataExata.isSelected()){
-            if(dataExata == "  /  /    "){
-                JOptionPane.showMessageDialog(null, "Só é possivel utilizar essa função com a data preenchida");
-                return null;
-            }
-            
-            //JOptionPane.showMessageDialog(null , dataExata);
-            where =  " r.data_vencimento = '" + dataExata + "'";            
+        // montando where Data Exata
+        if(this.r_txtData.isEnabled() && !dataExata.isEmpty()){
+          //  JOptionPane.showMessageDialog(null , dataExata);
+            where =  " r.data_vencimento = '" + dataExata+ "'";
         }
+        
+        
         
         //where Mes
         if(this.r_cbMes.isSelected()){            
@@ -687,7 +684,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
    }
 
    
-   //-------------------WHERE PAGAR
+   //------------WHERE PAGAR
    public String montarWherePagamento(){       
        // pegando os campos
         String ano = this.p_txtAno.getText();
@@ -704,8 +701,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
             where =  " p.data_vencimento = '" + dataExata+ "'";
         }
         
-        // where Mes
-                 
+        // where Mes                 
             if(this.p_cbMes.isSelected()){            
             if(ano.isEmpty()  && mes != 0){
               if(mes <= 9){

@@ -162,9 +162,9 @@ JanelaPrincipal jan;
             pagamento.setParcela_total(Integer.parseInt(this.numParcelas.getText()));
             pagamento.setStatus(this.cbStatus.getItemAt(this.cbStatus.getSelectedIndex()));
             pagamento.setData_vencimento(this.txtfDataVencimento.getText());            
-            pagamento.setObs( this.taObs.getText() );
+            pagamento.setObs( this.taObs.getText());
             
-           ContaPagarDAO.alterarPagamento(pagamento);    
+           ContaPagarDAO.alterarPagamento(pagamento);
            
            JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
            
@@ -174,7 +174,7 @@ JanelaPrincipal jan;
           
         } catch (NumberFormatException | SQLException ex) {
             JOptionPane.showMessageDialog(null, "erro: \n" + ex.getMessage());
-        }    
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     

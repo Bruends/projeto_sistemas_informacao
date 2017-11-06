@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class Conexao {
     //Constantes de conexão
     private static final String USUARIO = "root";
-    private static final String SENHA = "";
+    private static final String SENHA = "root";
     private static final String BANCO = "projeto_si";
     private static final String DRIVER = "com.mysql.jdbc.Driver";    
     private static final String URL = "jdbc:mysql://localhost:3306/" + BANCO  + "?useUnicode=true&amp;amp;characterEncoding =UTF-8";
