@@ -170,7 +170,7 @@ JanelaPrincipal jan;
            
            JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
            
-           //refresh tabela
+          //refresh tabela
           jan.refreshTableReceber(jan.getR_tabela());
           this.dispose();
           
@@ -179,8 +179,6 @@ JanelaPrincipal jan;
         }    
     }//GEN-LAST:event_btnAlterarActionPerformed
 
-    
-    
     /**
      * @param args the command line arguments
      */

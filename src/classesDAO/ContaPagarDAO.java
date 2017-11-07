@@ -257,7 +257,7 @@ public class ContaPagarDAO
        //----------ALTERAR
        public static boolean alterarPagamento(ContaPagar pagamento) throws SQLException {
             Connection  con = Conexao.getConexao();
-           String sql = "UPDATE conta_pagar SET titulo = ?, valor = ? , total_parcelas = ? ,  status = ?,   obs = ? "
+           String sql = "UPDATE conta_pagar SET titulo = ?, valor = ? , total_parcelas = ? ,  status = ?, data_vencimento = ? ,  obs = ? "
                    + "WHERE id = ? ;"; 
            state = con.prepareStatement(sql);
            
@@ -265,8 +265,9 @@ public class ContaPagarDAO
            state.setDouble(2 ,pagamento.getValor() );
            state.setInt(3,  pagamento.getParcela_total() );
            state.setString(4, pagamento.getStatus() );
-           state.setString(5, pagamento.getObs() );
-           state.setInt(6,  pagamento.getCod() );
+           state.setString(5, pagamento.getData_vencimento());
+           state.setString(6, pagamento.getObs() );
+           state.setInt(7,  pagamento.getCod() );
            
                                  
            state.execute();
@@ -336,7 +337,6 @@ public class ContaPagarDAO
             Conexao.fecharConexao( con,  state,  resultado );
             
             return pagamentos;
-            
              
         }
     }
