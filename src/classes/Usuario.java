@@ -29,6 +29,9 @@ public class Usuario {
         this.nome = nome;
     }
 
+   
+
+    
     public Usuario( String email, String senha, int nivel_acesso, String nome, String cpf, int ano_nascimento, String cargo, String departamento, float salario, String telefone, String endereco,String emailAcesso, int cod) {        
         this.email = email;
         this.senha = senha;
@@ -45,6 +48,19 @@ public class Usuario {
         this.cod = cod;
     }
 
+     public Usuario( String email,  int nivel_acesso, String nome, String cpf, int ano_nascimento, String cargo, String departamento, float salario, String telefone, String endereco, int cod) {        
+        this.email = email;        
+        this.nivel_acesso = nivel_acesso;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.ano_nascimento = ano_nascimento;
+        this.cargo = cargo;
+        this.departamento = departamento;
+        this.salario = salario;
+        this.telefone = telefone;
+        this.endereco = endereco;        
+        this.cod = cod;
+    }
     public Usuario( String email, String senha, int nivel_acesso, String nome, String cpf, int ano_nascimento, String cargo, String departamento, float salario, String telefone, String endereco,String emailAcesso) {        
         this.email = email;
         this.senha = senha;
@@ -169,17 +185,11 @@ public class Usuario {
         return ano_nascimento;
     }
 
-    public boolean setAno_nascimento(int ano_nascimento) {
-        if(ano_nascimento > 2017 && ano_nascimento < 1800) {
+    public void setAno_nascimento(int ano_nascimento) {        
             this.ano_nascimento = ano_nascimento;
-            return true;
-            
-        } else {
-            return false;
-            
-        }
-        
     }
+        
+    
     
       
     

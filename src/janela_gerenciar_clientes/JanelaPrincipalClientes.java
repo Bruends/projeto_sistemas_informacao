@@ -454,9 +454,14 @@ public class JanelaPrincipalClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Selecione um registro para alterar!");
         }else{
         String codCliente = tabelaClientes.getValueAt(this.tabelaClientes.getSelectedRow() , 0).toString();
-        JanelaAlteraCliente janAlterarCLiente = new JanelaAlteraCliente();
-        janAlterarCLiente.setTabelaClientes(this.tabelaClientes);
-        janAlterarCLiente.setCodCliente(codCliente);
+        String nome = tabelaClientes.getValueAt(this.tabelaClientes.getSelectedRow(), 1).toString();
+        String email = tabelaClientes.getValueAt(this.tabelaClientes.getSelectedRow(), 2).toString();
+        String cnpj = tabelaClientes.getValueAt(this.tabelaClientes.getSelectedRow(), 3).toString();
+        String endereco = tabelaClientes.getValueAt(this.tabelaClientes.getSelectedRow(), 4).toString();
+        String telefone = tabelaClientes.getValueAt(this.tabelaClientes.getSelectedRow(), 5).toString();
+        String cep = tabelaClientes.getValueAt(this.tabelaClientes.getSelectedRow(), 6).toString();
+        JanelaAlteraCliente janAlterarCLiente = new JanelaAlteraCliente(Integer.parseInt(codCliente), telefone, cep, nome, email, endereco, cnpj);
+        janAlterarCLiente.setTabelaClientes(this.tabelaClientes);        
         janAlterarCLiente.setVisible(true);
         }
     }//GEN-LAST:event_btnAlterarActionPerformed

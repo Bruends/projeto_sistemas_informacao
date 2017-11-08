@@ -33,10 +33,10 @@ public class ClienteDAO {
                           
         try{                
             if ( "todos".equals(campo) ) {
-                 sql = "SELECT * FROM CLIENTE WHERE id = "+valor+" nome LIKE '%"+valor+"%' OR email LIKE '%"+valor+"%' OR cnpj LIKE '%"+valor+"%' OR endereco LIKE '%"+valor+"%' OR telefone LIKE '%"+valor+"%' OR cep LIKE '%"+valor+"%'" ;                                  
+                 sql = "SELECT * FROM CLIENTE WHERE nome LIKE '%"+valor+"%' OR email LIKE '%"+valor+"%' OR cnpj LIKE '%"+valor+"%' OR endereco LIKE '%"+valor+"%' OR telefone LIKE '%"+valor+"%' OR cep LIKE '%"+valor+"%'" ;                                  
             }else{
-                 sql = "SELECT * FROM cliente WHERE " + campo +  "LIKE '%"+valor+"%'";                                                        
-            }
+                 sql = "SELECT * FROM cliente WHERE " + campo +  " LIKE '%"+valor+"%'";                                                        
+            }            
             state = con.prepareStatement(sql);                        
             resultado = state.executeQuery();                               
             while( resultado.next() ){                

@@ -59,6 +59,7 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
         lblAjuda3 = new javax.swing.JLabel();
         lblAjuda0 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        lblEndereco = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         cmbCampos = new javax.swing.JComboBox<>();
@@ -223,15 +224,23 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Informações")));
 
+        lblEndereco.setText("Endereço:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 512, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 104, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblEndereco)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisar"));
@@ -260,7 +269,7 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cmbCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblNumResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+                        .addComponent(lblNumResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPesquisar)))
                 .addContainerGap())
@@ -361,7 +370,7 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
 
     private void tabelaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaUsuariosMouseClicked
         // Exibe infos                
-        
+        lblEndereco.setText("Endereço: "+ tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(),10)+"" );
         
     }//GEN-LAST:event_tabelaUsuariosMouseClicked
 
@@ -406,11 +415,21 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
         // alterar cliente   
         if ( this.tabelaUsuarios.getSelectedRow() < 0 ) {            
             JOptionPane.showMessageDialog(null,"Selecione um registro para alterar!");
-        }else{
-        int codUsuario = Integer.parseInt(tabelaUsuarios.getValueAt(this.tabelaUsuarios.getSelectedRow() , 0).toString());
-        JanelaAlteraUsuario janAlterarUsuario = new JanelaAlteraUsuario();
-        janAlterarUsuario.setTabelaUsuarios(this.tabelaUsuarios);
-        janAlterarUsuario.setCodUsuario(codUsuario);
+        }else{        
+        int nivel_acesso = Integer.parseInt( tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 3).toString() );
+        String nome = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1).toString();
+        String cpf = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 4).toString();    
+        int ano_nascimento = Integer.parseInt( tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 5).toString() );    
+        String cargo = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 6).toString();    
+        String departamento = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 7).toString();    
+        float salario = Float.parseFloat( tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 8).toString() );    
+        String telefone = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 9).toString();
+        String endereco = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 10).toString() ;
+        String email = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 2).toString();    
+
+        int codUsuario = Integer.parseInt(tabelaUsuarios.getValueAt(this.tabelaUsuarios.getSelectedRow() , 0).toString());            
+        JanelaAlteraUsuario janAlterarUsuario = new JanelaAlteraUsuario(nivel_acesso,nome,cpf,ano_nascimento,cargo,departamento,salario,telefone,endereco,email,codUsuario);                
+        janAlterarUsuario.setTabelaUsuarios(tabelaUsuarios);
         janAlterarUsuario.setVisible(true);
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
@@ -526,6 +545,7 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel lblAjuda1;
     private javax.swing.JLabel lblAjuda2;
     private javax.swing.JLabel lblAjuda3;
+    private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblNumResultados;
     private javax.swing.JPanel panelAjuda;
     private javax.swing.JTable tabelaUsuarios;

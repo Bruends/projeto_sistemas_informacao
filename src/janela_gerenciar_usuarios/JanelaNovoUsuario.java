@@ -416,7 +416,7 @@ public class JanelaNovoUsuario extends javax.swing.JFrame {
             int anoNascimento= Integer.parseInt (txtAnoNascimento.getText() );
             String email= txtEmail.getText();
             String telefone= txtTelefone.getText();
-            String endereco = txtRua.getText() + ", nº " + txtNum.getText() + " - " + txtComplemento.getText() + ", " + txtBairro.getText() + ", " + txtEstado.getText() + " - " + txtCidade.getText();
+            String endereco = txtRua.getText() + ", nº " + txtNum.getText() + " - " + txtComplemento.getText() + ", " + txtBairro.getText() + ", " + txtEstado.getText() + "," + txtCidade.getText() + "," + txtCep.getText();
             String emailDeAcesso= txtEmailAcesso.getText();
             String senha= txtSenha.getText();
             int nivelAcesso;

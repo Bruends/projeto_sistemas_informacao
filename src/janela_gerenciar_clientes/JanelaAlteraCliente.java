@@ -8,9 +8,12 @@ package janela_gerenciar_clientes;
 import classes.Cliente;
 import classesDAO.ClienteDAO;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.sql.SQLException;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jdk.nashorn.internal.scripts.JO;
@@ -22,12 +25,53 @@ import jdk.nashorn.internal.scripts.JO;
 public class JanelaAlteraCliente extends javax.swing.JFrame {
     String codCliente="";
     JTable tabelaClientes;
-    /**
+    
+    private int cod;
+    private String telefone;
+    private String cep;
+    private String nome;
+    private String email;
+    private String endereco;
+    private String cnpj;
+    /** 
      * Creates new form JanelaNovoCliente
      */
     public JanelaAlteraCliente() {
         initComponents();
     }
+
+    public JanelaAlteraCliente(int cod, String telefone, String cep, String nome, String email, String endereco, String cnpj) {
+        initComponents();     ;        
+        this.cod = cod;
+        this.txtTelefone.setText(telefone);
+        this.txtCep.setText(cep);
+        this.txtNome.setText(nome);
+        this.txtEmail.setText(email);
+        String enderecoCompleto[] = endereco.split(",");
+        String rua = enderecoCompleto[0];
+        String numero = enderecoCompleto[1].substring(4, enderecoCompleto[1].indexOf("-")-1);
+        String complemento = endereco.split("-")[1];
+        complemento = complemento.substring(0, complemento.indexOf(","));
+        String bairro = endereco.split(",")[2];
+        String estado = endereco.split(",")[3];
+        estado = estado.substring(0, estado.indexOf("-"));
+        String cidade = endereco.split("-")[2];
+        cidade = cidade.substring(1,cidade.length());        
+        this.txtRua.setText(rua);        
+        this.txtNum.setText(numero);        
+        this.txtComplemento.setText(complemento);        
+        this.txtBairro.setText(bairro);        
+        this.txtEstado.setText(estado);        
+        this.txtCidade.setText(cidade);
+        
+        this.txtCnpj.setText(cnpj);
+        
+        
+    }
+
+    
+    
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -281,13 +325,14 @@ public class JanelaAlteraCliente extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         if ( validaFormulario() && validaTamanhoCampos()) {
-            int cod = Integer.parseInt(this.codCliente);
+            System.out.println("oi");
+            int cod = this.cod;
             String telefone = txtTelefone.getText() ;
             String cep = txtCep.getText();
             String nome = txtNome.getText();
             String email = txtEmail.getText();
             String endereco = txtRua.getText() + ", nº " + txtNum.getText() + " - " + txtComplemento.getText() + ", " + txtBairro.getText() + ", " + txtEstado.getText() + " - " + txtCidade.getText();
-;            String cnpj=txtCnpj.getText();
+            String cnpj=txtCnpj.getText();
             Cliente cliente = new Cliente(cod,telefone, cep, nome, email, endereco, cnpj);            
             if ( ClienteDAO.update(cliente) ) {                
                 JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
