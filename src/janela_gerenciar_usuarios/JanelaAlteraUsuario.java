@@ -26,12 +26,65 @@ public class JanelaAlteraUsuario extends javax.swing.JFrame {
 
     JTable tabelaUsuarios;
     int codUsuario;
+        
+    private String email;
+    private String senha;
+    private int nivel_acesso;
+    private String nome;
+    private String cpf;    
+    private int ano_nascimento;    
+    private String cargo;    
+    private String departamento;    
+    private float salario;    
+    private String telefone;
+    private String endereco;
+    private String email_Acesso;
     /**
      * Creates new form JanelaNovoCliente
      */
     public JanelaAlteraUsuario() {
         initComponents();
     }
+
+    public JanelaAlteraUsuario( int nivel_acesso, String nome, String cpf, int ano_nascimento, String cargo, String departamento, float salario, String telefone, String endereco, String email, int codUser) {
+        initComponents();    
+        this.codUsuario = codUser;
+        if( nivel_acesso == 1 ){
+            cmbNivelAcesso.setSelectedIndex(0);
+        }else if( nivel_acesso == 2 ){
+            cmbNivelAcesso.setSelectedIndex(1);
+        }else if( nivel_acesso == 3 ){
+            cmbNivelAcesso.setSelectedIndex(2);
+        }        
+        this.txtNome.setText(nome);
+        this.txtCpf.setText(cpf);
+        this.txtAnoNascimento.setText(ano_nascimento+"");
+        this.txtCargo.setText(cargo);
+        this.txtDepartamento.setText(departamento);
+        this.txtSalario.setText(salario+"");
+        this.txtTelefone.setText(telefone);
+        String enderecoCompleto[] = endereco.split(",");
+        String rua = enderecoCompleto[0];
+        this.txtRua.setText(rua);
+        String numero = enderecoCompleto[1].substring(4, enderecoCompleto[1].indexOf("-"));
+        this.txtNum.setText(numero);
+        String complemento = endereco.split("-")[1];        
+        complemento = complemento.substring(0, complemento.indexOf(","));
+        this.txtComplemento.setText(complemento);
+        String bairro = endereco.split(",")[2];
+        this.txtBairro.setText(bairro);
+        String estado = endereco.split(",")[3];
+        estado = estado.substring(0, estado.indexOf("-"));
+        this.txtEstado.setText(estado);
+        String cidade = endereco.split("-")[1];
+        cidade = cidade.substring(1,cidade.indexOf(","));
+        String cep = endereco.split(",")[4];        
+        this.txtCep.setText(cep);
+        this.txtCidade.setText(cidade);
+        this.txtEmail.setText(email);
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -304,7 +357,11 @@ public class JanelaAlteraUsuario extends javax.swing.JFrame {
 
         lblEmailAcesso.setText("E-mail para acesso*");
 
+        txtEmailAcesso.setEnabled(false);
+
         lblSenha.setText("Senha *");
+
+        txtSenha.setEnabled(false);
 
         cmbNivelAcesso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Básico", "Operador", "Administrador" }));
 
@@ -411,32 +468,30 @@ public class JanelaAlteraUsuario extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         if ( validaCampoVazio() ) {
-            
-            int codCliente = Integer.parseInt( tabelaUsuarios.getValueAt(this.tabelaUsuarios.getSelectedRow() , 0).toString());
-            String nome = txtNome.getText();
-            String cpf= txtCpf.getText();
+                        
+            String nomeTxt = txtNome.getText();
+            String cpfTxt= txtCpf.getText();
             int anoNascimento= Integer.parseInt (txtAnoNascimento.getText() );
-            String email= txtEmail.getText();
-            String telefone= txtTelefone.getText();
-            String endereco = txtRua.getText() + ", nº " + txtNum.getText() + " - " + txtComplemento.getText() + ", " + txtBairro.getText() + ", " + txtEstado.getText() + " - " + txtCidade.getText();
-            String emailDeAcesso= txtEmailAcesso.getText();
-            String senha= txtSenha.getText();
+            String emailTxt= txtEmail.getText();
+            String telefoneTxt= txtTelefone.getText();
+            String enderecoTxt = txtRua.getText() + ", nº " + txtNum.getText() + " - " + txtComplemento.getText() + ", " + txtBairro.getText() + ", " + txtEstado.getText() + " - " + txtCidade.getText();                        
             int nivelAcesso;
-            String cargo= txtCargo.getText();
-            String departamento= txtNome.getText();
-            float salario= Float.parseFloat(txtSalario.getText());
+            String cargoTxt= txtCargo.getText();
+            String departamentoTxt= txtNome.getText();
+            float salarioTxt= Float.parseFloat(txtSalario.getText());
             if ( cmbNivelAcesso.getSelectedItem().toString().equals("Básico") ) {
                 nivelAcesso = 1;
             }else if( cmbNivelAcesso.getSelectedItem().toString().equals("Operador") ){
                 nivelAcesso = 2;
             }else{
                 nivelAcesso = 3;
-            }
-            Usuario usuario = new Usuario(email, senha, nivelAcesso, nome, cpf, anoNascimento, cargo, departamento, salario, telefone, endereco,emailDeAcesso,codCliente);            
-            if ( UsuarioDAO.update(usuario) ) {                
+            }            
+            if ( UsuarioDAO.update(new Usuario(emailTxt,nivelAcesso, nomeTxt, cpfTxt, anoNascimento, cargoTxt, departamentoTxt, salarioTxt, telefoneTxt, enderecoTxt,this.codUsuario) ) ) {                
                 JOptionPane.showMessageDialog(null, "Usuário atualizado com sucesso!");
                 JanelaPrincipalUsuarios.carregaTabelaUsuarios(this.tabelaUsuarios);
                 this.dispose();
+            }else{
+                    JOptionPane.showMessageDialog(null, "Erro ao atualizar usuário!");
             }
             
         }
@@ -486,14 +541,6 @@ public class JanelaAlteraUsuario extends javax.swing.JFrame {
         }if ( txtCep.getText().trim().isEmpty() && !validaCampoNumerico(txtCpf.getText()) ) {
             lblValida.setText("Preencha todos os campos corretamente!");
             txtCep.grabFocus();
-            return false;
-        }if ( txtEmailAcesso.getText().trim().isEmpty() ) {
-            lblValida.setText("Preencha todos os campos corretamente!");
-            txtEmailAcesso.grabFocus();
-            return false;
-        }if ( txtSenha.getText().trim().isEmpty() ) {
-            lblValida.setText("Preencha todos os campos corretamente!");
-            txtSenha.grabFocus();
             return false;
         }if ( txtCargo.getText().trim().isEmpty() ) {
             lblValida.setText("Preencha todos os campos corretamente!");

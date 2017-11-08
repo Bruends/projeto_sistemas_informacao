@@ -88,23 +88,23 @@ public class UsuarioDAO {
     }
     
     public static boolean update(Usuario usuario) {
+        System.out.println(".....");
         con = Conexao.getConexao();
         PreparedStatement pstmt = null;
-        String sql = "UPDATE usuario SET  email = ?,senha = ?,nivel_acesso = ?,nome = ?, cpf = ?, ano_nascimento = ?, cargo = ?, departamento = ?, salario = ?, telefone = ?, endereco = ? WHERE id = ?";                       
+        String sql = "UPDATE usuario SET  email_contato = ?,nivel_acesso = ?,nome = ?, cpf = ?, ano_nascimento = ?, cargo = ?, departamento = ?, salario = ?, telefone = ?, endereco = ? WHERE id = ?";                       
         try {            
             pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, usuario.getEmail());
-            pstmt.setString(2, usuario.getSenha());
-            pstmt.setInt(3, usuario.getNivel_acesso());
-            pstmt.setString(4, usuario.getNome());
-            pstmt.setString(5, usuario.getCpf());
-            pstmt.setInt(6, usuario.getAno_nascimento());                                  
-            pstmt.setString(7, usuario.getCargo());                                  
-            pstmt.setString(8, usuario.getDepartamento());                                  
-            pstmt.setFloat(9, usuario.getSalario());                                  
-            pstmt.setString(10, usuario.getTelefone());                                  
-            pstmt.setString(11, usuario.getEndereco());                                  
-            pstmt.setInt(12, usuario.getCod());  
+            pstmt.setString(1, usuario.getEmail());            
+            pstmt.setInt(2, usuario.getNivel_acesso());
+            pstmt.setString(3, usuario.getNome());
+            pstmt.setString(4, usuario.getCpf());
+            pstmt.setInt(5, usuario.getAno_nascimento());                                  
+            pstmt.setString(6, usuario.getCargo());                                  
+            pstmt.setString(7, usuario.getDepartamento());                                  
+            pstmt.setFloat(8, usuario.getSalario());                                  
+            pstmt.setString(9, usuario.getTelefone());                                  
+            pstmt.setString(10,usuario.getEndereco());                                  
+            pstmt.setInt(11, usuario.getCod());  
            
             pstmt.executeUpdate();              
             return true;
@@ -138,7 +138,7 @@ public class UsuarioDAO {
             JOptionPane.showMessageDialog(null,"Erro ao excluir! " + ex);            
             //1451 = MySQLConstraintIntegrity.                        
             if ( ex.getErrorCode() == 1451 ) {
-                //JOptionPane.showMessageDialog(null, "Só é possível apagar clientes que não possuem pendências financeiras!");
+                JOptionPane.showMessageDialog(null, "Só é possível apagar clientes que não possuem pendências financeiras!");
             }
             return false;
         }finally{
@@ -152,10 +152,11 @@ public class UsuarioDAO {
         ArrayList<Usuario> usuarios = new ArrayList<>();                                   
         try{                
             if ( "todos".equals(campo) ) {
-                 sql = "SELECT * FROM usuario WHERE id = "+valor+" OR nome LIKE '%"+valor+"%' OR email LIKE '%"+valor+"%' OR cpf LIKE '%"+valor+"%' OR endereco LIKE '%"+valor+"%' OR telefone LIKE '%"+valor+"%' OR cargo LIKE '%"+valor+"%' OR departamento LIKE '%"+valor+"%' OR salario = "+valor+"" ;                 
+                 sql = "SELECT * FROM usuario WHERE  nome LIKE '%"+valor+"%' OR email LIKE '%"+valor+"%' OR cpf LIKE '%"+valor+"%' OR endereco LIKE '%"+valor+"%' OR telefone LIKE '%"+valor+"%' OR cargo LIKE '%"+valor+"%' OR departamento LIKE '%"+valor+"%'" ;                 
             }else{
                 sql = "SELECT * FROM usuario WHERE " + campo + " LIKE '%"+valor+"%'";                                        
             }
+            System.out.println(sql);
             preparedStatement = con.prepareStatement(sql);                        
             resultSet = preparedStatement.executeQuery();
                             
