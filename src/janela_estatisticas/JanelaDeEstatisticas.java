@@ -55,9 +55,11 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
     /**
      * Creates new form JanelaDeEstatisticas
      */
-    public JanelaDeEstatisticas() {
+    public JanelaDeEstatisticas() {        
         initComponents();
-        //this.setExtendedState(MAXIMIZED_BOTH);
+        jTabbedPane2.setVisible(false);
+        jToolBar1.setVisible(false);
+        this.setExtendedState(MAXIMIZED_BOTH);
         this.pnlGrafico1.setLayout( new BorderLayout() );
         this.pnlGrafico2.setLayout( new BorderLayout() );
         cmbAnoMes.setEnabled(true);
@@ -149,14 +151,14 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/finances (1).png"))); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 10, 64, 64);
+        jLabel1.setBounds(460, 10, 64, 64);
 
         jLabel2.setBackground(new java.awt.Color(102, 255, 102));
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 102, 102));
         jLabel2.setText("ESTATÍSTICAS");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(70, 30, 177, 29);
+        jLabel2.setBounds(530, 30, 177, 29);
 
         jTabbedPane2.setBackground(new java.awt.Color(204, 204, 204));
         jTabbedPane2.setForeground(new java.awt.Color(0, 153, 153));
@@ -209,11 +211,12 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         jTabbedPane2.addTab("Contas a pagar", new javax.swing.ImageIcon(getClass().getResource("/imgs/cash16px.png")), jSplitPane1); // NOI18N
 
         getContentPane().add(jTabbedPane2);
-        jTabbedPane2.setBounds(10, 160, 1100, 510);
+        jTabbedPane2.setBounds(80, 160, 1100, 510);
 
         jToolBar1.setBackground(new java.awt.Color(229, 229, 229));
         jToolBar1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Exportar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(153, 153, 153))); // NOI18N
         jToolBar1.setFloatable(false);
+        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar1.setRollover(true);
         jToolBar1.add(filler13);
 
@@ -240,7 +243,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         jToolBar1.add(btnExportPdf);
 
         getContentPane().add(jToolBar1);
-        jToolBar1.setBounds(850, 100, 130, 60);
+        jToolBar1.setBounds(1190, 190, 70, 110);
 
         jToolBar2.setBackground(new java.awt.Color(229, 229, 229));
         jToolBar2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gerar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(153, 153, 153))); // NOI18N
@@ -325,7 +328,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         btnGerarGrafico.setBackground(new java.awt.Color(229, 229, 229));
         btnGerarGrafico.setForeground(new java.awt.Color(51, 102, 255));
         btnGerarGrafico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/graph (2).png"))); // NOI18N
-        btnGerarGrafico.setText("Gerar");
+        btnGerarGrafico.setText("Gráfico de gastos");
         btnGerarGrafico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGerarGraficoActionPerformed(evt);
@@ -337,7 +340,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         btnCres.setBackground(new java.awt.Color(229, 229, 229));
         btnCres.setForeground(new java.awt.Color(0, 204, 51));
         btnCres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icon (8).png"))); // NOI18N
-        btnCres.setText("Crescimento");
+        btnCres.setText("Gráfico de crescimento");
         btnCres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCresActionPerformed(evt);
@@ -346,7 +349,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         jToolBar2.add(btnCres);
 
         getContentPane().add(jToolBar2);
-        jToolBar2.setBounds(10, 100, 830, 60);
+        jToolBar2.setBounds(150, 90, 970, 60);
 
         jMenu2.setText("Sobre");
 
@@ -357,12 +360,14 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(1147, 745));
+        setSize(new java.awt.Dimension(1281, 807));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCresActionPerformed
         // btn crescimento
+        jTabbedPane2.setVisible(true);
+        jToolBar1.setVisible(true);
         if( rbAno.isSelected() ){
             ArrayList<AnoContaPagar> anosContaPagar = new ArrayList<>();
             ArrayList<PercentualCrescimentoAno> percentuais = new ArrayList<>();            
@@ -412,6 +417,8 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
 
     private void btnGerarGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarGraficoActionPerformed
         // Btn gerar grafico
+        jTabbedPane2.setVisible(true);
+        jToolBar1.setVisible(true);
         anosCmb.clear();
         mesesCmb.clear();
         
@@ -638,7 +645,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

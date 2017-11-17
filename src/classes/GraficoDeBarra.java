@@ -34,6 +34,42 @@ public class GraficoDeBarra {
         return dataSet;
     }
     
+    public CategoryDataset createDataSetMesesReceber(ArrayList<MesContaReceber> meses){
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        
+        for ( MesContaReceber mes : meses ) {            
+            dataSet.addValue(mes.getContaReceber().getValor(), mes.getNome(), "");  
+        }
+        return dataSet;
+    }
+    
+    public CategoryDataset createDataSetAnosReceber(ArrayList<AnoContaReceber> anos){
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        
+        for ( AnoContaReceber ano : anos ) {            
+            dataSet.addValue(ano.getSomaValores(), ano.getAno(), "");  
+        }
+        return dataSet;
+    }
+    
+     public CategoryDataset createDataSetAnosReceber2(ArrayList<AnoContaReceber> anos){
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        
+        for ( AnoContaReceber ano : anos ) {            
+            dataSet.addValue(ano.getSomaValores(), ano.getAno(), "");  
+        }
+        return dataSet;
+    }
+    
+     public CategoryDataset createDataSetAnosReceber3(ArrayList<AnoContaReceber> anos){
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        
+        for ( AnoContaReceber ano : anos ) {            
+            dataSet.addValue(ano.getSomaValores(), ano.getAno(), "");  
+        }
+        return dataSet;
+    }
+     
     public CategoryDataset createDataSetAnos(ArrayList<AnoContaPagar> anos){
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
         
@@ -73,11 +109,46 @@ public class GraficoDeBarra {
         return painelDoGrafico;
     }
     
+    public ChartPanel criarGraficoMesesReceber(ArrayList<MesContaReceber> meses ){
+        CategoryDataset dataset = this.createDataSetMesesReceber(meses);
+        
+        JFreeChart grafico = this.createBarChartMeses(dataset);
+        
+        ChartPanel painelDoGrafico = new ChartPanel(grafico);
+        painelDoGrafico.setPreferredSize( new Dimension(400, 600) );
+        
+        
+        return painelDoGrafico;
+    }
+    
+     public ChartPanel criarGraficoAnualReceber(ArrayList<AnoContaReceber> anos ){
+        CategoryDataset dataset = this.createDataSetAnosReceber3(anos);
+        
+        JFreeChart grafico = this.createBarChartAno(dataset);
+        
+        ChartPanel painelDoGrafico = new ChartPanel(grafico);
+        painelDoGrafico.setPreferredSize( new Dimension(400, 600) );
+        
+        
+        return painelDoGrafico;
+    }
     
     public ChartPanel criarGraficoAnual(ArrayList<AnoContaPagar> anos ){
         CategoryDataset dataset = this.createDataSetAnos(anos);
         
         JFreeChart grafico = this.createBarChartAno(dataset);
+        
+        ChartPanel painelDoGrafico = new ChartPanel(grafico);
+        painelDoGrafico.setPreferredSize( new Dimension(400, 600) );
+        
+        
+        return painelDoGrafico;
+    }
+    
+    public ChartPanel criarGraficoAnualIntervaloReceber(ArrayList<AnoContaReceber> anos ){
+        CategoryDataset dataset = this.createDataSetAnosReceber(anos);
+        
+        JFreeChart grafico = this.createBarChartAnoIntervalo(dataset);
         
         ChartPanel painelDoGrafico = new ChartPanel(grafico);
         painelDoGrafico.setPreferredSize( new Dimension(400, 600) );

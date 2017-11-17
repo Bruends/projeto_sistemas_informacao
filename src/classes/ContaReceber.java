@@ -25,7 +25,12 @@ public class ContaReceber {
     private String status;
     private String modo_pagamento;
     private String obs;
-      
+
+    public ContaReceber(double valor) {
+        this.valor = valor;
+    }
+    public ContaReceber() {        
+    }
     //criando tabela com os dados necessários
     public void makeTable(JTable table, ArrayList<ContaReceber> recebimentos){
          DefaultTableModel tbl = (DefaultTableModel) table.getModel();

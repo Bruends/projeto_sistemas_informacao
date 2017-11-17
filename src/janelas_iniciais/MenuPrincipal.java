@@ -11,6 +11,10 @@ import janela_gerenciar_contas.JanelaPrincipal;
 import janela_gerenciar_usuarios.JanelaPrincipalUsuarios;
 import janela_gerenciar_clientes.JanelaPrincipalClientes;
 import janela_pesquisar.JanelaPesquisarPrincipal;
+import java.awt.event.ActionEvent;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
  *
@@ -56,6 +60,11 @@ private Usuario usuario;
         btnEstatisticas.setText("Estatisticas");
         btnEstatisticas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnEstatisticas.setIconTextGap(10);
+        btnEstatisticas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEstatisticasMouseClicked(evt);
+            }
+        });
         btnEstatisticas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEstatisticasActionPerformed(evt);
@@ -156,9 +165,38 @@ private Usuario usuario;
 
     private void btnEstatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstatisticasActionPerformed
         // 
-        JanelaDeEstatisticas janEstats = new JanelaDeEstatisticas();
-        janEstats.setVisible(true);
+       // JanelaDeEstatisticas janEstats = new JanelaDeEstatisticas();
+       // janEstats.setVisible(true);
+        
     }//GEN-LAST:event_btnEstatisticasActionPerformed
+
+    private void btnEstatisticasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEstatisticasMouseClicked
+        JPopupMenu menuPopUp = new JPopupMenu();
+        JMenuItem itemContasPagar = new JMenuItem();
+        JMenuItem itemContasReceber = new JMenuItem();
+        itemContasPagar.setText("Contas a pagar");
+        itemContasReceber.setText("Contas a receber");
+        menuPopUp.add(itemContasPagar);
+        menuPopUp.add(itemContasReceber);
+        //menuPopUp.setBounds(evt.getX(), evt.getY(), 100, 100);
+        //menuPopUp.setVisible(true);
+        menuPopUp.show(btnEstatisticas,evt.getX(),evt.getY());
+        
+        itemContasPagar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+               JanelaDeEstatisticas janEstats = new JanelaDeEstatisticas();
+               janEstats.setVisible(true); 
+            }
+        });
+        
+        itemContasReceber.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                
+            }
+        });
+    }//GEN-LAST:event_btnEstatisticasMouseClicked
 
     /**
      * @param args the command line arguments
