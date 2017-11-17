@@ -1,11 +1,8 @@
 package classesDAO;
 
 import classes.AnoContaPagar;
-import classes.AnoContaReceber;
 import classes.ContaPagar;
-import classes.ContaReceber;
 import classes.MesContaPagar;
-import classes.MesContaReceber;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,57 +57,6 @@ public class ContaPagarDAO
             throw new RuntimeException("Erro: " + ex);
             
         }        
-    }
-    
-    //Pesquisa intervalo de Meses por ano
-    public static ArrayList<MesContaReceber> retornaMesesReceber( String ano ){
-        ArrayList<MesContaReceber> meses = new ArrayList<>();
-        String sql = "SELECT * from conta_receber WHERE data_vencimento LIKE '%"+ano+"%'";        
-        Connection con = null;
-        try {
-            con = Conexao.getConexao();
-            state = con.prepareStatement(sql);            
-            resultado = state.executeQuery();            
-            while ( resultado.next() ) {                
-                String mesNum = resultado.getString( "data_vencimento" ).split("/")[1];                
-                String mesString = "";
-                switch(mesNum){
-                    case "01": mesString = "Janeiro";
-                        break;
-                    case "02": mesString = "Fevereiro";
-                        break;
-                    case "03": mesString = "Março";
-                        break;
-                    case "04": mesString = "Abril";
-                        break;
-                    case "05": mesString = "Maio";
-                        break;
-                    case "06": mesString = "Junho";
-                        break;
-                    case "07": mesString = "Julho";
-                        break;
-                    case "08": mesString = "Agosto";
-                        break;
-                    case "09": mesString = "Setembro";
-                        break;
-                    case "10": mesString = "Outubro";
-                        break;
-                    case "11": mesString = "Novembro";
-                        break;
-                    case "12": mesString = "Dezembro";
-                        break;                            
-                }
-                double valor = resultado.getDouble("valor");                
-                MesContaReceber mes = new MesContaReceber(mesString, new ContaReceber(valor) );
-                meses.add(mes);
-            }
-                        
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Erro ao retornar meses: "+e);
-        }finally{
-            Conexao.fecharConexao(con, state, resultado);            
-        }
-        return meses;
     }
     
     //Pesquisa intervalo de Meses por ano
@@ -190,54 +136,6 @@ public class ContaPagarDAO
         return anoContaPagar;
     }
     
-     
-      public static AnoContaReceber retornaAnoReceber( String ano ){
-        AnoContaReceber anoContaReceber = new AnoContaReceber();
-        Connection con = null;        
-        try {                                        
-                String sql = "SELECT SUM(valor) AS valores FROM conta_receber WHERE data_vencimento LIKE '%"+ano+"%'";                        
-                con = Conexao.getConexao();
-                state = con.prepareStatement(sql);            
-                resultado = state.executeQuery();            
-                while ( resultado.next()  ) {                                   
-                   //anoContaPagar  = new AnoContaPagar( ano, Float.parseFloat(resultado.getString("valores") ) );                       
-                   if( resultado.getString("valores") != null ){
-                       anoContaReceber.setAno(ano);
-                       anoContaReceber.setSomaValores( Float.parseFloat(resultado.getString("valores") ) );}
-                    
-                } 
-                
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Erro ao retornar anos: "+e);
-        }finally{
-            Conexao.fecharConexao(con, state, resultado);            
-        }
-        return anoContaReceber;
-    }
-          public static ArrayList<AnoContaReceber> retornaAnosReceber( ArrayList<Integer> anosParam ){
-        ArrayList<AnoContaReceber> anos = new ArrayList<>();
-        Connection con = null;        
-        try {     
-            for (int i = 0; i < anosParam.size() ; i++) {                            
-                String sql = "SELECT SUM(valor) AS valores FROM conta_receber WHERE data_vencimento LIKE '%"+anosParam.get(i)+"%'";                        
-                con = Conexao.getConexao();
-                state = con.prepareStatement(sql);            
-                resultado = state.executeQuery();            
-                while ( resultado.next()  ) {    
-                    //System.out.println( anosParam[i] );
-                    if( anosParam.get(i)!=null ){
-                    anos.add( new AnoContaReceber(anosParam.get(i).toString(), Double.parseDouble(resultado.getString("valores"))) );                
-                    }
-                }                         
-            }    
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Erro ao retornar anos: "+e);
-        }finally{
-            Conexao.fecharConexao(con, state, resultado);            
-        }
-        return anos;
-    }
-     
      public static ArrayList<AnoContaPagar> retornaAnos( ArrayList<Integer> anosParam ){
         ArrayList<AnoContaPagar> anos = new ArrayList<>();
         Connection con = null;        
@@ -249,7 +147,7 @@ public class ContaPagarDAO
                 resultado = state.executeQuery();            
                 while ( resultado.next()  ) {    
                     //System.out.println( anosParam[i] );
-                    if( anosParam.get(i)!=null && resultado.getString("valores") != null){
+                    if( anosParam.get(i)!=null ){
                     anos.add( new AnoContaPagar(anosParam.get(i).toString(), Double.parseDouble(resultado.getString("valores"))) );                
                     }
                 }                         
@@ -281,52 +179,13 @@ public class ContaPagarDAO
         }
         return anos;
     }
-        public static ArrayList<AnoContaReceber> retornaAnosReceber( String ano ){
-        ArrayList<AnoContaReceber> anos = new ArrayList<>();
-        Connection con = null;        
-        try {                                        
-                String sql = "SELECT SUM(valor) AS valores FROM conta_receberWHERE data_vencimento LIKE '%"+ano+"%'";                        
-                con = Conexao.getConexao();
-                state = con.prepareStatement(sql);            
-                resultado = state.executeQuery();            
-                while ( resultado.next()  ) {               
-                    anos.add( new AnoContaReceber(ano, Double.parseDouble(resultado.getString("valores"))) );                
-                }                            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Erro ao retornar anos: "+e);
-        }finally{
-            Conexao.fecharConexao(con, state, resultado);            
-        }
-        return anos;
-    }
+    
     
     //PESQUISAR ANOS
     public static ArrayList<String> retornaTodosAnos(){
         ArrayList<String> anos = new ArrayList<>();
         Connection con = null;
-        String sql = "SELECT data_vencimento from conta_receber";
-        try {
-            con = Conexao.getConexao();
-            state = con.prepareStatement(sql);
-            resultado = state.executeQuery();
-            
-            while ( resultado.next() ) { 
-                String ano = resultado.getString("data_vencimento").split("/")[2];
-                if( !anos.contains(ano) )anos.add( ano );                
-            }
-            
-        } catch (SQLException e) {            
-            JOptionPane.showMessageDialog(null,"Erro ao retornar anos: "+e);
-        }finally{
-            Conexao.fecharConexao(con, state, resultado);
-        }
-        return anos;
-    }
-    
-     public static ArrayList<String> retornaTodosAnosReceber(){
-        ArrayList<String> anos = new ArrayList<>();
-        Connection con = null;
-        String sql = "SELECT data_vencimento from conta_receber";
+        String sql = "SELECT data_vencimento from conta_pagar";
         try {
             con = Conexao.getConexao();
             state = con.prepareStatement(sql);
