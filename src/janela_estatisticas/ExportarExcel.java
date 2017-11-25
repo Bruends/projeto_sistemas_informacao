@@ -7,6 +7,8 @@ package janela_estatisticas;
 
 import classes.AnoContaPagar;
 import classes.MesContaPagar;
+import classes.PercentualCrescimentoAno;
+import classes.PercentualCrescimentoMes;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,23 +29,56 @@ public class ExportarExcel extends javax.swing.JFrame {
     private double valor;
     private ArrayList<MesContaPagar> mesesContaPagar = new ArrayList<>();
     private ArrayList<AnoContaPagar> anosContaPagar = new ArrayList<>();
-    
+    private ArrayList<PercentualCrescimentoMes> crescimentoMeses = new ArrayList<>();
+    ArrayList<PercentualCrescimentoAno> crescimentoAnos = new ArrayList<>();
     /**
      * Creates new form ExportarExcel
      * @param anosContaPagar
      */
     
-    public ExportarExcel(ArrayList<MesContaPagar> mesesContaPagar,ArrayList<AnoContaPagar> anosContaPagar){        
+    public ExportarExcel(ArrayList<MesContaPagar> mesesContaPagar,ArrayList<AnoContaPagar> anosContaPagar,ArrayList<PercentualCrescimentoMes> cresMes, ArrayList<PercentualCrescimentoAno> cresAno){        
         initComponents();
         if(mesesContaPagar!=null){
             this.mesesContaPagar = mesesContaPagar;                        
             DefaultTableModel tblModel = (DefaultTableModel)this.tblExcel.getModel();
             tblModel.setRowCount(0);
+            Object colunas[] = {"Mês","Valor"};
+            tblModel.setColumnIdentifiers( colunas );
             if( mesesContaPagar != null ){
                 for (int i = 0; i < mesesContaPagar.size(); i++) {
                     Object dados[] = {
                         mesesContaPagar.get(i).getNome(),
                         mesesContaPagar.get(i).getContaPagar().getValor()
+                    };
+                    tblModel.addRow(dados);
+                }
+            }            
+        }else if( cresMes != null ){
+            this.crescimentoMeses = cresMes;                        
+            DefaultTableModel tblModel = (DefaultTableModel)this.tblExcel.getModel();
+            tblModel.setRowCount(0);
+            Object colunas[] = {"Intervalo","Crescimento ( % )"};
+            tblModel.setColumnIdentifiers( colunas );
+            if( cresMes != null ){
+                for (int i = 0; i < cresMes.size(); i++) {
+                    Object dados[] = {
+                        cresMes.get(i).getIntervaloMeses(),
+                        cresMes.get(i).getCrescimentoPorcentagem()
+                    };
+                    tblModel.addRow(dados);
+                }
+            } 
+        }else if( cresAno != null ){
+            this.crescimentoAnos = cresAno;                
+            DefaultTableModel tblModel = (DefaultTableModel)this.tblExcel.getModel();
+            tblModel.setRowCount(0);
+            Object colunas[] = {"Intervalo","Crescimento ( % )"};
+            tblModel.setColumnIdentifiers( colunas );
+            if( anosContaPagar != null ){
+                for (int i = 0; i < cresAno.size(); i++) {
+                    Object dados[] = {
+                        cresAno.get(i).getIntervaloDeAnos(),
+                        cresAno.get(i).getPorcentagemDeCrescimento()
                     };
                     tblModel.addRow(dados);
                 }

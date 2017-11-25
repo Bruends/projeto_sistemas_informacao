@@ -58,6 +58,8 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
      ArrayList<MesContaPagar> mesesIntervaloGrafico = new ArrayList<>();
      ArrayList<MesContaPagar> mesesContaPagarGrafico = new ArrayList<>();
      ArrayList<AnoContaPagar> anosContaPagargraf = new ArrayList<>();
+     ArrayList<PercentualCrescimentoMes> percentuais = new ArrayList<>();
+     ArrayList<PercentualCrescimentoAno> percentuaisAno = new ArrayList<>();            
      
      MesContaPagar janeiro = new MesContaPagar();
      MesContaPagar fevereiro = new MesContaPagar();
@@ -368,7 +370,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         btnExportar.setVisible(true);
         if( rbAno.isSelected() ){
             ArrayList<AnoContaPagar> anosContaPagar = new ArrayList<>();
-            ArrayList<PercentualCrescimentoAno> percentuais = new ArrayList<>();            
+            
             for (int i = 0; i < anosCmb.size(); i++) {
                 anosContaPagar.add( ContaPagarDAO.retornaAno( anosCmb.get(i).toString() ) );
             }
@@ -382,16 +384,16 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
                     double numAnos = 2;
                     double resultado =  (Math.pow((valorFinal/valorInicial), (1/numAnos))-1)*100 ;
                     PercentualCrescimentoAno percentual = new PercentualCrescimentoAno((anosCmb.get(i)+" a " +anosCmb.get(i+1)), resultado);
-                    percentuais.add(percentual);
+                    percentuaisAno.add(percentual);
                 }
             }
             GraficoDeLinha graficoDeLinha = new GraficoDeLinha();
             this.pnlGrafico2.removeAll();
-            this.pnlGrafico2.add( graficoDeLinha.criarGraficoCrescimentoAnual(percentuais));
+            this.pnlGrafico2.add( graficoDeLinha.criarGraficoCrescimentoAnual(percentuaisAno));
             this.pnlGrafico2.revalidate();
             this.pnlGrafico2.repaint();
         }else if( rbMes.isSelected() ){            
-            ArrayList<PercentualCrescimentoMes> percentuais = new ArrayList<>();
+            percentuais.clear();
                         
             for (int i = 0; i < mesesIntervalo.size(); i++) {                
                 if( i+1 < mesesIntervalo.size() ){
@@ -691,11 +693,16 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                  // Gerar Excel
-            ExportarExcel janelaExportarExcel;
+            ExportarExcel janelaExportarExcel = null;
             if( rbMes.isSelected() ){
-                janelaExportarExcel = new ExportarExcel(mesesIntervalo,null); 
+                if( percentuais != null ){
+                    janelaExportarExcel = new ExportarExcel(null,null,percentuais,null); 
+                }else{
+                    janelaExportarExcel = new ExportarExcel(mesesIntervalo,null,null,null); 
+                }
+                
             }else{
-                janelaExportarExcel = new ExportarExcel(null,anosContaPagargraf); 
+                janelaExportarExcel = new ExportarExcel(null,anosContaPagargraf,null,percentuaisAno); 
             }               
             janelaExportarExcel.setVisible(true);
             }
