@@ -52,6 +52,8 @@ public class ExportarExcel extends javax.swing.JFrame {
             this.anosContaPagar = anosContaPagar;                
             DefaultTableModel tblModel = (DefaultTableModel)this.tblExcel.getModel();
             tblModel.setRowCount(0);
+            Object colunas[] = {"Ano","Crescimento"};
+            tblModel.setColumnIdentifiers( colunas );
             if( anosContaPagar != null ){
                 for (int i = 0; i < anosContaPagar.size(); i++) {
                     Object dados[] = {
