@@ -18,10 +18,12 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileOutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,7 +33,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.UndoableEditListener;
@@ -51,14 +55,31 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
      ArrayList<Integer> anosCmb = new ArrayList<>();
      ArrayList<Integer> mesesCmb = new ArrayList<>();
      ArrayList<MesContaPagar> mesesIntervalo = new ArrayList<>();
+     ArrayList<MesContaPagar> mesesIntervaloGrafico = new ArrayList<>();
+     ArrayList<MesContaPagar> mesesContaPagarGrafico = new ArrayList<>();
      ArrayList<AnoContaPagar> anosContaPagargraf = new ArrayList<>();
-    /**
+     
+     MesContaPagar janeiro = new MesContaPagar();
+     MesContaPagar fevereiro = new MesContaPagar();
+     MesContaPagar marco = new MesContaPagar();
+     MesContaPagar abril = new MesContaPagar();
+     MesContaPagar maio = new MesContaPagar();
+     MesContaPagar junho = new MesContaPagar();
+     MesContaPagar julho = new MesContaPagar();
+     MesContaPagar agosto = new MesContaPagar();
+     MesContaPagar setembro = new MesContaPagar();
+     MesContaPagar outubro = new MesContaPagar();
+     MesContaPagar novembro = new MesContaPagar();
+     MesContaPagar dezembro = new MesContaPagar();
+     private int contador = 0;
+     
+     /**
      * Creates new form JanelaDeEstatisticas
      */
     public JanelaDeEstatisticas() {        
-        initComponents();
+        initComponents();        
         jTabbedPane2.setVisible(false);
-        jToolBar1.setVisible(false);
+        btnExportar.setVisible(false);
         this.setExtendedState(MAXIMIZED_BOTH);
         this.pnlGrafico1.setLayout( new BorderLayout() );
         this.pnlGrafico2.setLayout( new BorderLayout() );
@@ -73,6 +94,8 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         
     }
 
+    
+    
     private void carregaComboAno(JComboBox cmbAno){
         DefaultComboBoxModel cmbModelo = (DefaultComboBoxModel) cmbAno.getModel();
         for (int i = 0; i < ContaPagarDAO.retornaTodosAnos().size(); i++) {            
@@ -102,12 +125,6 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         pnlGrafico1 = new javax.swing.JPanel();
         pnlGrafico2 = new javax.swing.JPanel();
         lblCrescimento = new javax.swing.JLabel();
-        jToolBar1 = new javax.swing.JToolBar();
-        filler13 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
-        btnExportarExcel = new javax.swing.JButton();
-        filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
-        filler11 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
-        btnExportPdf = new javax.swing.JButton();
         jToolBar2 = new javax.swing.JToolBar();
         lblAnoMes = new javax.swing.JLabel();
         rbMes = new javax.swing.JRadioButton();
@@ -134,6 +151,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         btnGerarGrafico = new javax.swing.JButton();
         filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         btnCres = new javax.swing.JButton();
+        btnExportar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -213,44 +231,12 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         getContentPane().add(jTabbedPane2);
         jTabbedPane2.setBounds(80, 160, 1100, 510);
 
-        jToolBar1.setBackground(new java.awt.Color(229, 229, 229));
-        jToolBar1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Exportar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(153, 153, 153))); // NOI18N
-        jToolBar1.setFloatable(false);
-        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jToolBar1.setRollover(true);
-        jToolBar1.add(filler13);
-
-        btnExportarExcel.setBackground(new java.awt.Color(229, 229, 229));
-        btnExportarExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icon (2).png"))); // NOI18N
-        btnExportarExcel.setToolTipText("Exportar para Planilha do Microsoft Excel");
-        btnExportarExcel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportarExcelActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnExportarExcel);
-        jToolBar1.add(filler10);
-        jToolBar1.add(filler11);
-
-        btnExportPdf.setBackground(new java.awt.Color(229, 229, 229));
-        btnExportPdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/pdf-file32px.png"))); // NOI18N
-        btnExportPdf.setToolTipText("Exportar para Apresentação do Power Point");
-        btnExportPdf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportPdfActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnExportPdf);
-
-        getContentPane().add(jToolBar1);
-        jToolBar1.setBounds(1190, 190, 70, 110);
-
         jToolBar2.setBackground(new java.awt.Color(229, 229, 229));
         jToolBar2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gerar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(153, 153, 153))); // NOI18N
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
 
-        lblAnoMes.setText("Ano:");
+        lblAnoMes.setText("Meses:");
         lblAnoMes.setEnabled(false);
         jToolBar2.add(lblAnoMes);
 
@@ -351,6 +337,18 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         getContentPane().add(jToolBar2);
         jToolBar2.setBounds(150, 90, 970, 60);
 
+        btnExportar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btnExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/export24px.png"))); // NOI18N
+        btnExportar.setIconTextGap(0);
+        btnExportar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnExportar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnExportarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btnExportar);
+        btnExportar.setBounds(1180, 180, 30, 40);
+
         jMenu2.setText("Sobre");
 
         jMenuItem1.setText("Ajuda");
@@ -360,14 +358,14 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(1281, 807));
+        setSize(new java.awt.Dimension(1275, 807));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCresActionPerformed
         // btn crescimento
         jTabbedPane2.setVisible(true);
-        jToolBar1.setVisible(true);
+        btnExportar.setVisible(true);
         if( rbAno.isSelected() ){
             ArrayList<AnoContaPagar> anosContaPagar = new ArrayList<>();
             ArrayList<PercentualCrescimentoAno> percentuais = new ArrayList<>();            
@@ -395,8 +393,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         }else if( rbMes.isSelected() ){            
             ArrayList<PercentualCrescimentoMes> percentuais = new ArrayList<>();
                         
-            for (int i = 0; i < mesesIntervalo.size(); i++) {
-                System.out.println(i);
+            for (int i = 0; i < mesesIntervalo.size(); i++) {                
                 if( i+1 < mesesIntervalo.size() ){
                     double valorFinal = mesesIntervalo.get(i+1).getContaPagar().getValor();
                     double valorInicial = mesesIntervalo.get(i).getContaPagar().getValor();
@@ -418,10 +415,27 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
     private void btnGerarGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarGraficoActionPerformed
         // Btn gerar grafico
         jTabbedPane2.setVisible(true);
-        jToolBar1.setVisible(true);
+        btnExportar.setVisible(true);
         anosCmb.clear();
         mesesCmb.clear();
+        contador++;
         
+        if( contador > 1 ){
+            janeiro = null;
+            fevereiro = null;
+            marco = null;
+            abril = null;
+            maio = null;
+            junho = null;
+            julho = null;
+            agosto = null;
+            setembro = null;
+            outubro = null;
+            novembro = null;
+            dezembro = null;
+        }
+                
+        mesesContaPagarGrafico.clear();        
         ArrayList<AnoContaPagar> anos=null;
 
         if( rbMes.isSelected() ){
@@ -431,6 +445,41 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
             GraficoDeBarra graficoDeBarra = new GraficoDeBarra();
             ArrayList<MesContaPagar> mesesContaPagar = new ArrayList<>();
             mesesContaPagar = ContaPagarDAO.retornaMeses( cmbAnoMes.getItemAt( cmbAnoMes.getSelectedIndex() ) );
+            ArrayList<MesContaPagar> mesesContaPagar2 = new ArrayList<>();
+            ArrayList<String> meses = new ArrayList<>();
+            meses.add("Janeiro");
+            meses.add("Fevereiro");
+            meses.add("Março");
+            meses.add("Abril");
+            meses.add("Maio");
+            meses.add("junho");
+            meses.add("Julho");
+            meses.add("Agosto");
+            meses.add("Setembro");
+            meses.add("Outubro");
+            meses.add("Novembro");
+            meses.add("Dezembro");
+            ArrayList<Integer> posicoes = new ArrayList<>();
+            for (int i = 0; i < mesesContaPagar.size(); i++) {
+                for (int j = 0; j < meses.size(); j++) {
+                    //index out of bounds \/
+                    if( !mesesContaPagar.get(i).getNome().equals( meses.get(j) ) ){                
+                        posicoes.add( i );
+                    }
+                }
+            }
+            
+            for (int i = posicoes.size()-1; i >= 0; i--) {
+                meses.remove(posicoes.get(i));
+            }
+            
+            for (int i = 0; i < meses.size(); i++) {
+                try {
+                    mesesContaPagar2.add( ContaPagarDAO.retornaMesesUnique(cmbAnoMes.getItemAt( cmbAnoMes.getSelectedIndex() ),meses.get(i)) );
+                } catch (SQLException ex) {
+                    Logger.getLogger(JanelaDeEstatisticas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             String mesDeCmb = cmbDeMes.getItemAt( cmbDeMes.getSelectedIndex() );
             String mesAteCmb = cmbAteMes.getItemAt( cmbAteMes.getSelectedIndex() );    
             ArrayList<String> nomeMeses = new ArrayList<>();
@@ -515,23 +564,21 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
                         break;
                     case 12: mesAtual = "Dezembro";
                         break;                            
-                }                    
+                }                        
                 nomeMeses.add(mesAtual);                    
                 mesDe++;                    
                 }
-                
-                
-                
-                for (int i = 0; i < mesesContaPagar.size(); i++) { 
-                    if( nomeMeses.contains( mesesContaPagar.get(i).getNome() ) ){
-                        mesesIntervalo.add( mesesContaPagar.get(i) );
+                                   
+                for (int i = 0; i < mesesContaPagar2.size(); i++) { 
+                    if( nomeMeses.contains( mesesContaPagar2.get(i).getNome() ) ){                        
+                        mesesIntervalo.add( mesesContaPagar2.get(i) );                          
                     }                                            
                 }
-                
-                
-                
-            
+                 
+               
+                                            
             this.pnlGrafico1.removeAll();
+            //this.pnlGrafico1.add( graficoDeBarra.criarGrafico( mesesIntervalo ));
             this.pnlGrafico1.add( graficoDeBarra.criarGrafico( mesesIntervalo ));
             this.pnlGrafico1.revalidate();
             this.pnlGrafico1.repaint();
@@ -559,10 +606,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
                     //int teste= Integer.parseInt(cmbAteAnual.getItemAt( i ));
                     if( (Integer.parseInt(cmbAteAnual.getItemAt( i )) < anoAte  ) ){
                         anosCmb.add( Integer.parseInt(cmbAteAnual.getItemAt( i )) );
-                    }else{
-                        // System.out.println( cmbAteAnual.getItemAt( i ) +"não é menor ou igual" );
                     }
-                    // anoAte--;
                 }
 
                 for (int i = 0; i < anosCmb.size(); i++) {
@@ -572,11 +616,12 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
                     }
                 }
 
-                for (int i = 0; i < anosCmb.size(); i++) {
+                for (int i = 0; i < anosCmb.size(); i++) {                    
                     if( anosCmb.get(i) < Integer.parseInt( cmbDeAnual.getItemAt( cmbDeAnual.getSelectedIndex() ) )  ){
                         anosCmb.remove(i);
                     }
                 }
+                
                 anosCmb.add( Integer.parseInt(cmbAteAnual.getItemAt( cmbAteAnual.getSelectedIndex() )) );
                 // ArrayList<String> anosCmb2 = anosCmb; debug
                 Collections.sort(anosCmb);
@@ -597,10 +642,13 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         // RadioButton anos
         cmbAnoMes.setEnabled(false);
         cmbDeAnual.setEnabled(true);
+        cmbDeMes.setEnabled(false);
+        cmbAteMes.setEnabled(false);
         cmbAteAnual.setEnabled(true);
         lblAnoMes.setEnabled(false);
         lblAteAno.setEnabled(true);
         lblDeAno.setEnabled(true);
+        
     }//GEN-LAST:event_rbAnoActionPerformed
 
     private void rbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbMesActionPerformed
@@ -611,28 +659,56 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         lblDeAno.setEnabled(false);
         cmbDeAnual.setEnabled(false);
         cmbAteAnual.setEnabled(false);
+        cmbDeMes.setEnabled(false);
+        cmbAteMes.setEnabled(false);
     }//GEN-LAST:event_rbMesActionPerformed
 
     private void cmbAteAnualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAteAnualActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbAteAnualActionPerformed
 
-    private void btnExportarExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarExcelActionPerformed
-        // Gerar Excel
-        ExportarExcel janelaExportarExcel;
-        if( rbMes.isSelected() ){
-            janelaExportarExcel = new ExportarExcel(mesesIntervalo,null); 
-        }else{
-            janelaExportarExcel = new ExportarExcel(null,anosContaPagargraf); 
-        }               
-        janelaExportarExcel.setVisible(true);
-    }//GEN-LAST:event_btnExportarExcelActionPerformed
-
-    private void btnExportPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportPdfActionPerformed
-        // btn gerar pdf
-        JanelaExportarPdf janExportarPdf = new JanelaExportarPdf();
-        janExportarPdf.setVisible(true);
-    }//GEN-LAST:event_btnExportPdfActionPerformed
+    private void btnExportarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExportarMouseClicked
+        // TODO add your handling code here:
+        JPopupMenu menuPopUp = new JPopupMenu();
+        JMenuItem itemExportarExcel = new JMenuItem();
+        JMenuItem itemExportarPdf = new JMenuItem();
+        itemExportarExcel.setText("Exportar para documento do Microsoft Word Excel");
+        itemExportarPdf.setText("Gerar relatório em PDF");
+        menuPopUp.add(itemExportarExcel);
+        menuPopUp.add(itemExportarPdf);
+        //menuPopUp.setBounds(evt.getX(), evt.getY(), 100, 100);
+        //menuPopUp.setVisible(true);
+        menuPopUp.show(btnExportar,evt.getX(),evt.getY());
+        
+        itemExportarExcel.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                
+            }
+        });
+        
+        itemExportarExcel.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                 // Gerar Excel
+            ExportarExcel janelaExportarExcel;
+            if( rbMes.isSelected() ){
+                janelaExportarExcel = new ExportarExcel(mesesIntervalo,null); 
+            }else{
+                janelaExportarExcel = new ExportarExcel(null,anosContaPagargraf); 
+            }               
+            janelaExportarExcel.setVisible(true);
+            }
+        });
+        
+        itemExportarPdf.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                 JanelaExportarPdf janExportarPdf = new JanelaExportarPdf();
+                 janExportarPdf.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_btnExportarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -671,8 +747,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCres;
-    private javax.swing.JButton btnExportPdf;
-    private javax.swing.JButton btnExportarExcel;
+    private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnGerarGrafico;
     private javax.swing.ButtonGroup btnGroupIntervalo;
     private javax.swing.JComboBox<String> cmbAnoMes;
@@ -681,9 +756,6 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbDeAnual;
     private javax.swing.JComboBox<String> cmbDeMes;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler10;
-    private javax.swing.Box.Filler filler11;
-    private javax.swing.Box.Filler filler13;
     private javax.swing.Box.Filler filler14;
     private javax.swing.Box.Filler filler15;
     private javax.swing.Box.Filler filler2;
@@ -706,7 +778,6 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JLabel lblAnoMes;
     private javax.swing.JLabel lblAteAno;
