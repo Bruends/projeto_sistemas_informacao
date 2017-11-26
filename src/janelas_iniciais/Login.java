@@ -5,6 +5,8 @@ import classes.*;
 
 
 import janela_gerenciar_contas.JanelaPrincipal;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -26,6 +28,13 @@ public class Login extends javax.swing.JFrame {
     public Login() {
        initComponents();    
        
+       //Carrega combo emails
+        DefaultComboBoxModel cmbEmailModel = (DefaultComboBoxModel)l_txt_email.getModel() ;        
+        ArrayList<String> emails = new ArrayList<>();
+        emails = LoginDAO.retornaEmailsUsuarios();
+        for (int i = 0; i < emails.size(); i++) {
+            cmbEmailModel.addElement( emails.get(i) );
+        }
     }
 
     /**
@@ -38,24 +47,15 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        l_txt_email = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btn_login = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         l_txt_senha = new javax.swing.JPasswordField();
+        l_txt_email = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
-
-        l_txt_email.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        l_txt_email.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                l_txt_emailActionPerformed(evt);
-            }
-        });
-        getContentPane().add(l_txt_email);
-        l_txt_email.setBounds(150, 120, 240, 30);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel1.setText("Senha:");
@@ -84,17 +84,16 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(l_txt_senha);
         l_txt_senha.setBounds(150, 170, 240, 30);
 
+        getContentPane().add(l_txt_email);
+        l_txt_email.setBounds(150, 120, 240, 30);
+
         setSize(new java.awt.Dimension(556, 346));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void l_txt_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_l_txt_emailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_l_txt_emailActionPerformed
-
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
         // Botão Login
-        String email  = l_txt_email.getText();
+        String email  = l_txt_email.getItemAt( l_txt_email.getSelectedIndex() );
         String senha = l_txt_senha.getText();
         
         //evento login
@@ -169,7 +168,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField l_txt_email;
+    private javax.swing.JComboBox<String> l_txt_email;
     private javax.swing.JPasswordField l_txt_senha;
     // End of variables declaration//GEN-END:variables
 }
