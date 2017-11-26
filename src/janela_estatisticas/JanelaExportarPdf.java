@@ -270,9 +270,9 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(861, 699));
@@ -307,6 +307,16 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
             btnNovaImagem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
+                    for (int i = botoes.size()-1; i >= 0; i--) {
+                        if( ae.getActionCommand().equals(botoes.get(i).getText()) ){                            
+                            //botoes.remove(i);                                                                                                                     
+                            pnlImagens.remove(botoes.get(i));
+                            pnlImagens.revalidate();
+                            pnlImagens.repaint();
+                        }
+                        }
+                    
+                /*
                     for (int i = 0; i < botoes.size(); i++) {
                         if( ae.getActionCommand().equals(botoes.get(i).getText()) ){                            
                             //botoes.remove(i);                                                                                                                     
@@ -315,16 +325,18 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
                             pnlImagens.repaint();
                         }
                     }
-                    
+                    */
                 }
             });            
             if ( botoes.size() < 5 ) {
-                botoes.add(btnNovaImagem); 
-                System.out.println(botoes.size());
+                botoes.add(btnNovaImagem);                 
             }else{
                 JOptionPane.showMessageDialog(null, "Não é possível adicionar mais do que 5 gráficos!");
             }
                        
+        }else{
+            pnlImagens.revalidate();
+            pnlImagens.repaint();                                         
         }
                                                                 
          for (int i = 0; i < botoes.size(); i++) {           
@@ -342,7 +354,12 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         String absolutePath="";
         if ( fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION ) {
-            absolutePath = fileChooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileChooser.getSelectedFile().getName()+".pdf";
+            if ( fileChooser.getSelectedFile().getName().split(".")[fileChooser.getSelectedFile().getName().split(".").length].equals("pdf") ) {
+                absolutePath = fileChooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileChooser.getSelectedFile().getName();
+            }else{
+                absolutePath = fileChooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileChooser.getSelectedFile().getName()+".pdf";
+            }
+            
             try {
                 PdfWriter.getInstance(document, new FileOutputStream(absolutePath));
                 document.open();

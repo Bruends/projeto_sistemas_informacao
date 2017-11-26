@@ -37,33 +37,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
               </Events>
             </MenuItem>
-            <Menu class="javax.swing.JMenu" name="jMenu2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Exportar..."/>
-              </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Documento do Excel"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
-                  </Events>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="jMenu5">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Gerar relat&#xf3;rio..."/>
-              </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Relat&#xf3;rio em PDF"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
           </SubComponents>
         </Menu>
       </SubComponents>
@@ -109,7 +82,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="470" y="10" width="-1" height="-1"/>
+          <AbsoluteConstraints x="480" y="10" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -128,7 +101,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="540" y="30" width="-1" height="-1"/>
+          <AbsoluteConstraints x="550" y="30" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -671,11 +644,11 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="66" green="66" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="CONTAS A PAGAR"/>
+        <Property name="text" type="java.lang.String" value="CONTAS A RECEBER"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="570" y="60" width="110" height="-1"/>
+          <AbsoluteConstraints x="580" y="60" width="120" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>

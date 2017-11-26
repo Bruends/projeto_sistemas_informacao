@@ -130,6 +130,10 @@ public class ContaReceber {
     public void setValor(double valor) {
         this.valor = valor;
     }
+    
+    public void addValor(double valor) {                
+        this.valor += valor;        
+    }
 
     public int getParcela_atual() {
         return parcela_atual;

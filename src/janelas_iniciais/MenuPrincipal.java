@@ -7,6 +7,7 @@ package janelas_iniciais;
 
 import classes.Usuario;
 import janela_estatisticas.JanelaDeEstatisticas;
+import janela_estatisticas.JanelaDeEstatisticasContasReceber;
 import janela_gerenciar_contas.JanelaPrincipal;
 import janela_gerenciar_usuarios.JanelaPrincipalUsuarios;
 import janela_gerenciar_clientes.JanelaPrincipalClientes;
@@ -193,7 +194,8 @@ private Usuario usuario;
         itemContasReceber.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                
+                JanelaDeEstatisticasContasReceber janEstatsContaRecebeer = new JanelaDeEstatisticasContasReceber();
+                janEstatsContaRecebeer.setVisible(true);
             }
         });
     }//GEN-LAST:event_btnEstatisticasMouseClicked

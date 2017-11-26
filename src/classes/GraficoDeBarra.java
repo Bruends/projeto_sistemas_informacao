@@ -37,6 +37,8 @@ public class GraficoDeBarra {
         return dataSet;
     }
     
+    
+    
     public CategoryDataset createDataSetMesesReceber(ArrayList<MesContaReceber> meses){
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
         
@@ -112,6 +114,7 @@ public class GraficoDeBarra {
         
         return painelDoGrafico;
     }
+    
     
     public ChartPanel criarGraficoMesesReceber(ArrayList<MesContaReceber> meses ){
         CategoryDataset dataset = this.createDataSetMesesReceber(meses);
