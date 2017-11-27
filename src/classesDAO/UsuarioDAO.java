@@ -108,7 +108,7 @@ public class UsuarioDAO {
             pstmt.executeUpdate();              
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Erro ao atualizar usuario! ERRO: " + ex);
+            JOptionPane.showMessageDialog(null,"Erro ao atualizar usuario!");
             return false;
         }finally{
             Conexao.fecharConexao(con, preparedStatement);
@@ -134,7 +134,7 @@ public class UsuarioDAO {
             preparedStatement.executeUpdate();
             return true;
         }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null,"Erro ao excluir! " + ex);            
+            JOptionPane.showMessageDialog(null,"Erro ao excluir! ");            
             //1451 = MySQLConstraintIntegrity.                        
             if ( ex.getErrorCode() == 1451 ) {
                 JOptionPane.showMessageDialog(null, "Só é possível apagar clientes que não possuem pendências financeiras!");
@@ -178,7 +178,7 @@ public class UsuarioDAO {
             
             
         }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null,"Erro ao pesquisar usuarios!" + ex);
+            JOptionPane.showMessageDialog(null,"Erro ao pesquisar usuarios!");
             return null;
         }finally{
             Conexao.fecharConexao(con,preparedStatement,resultSet);

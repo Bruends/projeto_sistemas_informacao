@@ -41,6 +41,14 @@ private Date date = new Date();
         initComponents();
         this.usuario = user;
         this.lblDataHora.setText( dateFormat.format( date )  );
+        
+        if(this.usuario.getNivel_acesso() <= 2){
+            this.btnGerenciarUsuarios.setEnabled(false);
+        }
+        if(this.usuario.getNivel_acesso() <= 1){
+            this.btnGerenciarClientes.setEnabled(false);
+            
+        }
     }
 
     /**
@@ -52,6 +60,7 @@ private Date date = new Date();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel3 = new javax.swing.JLabel();
         btnEstatisticas = new javax.swing.JButton();
         btnGerenciarContas = new javax.swing.JButton();
         btnGerenciarClientes = new javax.swing.JButton();
@@ -59,9 +68,21 @@ private Date date = new Date();
         btnPesquisar = new javax.swing.JButton();
         lblDataHora = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Sair");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(530, 10, 30, 20);
 
         btnEstatisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/finances.png"))); // NOI18N
         btnEstatisticas.setText("Gráficos e Relatórios");
@@ -101,7 +122,7 @@ private Date date = new Date();
             }
         });
         getContentPane().add(btnGerenciarClientes);
-        btnGerenciarClientes.setBounds(320, 270, 210, 60);
+        btnGerenciarClientes.setBounds(320, 270, 220, 60);
 
         btnGerenciarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/user.png"))); // NOI18N
         btnGerenciarUsuarios.setText("Gerenciar Usuários");
@@ -113,7 +134,7 @@ private Date date = new Date();
             }
         });
         getContentPane().add(btnGerenciarUsuarios);
-        btnGerenciarUsuarios.setBounds(320, 190, 210, 60);
+        btnGerenciarUsuarios.setBounds(320, 190, 220, 60);
 
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/search.png"))); // NOI18N
         btnPesquisar.setText("Pesquisar");
@@ -127,18 +148,23 @@ private Date date = new Date();
         getContentPane().add(btnPesquisar);
         btnPesquisar.setBounds(50, 190, 205, 60);
 
-        lblDataHora.setForeground(new java.awt.Color(255, 255, 0));
+        lblDataHora.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblDataHora.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(lblDataHora);
-        lblDataHora.setBounds(470, 10, 110, 20);
+        lblDataHora.setBounds(450, 370, 110, 20);
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Menu");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(200, 30, 190, 60);
 
-        setSize(new java.awt.Dimension(605, 403));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs_background/accountant-accounting-adviser-advisor-159804.jpeg"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(-340, -120, 1040, 630);
+
+        setSize(new java.awt.Dimension(605, 449));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -198,6 +224,12 @@ private Date date = new Date();
         });
     }//GEN-LAST:event_btnEstatisticasMouseClicked
 
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        Login login = new Login();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel3MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -239,7 +271,9 @@ private Date date = new Date();
     private javax.swing.JButton btnGerenciarContas;
     private javax.swing.JButton btnGerenciarUsuarios;
     private javax.swing.JButton btnPesquisar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lblDataHora;
     // End of variables declaration//GEN-END:variables
 }

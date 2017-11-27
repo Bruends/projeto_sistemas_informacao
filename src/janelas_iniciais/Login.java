@@ -141,21 +141,21 @@ public class Login extends javax.swing.JFrame {
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/circular-shape-silhouette16px.png"))); // NOI18N
         jLabel11.setText("LUCAS SOUSA ALVES - 16203453");
         jPanel1.add(jLabel11);
-        jLabel11.setBounds(40, 220, 200, 20);
+        jLabel11.setBounds(40, 220, 250, 20);
 
         jLabel13.setFont(new java.awt.Font("Microsoft JhengHei", 1, 11)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(204, 204, 204));
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/circular-shape-silhouette16px.png"))); // NOI18N
-        jLabel13.setText("FELIPE MACEDO - ");
+        jLabel13.setText("FELIPE MACEDO - 16177657");
         jPanel1.add(jLabel13);
-        jLabel13.setBounds(40, 240, 170, 20);
+        jLabel13.setBounds(40, 240, 230, 20);
 
         jLabel14.setFont(new java.awt.Font("Microsoft JhengHei", 1, 11)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(204, 204, 204));
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/circular-shape-silhouette16px.png"))); // NOI18N
-        jLabel14.setText("BRUNO MENDES - ");
+        jLabel14.setText("BRUNO MENDES - 16195396 ");
         jPanel1.add(jLabel14);
-        jLabel14.setBounds(40, 200, 170, 20);
+        jLabel14.setBounds(40, 200, 250, 20);
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/ABSTRACT-Aquarius_1600x1200.png"))); // NOI18N
         jPanel1.add(lblBackground);
