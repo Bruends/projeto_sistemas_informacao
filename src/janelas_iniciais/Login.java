@@ -50,9 +50,23 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btn_login = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         l_txt_senha = new javax.swing.JPasswordField();
         l_txt_email = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        lblBackground = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -60,34 +74,111 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel1.setText("Senha:");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(100, 170, 50, 30);
+        jLabel1.setBounds(420, 260, 50, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel2.setText("E-Mail:  ");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(100, 120, 50, 30);
+        jLabel2.setBounds(420, 210, 50, 30);
 
+        btn_login.setFont(new java.awt.Font("Microsoft JhengHei", 0, 11)); // NOI18N
+        btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/login-sketch32px.png"))); // NOI18N
         btn_login.setText("Login");
+        btn_login.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btn_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_loginActionPerformed(evt);
             }
         });
         getContentPane().add(btn_login);
-        btn_login.setBounds(150, 230, 240, 40);
-
-        jLabel4.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/change.png"))); // NOI18N
-        jLabel4.setText("Setor Financeiro Login");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(100, 20, 340, 80);
+        btn_login.setBounds(610, 300, 100, 40);
         getContentPane().add(l_txt_senha);
-        l_txt_senha.setBounds(150, 170, 240, 30);
+        l_txt_senha.setBounds(470, 260, 240, 30);
 
         getContentPane().add(l_txt_email);
-        l_txt_email.setBounds(150, 120, 240, 30);
+        l_txt_email.setBounds(470, 210, 240, 30);
 
-        setSize(new java.awt.Dimension(556, 346));
+        jPanel1.setLayout(null);
+
+        jLabel4.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(17, 52, 84));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/graphLogin64px.png"))); // NOI18N
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(10, 20, 70, 80);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/universidade_cruzeiro-do-sul-ins-log-g.png"))); // NOI18N
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(10, 340, 270, 120);
+
+        jLabel5.setFont(new java.awt.Font("Microsoft JhengHei", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(17, 52, 84));
+        jLabel5.setText("SETOR FINANEIRO");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(100, 30, 220, 40);
+
+        jSeparator1.setBackground(new java.awt.Color(17, 52, 84));
+        jSeparator1.setForeground(new java.awt.Color(17, 52, 84));
+        jPanel1.add(jSeparator1);
+        jSeparator1.setBounds(110, 70, 190, 10);
+
+        jLabel6.setFont(new java.awt.Font("Microsoft JhengHei", 0, 14)); // NOI18N
+        jLabel6.setText("LOGIN");
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(180, 80, 50, 20);
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(17, 52, 84));
+        jLabel7.setText("Grupo 1");
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(290, 410, 50, 14);
+
+        jLabel10.setFont(new java.awt.Font("Microsoft JhengHei", 0, 10)); // NOI18N
+        jLabel10.setText("CONTAS A PAGAR E A RECEBER");
+        jPanel1.add(jLabel10);
+        jLabel10.setBounds(120, 110, 160, 16);
+
+        jLabel11.setFont(new java.awt.Font("Microsoft JhengHei", 1, 11)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/circular-shape-silhouette16px.png"))); // NOI18N
+        jLabel11.setText("LUCAS SOUSA ALVES - 16203453");
+        jPanel1.add(jLabel11);
+        jLabel11.setBounds(40, 220, 200, 20);
+
+        jLabel13.setFont(new java.awt.Font("Microsoft JhengHei", 1, 11)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/circular-shape-silhouette16px.png"))); // NOI18N
+        jLabel13.setText("FELIPE ALGUMA COISA - ");
+        jPanel1.add(jLabel13);
+        jLabel13.setBounds(40, 240, 170, 20);
+
+        jLabel14.setFont(new java.awt.Font("Microsoft JhengHei", 1, 11)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/circular-shape-silhouette16px.png"))); // NOI18N
+        jLabel14.setText("BRUNO MENDES - ");
+        jPanel1.add(jLabel14);
+        jLabel14.setBounds(40, 200, 170, 20);
+
+        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/ABSTRACT-Aquarius_1600x1200.png"))); // NOI18N
+        jPanel1.add(lblBackground);
+        lblBackground.setBounds(-610, 5, 1600, 1200);
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/circular-shape-silhouette16px.png"))); // NOI18N
+        jLabel12.setText("BRUNO MENDES - ");
+        jPanel1.add(jLabel12);
+        jLabel12.setBounds(30, 160, 170, 14);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 0, 380, 450);
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/clerk-with-tie128pxBlack.png"))); // NOI18N
+        getContentPane().add(jLabel9);
+        jLabel9.setBounds(520, 60, 120, 140);
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/circular-shape-silhouette256px.png"))); // NOI18N
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(460, 50, 260, 150);
+
+        setSize(new java.awt.Dimension(813, 486));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -166,9 +257,23 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox<String> l_txt_email;
     private javax.swing.JPasswordField l_txt_senha;
+    private javax.swing.JLabel lblBackground;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,6 +11,7 @@ import classes.MesContaPagar;
 import classes.MesContaReceber;
 import classes.PercentualCrescimentoAno;
 import classes.PercentualCrescimentoMes;
+import classes.Usuario;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,13 +34,14 @@ public class ExportarExcelContaReceber extends javax.swing.JFrame {
     private ArrayList<AnoContaReceber> anosContaReceber = new ArrayList<>();
     private ArrayList<PercentualCrescimentoMes> crescimentoMeses = new ArrayList<>();
     ArrayList<PercentualCrescimentoAno> crescimentoAnos = new ArrayList<>();
+    private Usuario usuario;
     /**
      * Creates new form ExportarExcel
      * @param anosContaReceber
      */
     
     public ExportarExcelContaReceber(ArrayList<MesContaReceber> mesesContaReceber,ArrayList<AnoContaReceber> anosContaReceber,ArrayList<PercentualCrescimentoMes> cresMes, ArrayList<PercentualCrescimentoAno> cresAno){        
-        initComponents();
+        initComponents();        
         if(mesesContaReceber!=null){            
             this.mesesContaReceber = mesesContaReceber;                        
             DefaultTableModel tblModel = (DefaultTableModel)this.tblExcel.getModel();

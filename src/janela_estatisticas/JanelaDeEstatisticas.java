@@ -12,6 +12,7 @@ import classes.GraficoDeLinha;
 import classes.MesContaPagar;
 import classes.PercentualCrescimentoAno;
 import classes.PercentualCrescimentoMes;
+import classes.Usuario;
 import classesDAO.ContaPagarDAO;
 import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.Paragraph;
@@ -47,6 +48,8 @@ import javax.swing.text.Position;
 import javax.swing.text.Segment;
 
 
+
+
 /**
  *
  * @author Lusca
@@ -60,7 +63,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
      ArrayList<AnoContaPagar> anosContaPagargraf = new ArrayList<>();
      ArrayList<PercentualCrescimentoMes> percentuais = new ArrayList<>();
      ArrayList<PercentualCrescimentoAno> percentuaisAno = new ArrayList<>(); 
-     
+     private Usuario usuario;
      
      MesContaPagar janeiro = new MesContaPagar();
      MesContaPagar fevereiro = new MesContaPagar();
@@ -75,12 +78,16 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
      MesContaPagar novembro = new MesContaPagar();
      MesContaPagar dezembro = new MesContaPagar();
      private int contador = 0;
+
+    public JanelaDeEstatisticas() {
+    }          
      
      /**
      * Creates new form JanelaDeEstatisticas
      */
-    public JanelaDeEstatisticas() {        
-        initComponents();        
+    public JanelaDeEstatisticas(Usuario usuario) {        
+        initComponents();              
+        this.usuario = usuario;                
         jTabbedPane2.setVisible(false);
         btnExportar.setVisible(false);
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -733,12 +740,9 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
                  // Gerar Excel
             ExportarExcel janelaExportarExcel = new ExportarExcel();
             if( rbMes.isSelected() ){
-                if( percentuais.size() > 0 ){
-                    System.out.println("percentuais");
-                    System.out.println(percentuais.get(0).getCrescimentoPorcentagem());
+                if( percentuais.size() > 0 ){                                        
                     janelaExportarExcel = new ExportarExcel(null,null,percentuais,null); 
-                }else{                    
-                    System.out.println("mesesintervalo");
+                }else{                                        
                     janelaExportarExcel = new ExportarExcel(mesesIntervalo,null,null,null); 
                 }
                 
@@ -755,7 +759,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         itemExportarPdf.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                 JanelaExportarPdf janExportarPdf = new JanelaExportarPdf();
+                 JanelaExportarPdf janExportarPdf = new JanelaExportarPdf(usuario);
                  janExportarPdf.setVisible(true);
             }
         });
@@ -780,12 +784,9 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         // item d emenu exportar para excel
         ExportarExcel janelaExportarExcel = null;
             if( rbMes.isSelected() ){
-                if( percentuais.size() > 0 ){
-                    System.out.println("percentuais");
-                    System.out.println(percentuais.get(0).getCrescimentoPorcentagem());
+                if( percentuais.size() > 0 ){                                        
                     janelaExportarExcel = new ExportarExcel(null,null,percentuais,null); 
-                }else{                    
-                    System.out.println("mesesintervalo");
+                }else{                                        
                     janelaExportarExcel = new ExportarExcel(mesesIntervalo,null,null,null); 
                 }
                 

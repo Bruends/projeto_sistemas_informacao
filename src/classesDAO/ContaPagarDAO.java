@@ -201,7 +201,9 @@ public class ContaPagarDAO
                                         
                         
         } catch (SQLException e) {
-            System.out.println(e);           
+            JOptionPane.showMessageDialog(null, "Erri ao retornar meses: "+e);
+            JOptionPane.showMessageDialog(null, "Conctacte o administrador do sistema "+e);
+            
         }finally{
             Conexao.fecharConexao(con, state, resultado);            
         }

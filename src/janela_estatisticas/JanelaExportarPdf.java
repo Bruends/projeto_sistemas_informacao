@@ -5,6 +5,7 @@
  */
 package janela_estatisticas;
 
+import classes.Usuario;
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -12,6 +13,7 @@ import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +22,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.text.Text;
@@ -46,11 +51,21 @@ import javax.swing.text.StyleConstants.FontConstants;
 public class JanelaExportarPdf extends javax.swing.JFrame {
     ArrayList<File> imagens = new ArrayList<>();
     ArrayList<JButton> botoes = new ArrayList<>();
+    private Usuario usuario;
+    private DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss - dd/MM/yyyy");
+    Date date = new Date();
+    
+    public JanelaExportarPdf() throws HeadlessException {
+    }
+    
+    
+    
     /**
      * Creates new form JanelaExportarPdf
      */
-    public JanelaExportarPdf() {
+    public JanelaExportarPdf(Usuario usuario) {        
         initComponents();
+        this.usuario = usuario;
         pnlImagens.setLayout(new BoxLayout(pnlImagens,BoxLayout.Y_AXIS) );
         
     }
@@ -354,16 +369,25 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         String absolutePath="";
         if ( fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION ) {
-            if ( fileChooser.getSelectedFile().getName().split(".")[fileChooser.getSelectedFile().getName().split(".").length].equals("pdf") ) {
+            if( fileChooser.getSelectedFile().getName().split(".").length > 0 ){
+                if ( fileChooser.getSelectedFile().getName().split(".")[fileChooser.getSelectedFile().getName().split(".").length].equals("pdf") ) {
                 absolutePath = fileChooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileChooser.getSelectedFile().getName();
             }else{
                 absolutePath = fileChooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileChooser.getSelectedFile().getName()+".pdf";
             }
+            }else{
+                absolutePath = fileChooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileChooser.getSelectedFile().getName()+".pdf";
+            }
+            
             
             try {
                 PdfWriter.getInstance(document, new FileOutputStream(absolutePath));
                 document.open();
-                
+                try {
+                document.add( new Paragraph("Autor: " + this.usuario.getNome()+ "             Hora/Data:  "+dateFormat.format(date)) );
+            } catch (DocumentException ex) {
+                Logger.getLogger(JanelaExportarPdf.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 if (!txtTitulo.getText().equals("")) {
                     Paragraph paragrafoTitulo = new Paragraph("Título: \n\n");
                     document.add(paragrafoTitulo);
@@ -386,7 +410,7 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
                 //É preciso adicionar pelo menos um paragrafo p criar um pagina
                 if(txtAreaConclusao.getText().equals("") && txtAreaRelato.getText().equals("")){                    
                     document.add(new Paragraph(""));                                
-                }
+                }               
                 document.newPage();
                //adiciona as imagens escolhidas pelo usuario no documento
                 for (int i = 0; i < imagens.size(); i++) {
@@ -409,6 +433,7 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erro de Geração de relatorio: "+ ex.getMessage());
                 Logger.getLogger(JanelaExportarPdf.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
             document.close();
         }
         

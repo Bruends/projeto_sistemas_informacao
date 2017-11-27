@@ -13,6 +13,10 @@ import janela_gerenciar_usuarios.JanelaPrincipalUsuarios;
 import janela_gerenciar_clientes.JanelaPrincipalClientes;
 import janela_pesquisar.JanelaPesquisarPrincipal;
 import java.awt.event.ActionEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -23,6 +27,8 @@ import javax.swing.JPopupMenu;
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 private Usuario usuario;
+private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+private Date date = new Date();
     
     /**
      * Creates new form MenuPrincipal
@@ -34,6 +40,7 @@ private Usuario usuario;
     public MenuPrincipal(Usuario user) {
         initComponents();
         this.usuario = user;
+        this.lblDataHora.setText( dateFormat.format( date )  );
     }
 
     /**
@@ -51,6 +58,7 @@ private Usuario usuario;
         btnAprovacoes = new javax.swing.JButton();
         btnGerenciarUsuarios = new javax.swing.JButton();
         btnPesquisar = new javax.swing.JButton();
+        lblDataHora = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -129,6 +137,10 @@ private Usuario usuario;
         getContentPane().add(btnPesquisar);
         btnPesquisar.setBounds(50, 190, 205, 60);
 
+        lblDataHora.setForeground(new java.awt.Color(255, 255, 0));
+        getContentPane().add(lblDataHora);
+        lblDataHora.setBounds(470, 10, 110, 20);
+
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(254, 254, 254));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -186,7 +198,7 @@ private Usuario usuario;
         itemContasPagar.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-               JanelaDeEstatisticas janEstats = new JanelaDeEstatisticas();
+               JanelaDeEstatisticas janEstats = new JanelaDeEstatisticas(usuario);
                janEstats.setVisible(true); 
             }
         });
@@ -244,5 +256,6 @@ private Usuario usuario;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblDataHora;
     // End of variables declaration//GEN-END:variables
 }

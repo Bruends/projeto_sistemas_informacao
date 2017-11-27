@@ -12,6 +12,7 @@ import classes.GraficoDeLinha;
 import classes.MesContaReceber;
 import classes.PercentualCrescimentoAno;
 import classes.PercentualCrescimentoMes;
+import classes.Usuario;
 import classesDAO.ContaPagarDAO;
 import classesDAO.ContaReceberDAO;
 import com.lowagie.text.pdf.PdfWriter;
@@ -19,6 +20,7 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import java.awt.BorderLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
@@ -61,6 +63,7 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
      ArrayList<AnoContaReceber> anosContaPagargraf = new ArrayList<>();
      ArrayList<PercentualCrescimentoMes> percentuais = new ArrayList<>();
      ArrayList<PercentualCrescimentoAno> percentuaisAno = new ArrayList<>(); 
+     private Usuario usuario;
      
      
      MesContaReceber janeiro = new MesContaReceber();
@@ -80,8 +83,9 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
      /**
      * Creates new form JanelaDeEstatisticas
      */
-    public JanelaDeEstatisticasContasReceber() {        
+    public JanelaDeEstatisticasContasReceber(Usuario usuario) {                
         initComponents();        
+        this.usuario = usuario;
         jTabbedPane2.setVisible(false);
         btnExportar.setVisible(false);
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -96,6 +100,9 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
         carregaComboAno(this.cmbDeAnual);
         carregaComboAno(this.cmbAteAnual);
         
+    }
+
+    public JanelaDeEstatisticasContasReceber() throws HeadlessException {
     }
 
     
@@ -730,7 +737,7 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
         itemExportarPdf.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                 JanelaExportarPdf janExportarPdf = new JanelaExportarPdf();
+                 JanelaExportarPdf janExportarPdf = new JanelaExportarPdf(usuario);
                  janExportarPdf.setVisible(true);
             }
         });
