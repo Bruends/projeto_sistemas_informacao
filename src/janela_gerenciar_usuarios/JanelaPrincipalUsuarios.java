@@ -431,7 +431,14 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
         String departamento = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 7).toString();    
         float salario = Float.parseFloat( tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 8).toString() );    
         String telefone = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 9).toString();
-        String endereco = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 10).toString();
+        //String endereco = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 10).toString();
+        String endereco = "";
+            for (int i = 0; i < usuarios.size(); i++) {
+                if ( usuarios.get(i).getCod() == Integer.parseInt( tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 0).toString() ) ) {
+                    endereco = usuarios.get(i).getEndereco();
+                    break;
+                }
+            }
         String email = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 2).toString();  
 
         int codUsuario = Integer.parseInt(tabelaUsuarios.getValueAt(this.tabelaUsuarios.getSelectedRow() , 0).toString());            
