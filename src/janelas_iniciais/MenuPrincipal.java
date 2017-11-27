@@ -7,10 +7,19 @@ package janelas_iniciais;
 
 import classes.Usuario;
 import janela_estatisticas.JanelaDeEstatisticas;
+import janela_estatisticas.JanelaDeEstatisticasContasReceber;
 import janela_gerenciar_contas.JanelaPrincipal;
 import janela_gerenciar_usuarios.JanelaPrincipalUsuarios;
 import janela_gerenciar_clientes.JanelaPrincipalClientes;
 import janela_pesquisar.JanelaPesquisarPrincipal;
+import java.awt.event.ActionEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
  *
@@ -18,6 +27,8 @@ import janela_pesquisar.JanelaPesquisarPrincipal;
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 private Usuario usuario;
+private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+private Date date = new Date();
     
     /**
      * Creates new form MenuPrincipal
@@ -29,6 +40,7 @@ private Usuario usuario;
     public MenuPrincipal(Usuario user) {
         initComponents();
         this.usuario = user;
+        this.lblDataHora.setText( dateFormat.format( date )  );
     }
 
     /**
@@ -46,6 +58,7 @@ private Usuario usuario;
         btnAprovacoes = new javax.swing.JButton();
         btnGerenciarUsuarios = new javax.swing.JButton();
         btnPesquisar = new javax.swing.JButton();
+        lblDataHora = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -56,6 +69,11 @@ private Usuario usuario;
         btnEstatisticas.setText("Estatisticas");
         btnEstatisticas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnEstatisticas.setIconTextGap(10);
+        btnEstatisticas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEstatisticasMouseClicked(evt);
+            }
+        });
         btnEstatisticas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEstatisticasActionPerformed(evt);
@@ -119,6 +137,10 @@ private Usuario usuario;
         getContentPane().add(btnPesquisar);
         btnPesquisar.setBounds(50, 190, 205, 60);
 
+        lblDataHora.setForeground(new java.awt.Color(255, 255, 0));
+        getContentPane().add(lblDataHora);
+        lblDataHora.setBounds(470, 10, 110, 20);
+
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(254, 254, 254));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -156,9 +178,39 @@ private Usuario usuario;
 
     private void btnEstatisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstatisticasActionPerformed
         // 
-        JanelaDeEstatisticas janEstats = new JanelaDeEstatisticas();
-        janEstats.setVisible(true);
+       // JanelaDeEstatisticas janEstats = new JanelaDeEstatisticas();
+       // janEstats.setVisible(true);
+        
     }//GEN-LAST:event_btnEstatisticasActionPerformed
+
+    private void btnEstatisticasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEstatisticasMouseClicked
+        JPopupMenu menuPopUp = new JPopupMenu();
+        JMenuItem itemContasPagar = new JMenuItem();
+        JMenuItem itemContasReceber = new JMenuItem();
+        itemContasPagar.setText("Contas a pagar");
+        itemContasReceber.setText("Contas a receber");
+        menuPopUp.add(itemContasPagar);
+        menuPopUp.add(itemContasReceber);
+        //menuPopUp.setBounds(evt.getX(), evt.getY(), 100, 100);
+        //menuPopUp.setVisible(true);
+        menuPopUp.show(btnEstatisticas,evt.getX(),evt.getY());
+        
+        itemContasPagar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+               JanelaDeEstatisticas janEstats = new JanelaDeEstatisticas(usuario);
+               janEstats.setVisible(true); 
+            }
+        });
+        
+        itemContasReceber.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                JanelaDeEstatisticasContasReceber janEstatsContaRecebeer = new JanelaDeEstatisticasContasReceber(usuario);
+                janEstatsContaRecebeer.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_btnEstatisticasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -204,5 +256,6 @@ private Usuario usuario;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblDataHora;
     // End of variables declaration//GEN-END:variables
 }

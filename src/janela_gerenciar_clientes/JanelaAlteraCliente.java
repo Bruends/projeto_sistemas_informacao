@@ -324,8 +324,7 @@ public class JanelaAlteraCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        if ( validaFormulario() && validaTamanhoCampos()) {
-            System.out.println("oi");
+        if ( validaFormulario() && validaTamanhoCampos()) {            
             int cod = this.cod;
             String telefone = txtTelefone.getText() ;
             String cep = txtCep.getText();

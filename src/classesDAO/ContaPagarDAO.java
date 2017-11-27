@@ -100,8 +100,21 @@ public class ContaPagarDAO
                 double valor = resultado.getDouble("valor");
                 String titulo = resultado.getString("Titulo");
                 MesContaPagar mes = new MesContaPagar(mesString, new ContaPagar(titulo,valor) );
-                meses.add(mes);
-            }
+                
+                if(meses.size() > 0){
+                    for (int i = 0; i < meses.size(); i++) {                    
+                        if ( !meses.get(i).getNome().equals( mesString ) ) {                            
+                            meses.add(mes);
+                            break;
+                        }else{                            
+                            meses.get(i).getContaPagar().addValor(valor);                            
+                        }
+                    }
+                }else{
+                    meses.add(mes);                    
+                }
+            }                    
+                
                         
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,"Erro ao retornar meses: "+e);
@@ -109,6 +122,92 @@ public class ContaPagarDAO
             Conexao.fecharConexao(con, state, resultado);            
         }
         return meses;
+    }
+    
+     public static MesContaPagar retornaMesesUnique( String ano, String mes ) throws SQLException{        
+        String mesNumero = "";
+        MesContaPagar mesAtual = new MesContaPagar();
+         switch(mes){
+                    case "Janeiro": mesNumero = "01";
+                        break;
+                    case "Fevereiro": mesNumero = "02";
+                        break;
+                    case "Março": mesNumero = "03";
+                        break;
+                    case "Abril": mesNumero = "04";
+                        break;
+                    case "Maio": mesNumero = "05";
+                        break;
+                    case "Junho": mesNumero = "06";
+                        break;
+                    case "Julho": mesNumero = "07";
+                        break;
+                    case "Agosto": mesNumero = "08";
+                        break;
+                    case "Setembro": mesNumero = "09";
+                        break;
+                    case "Outubro": mesNumero = "10";
+                        break;
+                    case "Novembro": mesNumero = "11";
+                        break;
+                    case "Dezembro": mesNumero = "12";
+                        break;                            
+                }
+        String sql = "SELECT SUM(valor) as somaValor,data_vencimento,Titulo FROM conta_pagar WHERE data_vencimento LIKE '%/"+mesNumero+"/%' AND data_vencimento LIKE '%/"+ano+"%'";        
+        Connection con = null;
+        try {
+            con = Conexao.getConexao();
+            state = con.prepareStatement(sql);            
+            resultado = state.executeQuery();                        
+                while ( resultado.next() ) {                           
+                if( resultado.getString( "data_vencimento" ) != null ){
+                    String mesNum = resultado.getString( "data_vencimento" ).split("/")[1];                
+                String mesString = "";
+                switch(mesNum){
+                    case "01": mesString = "Janeiro";
+                        break;
+                    case "02": mesString = "Fevereiro";
+                        break;
+                    case "03": mesString = "Março";
+                        break;
+                    case "04": mesString = "Abril";
+                        break;
+                    case "05": mesString = "Maio";
+                        break;
+                    case "06": mesString = "Junho";
+                        break;
+                    case "07": mesString = "Julho";
+                        break;
+                    case "08": mesString = "Agosto";
+                        break;
+                    case "09": mesString = "Setembro";
+                        break;
+                    case "10": mesString = "Outubro";
+                        break;
+                    case "11": mesString = "Novembro";
+                        break;
+                    case "12": mesString = "Dezembro";
+                        break;                            
+                }
+                double valor = Double.parseDouble( resultado.getString("somaValor") );
+                String titulo = resultado.getString("Titulo");
+                mesAtual = new MesContaPagar(mesString, new ContaPagar(titulo,valor) );                                       
+                }else{
+                    resultado.next();
+                }
+                                  
+                }    
+            
+                                        
+                        
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erri ao retornar meses: "+e);
+            JOptionPane.showMessageDialog(null, "Conctacte o administrador do sistema "+e);
+            
+        }finally{
+            Conexao.fecharConexao(con, state, resultado);            
+        }
+        return mesAtual;
     }
     
     //retorna ano

@@ -11,6 +11,7 @@ import classes.MesContaPagar;
 import classes.MesContaReceber;
 import classes.PercentualCrescimentoAno;
 import classes.PercentualCrescimentoMes;
+import classes.Usuario;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,92 +27,20 @@ import javax.swing.table.TableModel;
  *
  * @author Lusca
  */
-public class ExportarExcel extends javax.swing.JFrame {
+public class ExportarExcelContaReceber extends javax.swing.JFrame {
     private String mes;
     private double valor;
-    private ArrayList<MesContaPagar> mesesContaPagar = new ArrayList<>();
     private ArrayList<MesContaReceber> mesesContaReceber = new ArrayList<>();
-    private ArrayList<AnoContaPagar> anosContaPagar = new ArrayList<>();
     private ArrayList<AnoContaReceber> anosContaReceber = new ArrayList<>();
     private ArrayList<PercentualCrescimentoMes> crescimentoMeses = new ArrayList<>();
     ArrayList<PercentualCrescimentoAno> crescimentoAnos = new ArrayList<>();
-    
-    
+    private Usuario usuario;
+
     
     /**
      * Creates new form ExportarExcel
-     * @param anosContaPagar
-     */    
-    public ExportarExcel(ArrayList<MesContaPagar> mesesContaPagar,ArrayList<AnoContaPagar> anosContaPagar,ArrayList<PercentualCrescimentoMes> cresMes, ArrayList<PercentualCrescimentoAno> cresAno){        
-        initComponents();
-        if(mesesContaPagar!=null){            
-            this.mesesContaPagar = mesesContaPagar;                        
-            DefaultTableModel tblModel = (DefaultTableModel)this.tblExcel.getModel();
-            tblModel.setRowCount(0);
-            Object colunas[] = {"Mês","Valor"};
-            tblModel.setColumnIdentifiers( colunas );
-            if( mesesContaPagar != null ){
-                for (int i = 0; i < mesesContaPagar.size(); i++) {
-                    Object dados[] = {
-                        mesesContaPagar.get(i).getNome(),
-                        mesesContaPagar.get(i).getContaPagar().getValor()
-                    };
-                    tblModel.addRow(dados);
-                }
-            }            
-        }else if( cresMes != null ){
-            this.crescimentoMeses = cresMes;                    
-            DefaultTableModel tblModel = (DefaultTableModel)this.tblExcel.getModel();
-            tblModel.setRowCount(0);
-            Object colunas[] = {"Intervalo","Crescimento ( % )"};
-            tblModel.setColumnIdentifiers( colunas );
-            if( cresMes != null ){
-                for (int i = 0; i < cresMes.size(); i++) {
-                    Object dados[] = {
-                        cresMes.get(i).getIntervaloMeses(),
-                        cresMes.get(i).getCrescimentoPorcentagem()
-                    };
-                    tblModel.addRow(dados);
-                }
-            } 
-        }else if( cresAno != null ){            
-            this.crescimentoAnos = cresAno;                
-            DefaultTableModel tblModel = (DefaultTableModel)this.tblExcel.getModel();
-            tblModel.setRowCount(0);
-            Object colunas[] = {"Intervalo","Crescimento ( % )"};
-            tblModel.setColumnIdentifiers( colunas );
-            if( anosContaPagar != null ){
-                for (int i = 0; i < cresAno.size(); i++) {
-                    Object dados[] = {
-                        cresAno.get(i).getIntervaloDeAnos(),
-                        cresAno.get(i).getPorcentagemDeCrescimento()
-                    };
-                    tblModel.addRow(dados);
-                }
-            }
-        }
-        if( anosContaPagar != null && cresAno == null && cresMes == null && mesesContaPagar == null ){           
-            this.anosContaPagar = anosContaPagar;                
-            DefaultTableModel tblModel = (DefaultTableModel)this.tblExcel.getModel();
-            tblModel.setRowCount(0);
-            Object colunas[] = {"Ano","Valor"};
-            tblModel.setColumnIdentifiers( colunas );
-            if( anosContaPagar != null ){
-                for (int i = 0; i < anosContaPagar.size(); i++) {
-                    Object dados[] = {
-                        anosContaPagar.get(i).getAno(),
-                        anosContaPagar.get(i).getSomaValores()
-                    };
-                    tblModel.addRow(dados);
-                }
-            }
-        }
-    }
-    
-    public ExportarExcel(ArrayList<MesContaPagar> mesesContaPagar){
-        initComponents();
-        
-    }
+     * @param anosContaReceber
+     */
     
     public void ExportarExcelContaReceber(ArrayList<MesContaReceber> mesesContaReceber,ArrayList<AnoContaReceber> anosContaReceber,ArrayList<PercentualCrescimentoMes> cresMes, ArrayList<PercentualCrescimentoAno> cresAno){        
         initComponents();
@@ -179,7 +108,9 @@ public class ExportarExcel extends javax.swing.JFrame {
         }
     }
     
-    public ExportarExcel() {
+    
+    
+    public ExportarExcelContaReceber() {
         initComponents();        
     }
 
@@ -307,14 +238,14 @@ public class ExportarExcel extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Documento gerado com sucesso!");
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Falha ao gerar documento!");
-                Logger.getLogger(ExportarExcel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ExportarExcelContaReceber.class.getName()).log(Level.SEVERE, null, ex);
             }
 
 
             try {
                 out.close();
             } catch (IOException ex) {                
-                Logger.getLogger(ExportarExcel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ExportarExcelContaReceber.class.getName()).log(Level.SEVERE, null, ex);
             }             
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -335,20 +266,21 @@ public class ExportarExcel extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ExportarExcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExportarExcelContaReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ExportarExcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExportarExcelContaReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ExportarExcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExportarExcelContaReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ExportarExcel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExportarExcelContaReceber.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ExportarExcel().setVisible(true);
+                new ExportarExcelContaReceber().setVisible(true);
             }
         });
     }
@@ -371,12 +303,12 @@ public class ExportarExcel extends javax.swing.JFrame {
         this.valor = valor;
     }
 
-    public ArrayList<MesContaPagar> getMesesContaPagar() {
-        return mesesContaPagar;
+    public ArrayList<MesContaReceber> getMesesContaReceber() {
+        return mesesContaReceber;
     }
 
-    public void setMesesContaPagar(ArrayList<MesContaPagar> mesesContaPagar) {
-        this.mesesContaPagar = mesesContaPagar;
+    public void setMesesContaReceber(ArrayList<MesContaReceber> mesesContaPagar) {
+        this.mesesContaReceber = mesesContaPagar;
     }
 
     

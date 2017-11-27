@@ -87,8 +87,7 @@ public class UsuarioDAO {
         }        
     }
     
-    public static boolean update(Usuario usuario) {
-        System.out.println(".....");
+    public static boolean update(Usuario usuario) {        
         con = Conexao.getConexao();
         PreparedStatement pstmt = null;
         String sql = "UPDATE usuario SET  email_contato = ?,nivel_acesso = ?,nome = ?, cpf = ?, ano_nascimento = ?, cargo = ?, departamento = ?, salario = ?, telefone = ?, endereco = ? WHERE id = ?";                       
@@ -155,8 +154,7 @@ public class UsuarioDAO {
                  sql = "SELECT * FROM usuario WHERE  nome LIKE '%"+valor+"%' OR email LIKE '%"+valor+"%' OR cpf LIKE '%"+valor+"%' OR endereco LIKE '%"+valor+"%' OR telefone LIKE '%"+valor+"%' OR cargo LIKE '%"+valor+"%' OR departamento LIKE '%"+valor+"%'" ;                 
             }else{
                 sql = "SELECT * FROM usuario WHERE " + campo + " LIKE '%"+valor+"%'";                                        
-            }
-            System.out.println(sql);
+            }            
             preparedStatement = con.prepareStatement(sql);                        
             resultSet = preparedStatement.executeQuery();
                             

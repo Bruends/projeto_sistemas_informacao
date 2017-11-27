@@ -5,6 +5,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class LoginDAO {      
     private Usuario usuario;
@@ -17,6 +22,36 @@ public class LoginDAO {
         this.email   = email;
         this.senha = senha;
         
+    }
+    
+    public static ArrayList<String> retornaEmailsUsuarios(){
+        ArrayList<String> emails = new ArrayList<>();
+        Connection con = null;
+        ResultSet rs = null;
+        Statement stmt = null;
+        String sql = "SELECT email FROM usuario";
+        try{
+            con = Conexao.getConexao();
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery(sql);
+            
+            while( rs.next() ){
+                emails.add( rs.getString("email") );
+            }
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro ao carregar emails: "+ex);
+            JOptionPane.showMessageDialog(null, "Contacte o admnistrador do sistema.");
+        }finally{            
+            try {
+                if( rs != null )rs.close();
+                if( stmt != null )stmt.close();
+                if( con != null )con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return emails;
     }
     
     //realiza login    
