@@ -55,19 +55,16 @@ private Date date = new Date();
         btnEstatisticas = new javax.swing.JButton();
         btnGerenciarContas = new javax.swing.JButton();
         btnGerenciarClientes = new javax.swing.JButton();
-        btnAprovacoes = new javax.swing.JButton();
         btnGerenciarUsuarios = new javax.swing.JButton();
         btnPesquisar = new javax.swing.JButton();
         lblDataHora = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        btnEstatisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/presentation.png"))); // NOI18N
-        btnEstatisticas.setText("Estatisticas");
-        btnEstatisticas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnEstatisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/finances.png"))); // NOI18N
+        btnEstatisticas.setText("Gráficos e Relatórios");
         btnEstatisticas.setIconTextGap(10);
         btnEstatisticas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -80,7 +77,7 @@ private Date date = new Date();
             }
         });
         getContentPane().add(btnEstatisticas);
-        btnEstatisticas.setBounds(49, 110, 205, 60);
+        btnEstatisticas.setBounds(49, 110, 490, 60);
 
         btnGerenciarContas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/check.png"))); // NOI18N
         btnGerenciarContas.setText("Gerenciar Contas");
@@ -104,14 +101,7 @@ private Date date = new Date();
             }
         });
         getContentPane().add(btnGerenciarClientes);
-        btnGerenciarClientes.setBounds(330, 270, 205, 60);
-
-        btnAprovacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/list.png"))); // NOI18N
-        btnAprovacoes.setText("Aprovações");
-        btnAprovacoes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnAprovacoes.setIconTextGap(10);
-        getContentPane().add(btnAprovacoes);
-        btnAprovacoes.setBounds(328, 110, 205, 60);
+        btnGerenciarClientes.setBounds(320, 270, 210, 60);
 
         btnGerenciarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/user.png"))); // NOI18N
         btnGerenciarUsuarios.setText("Gerenciar Usuários");
@@ -123,7 +113,7 @@ private Date date = new Date();
             }
         });
         getContentPane().add(btnGerenciarUsuarios);
-        btnGerenciarUsuarios.setBounds(328, 188, 205, 60);
+        btnGerenciarUsuarios.setBounds(320, 190, 210, 60);
 
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/search.png"))); // NOI18N
         btnPesquisar.setText("Pesquisar");
@@ -142,15 +132,11 @@ private Date date = new Date();
         lblDataHora.setBounds(470, 10, 110, 20);
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Menu");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(200, 30, 190, 60);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs_background/accountant-accounting-adviser-advisor-159804.jpeg"))); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(-210, -30, 820, 440);
 
         setSize(new java.awt.Dimension(605, 403));
         setLocationRelativeTo(null);
@@ -248,13 +234,11 @@ private Date date = new Date();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAprovacoes;
     private javax.swing.JButton btnEstatisticas;
     private javax.swing.JButton btnGerenciarClientes;
     private javax.swing.JButton btnGerenciarContas;
     private javax.swing.JButton btnGerenciarUsuarios;
     private javax.swing.JButton btnPesquisar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblDataHora;
     // End of variables declaration//GEN-END:variables
