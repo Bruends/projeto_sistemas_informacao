@@ -73,11 +73,11 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "E-mail", "Nível de acesso", "CPF", "Ano de nascimento", "Cargo", "Departamento", "Salário", "Telefone", "endereco"
+                "Código", "Nome", "E-mail", "Nível de acesso", "CPF", "Ano de nascimento", "Cargo", "Departamento", "Salário", "Telefone"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
