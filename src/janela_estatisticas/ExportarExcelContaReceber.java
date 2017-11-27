@@ -35,15 +35,17 @@ public class ExportarExcelContaReceber extends javax.swing.JFrame {
     private ArrayList<PercentualCrescimentoMes> crescimentoMeses = new ArrayList<>();
     ArrayList<PercentualCrescimentoAno> crescimentoAnos = new ArrayList<>();
     private Usuario usuario;
+
+    
     /**
      * Creates new form ExportarExcel
      * @param anosContaReceber
      */
     
-    public ExportarExcelContaReceber(ArrayList<MesContaReceber> mesesContaReceber,ArrayList<AnoContaReceber> anosContaReceber,ArrayList<PercentualCrescimentoMes> cresMes, ArrayList<PercentualCrescimentoAno> cresAno){        
-        initComponents();        
+    public void ExportarExcelContaReceber(ArrayList<MesContaReceber> mesesContaReceber,ArrayList<AnoContaReceber> anosContaReceber,ArrayList<PercentualCrescimentoMes> cresMes, ArrayList<PercentualCrescimentoAno> cresAno){        
+        initComponents();
         if(mesesContaReceber!=null){            
-            this.mesesContaReceber = mesesContaReceber;                        
+            this.mesesContaReceber= mesesContaReceber;                        
             DefaultTableModel tblModel = (DefaultTableModel)this.tblExcel.getModel();
             tblModel.setRowCount(0);
             Object colunas[] = {"Mês","Valor"};
@@ -88,8 +90,8 @@ public class ExportarExcelContaReceber extends javax.swing.JFrame {
                 }
             }
         }
-        if( anosContaReceber != null && cresAno == null && cresMes == null && mesesContaReceber == null ){            
-            this.anosContaReceber = anosContaReceber;                
+        if( anosContaReceber != null && cresAno == null && cresMes == null && mesesContaReceber == null ){           
+            this.anosContaReceber = anosContaReceber;                       
             DefaultTableModel tblModel = (DefaultTableModel)this.tblExcel.getModel();
             tblModel.setRowCount(0);
             Object colunas[] = {"Ano","Valor"};
@@ -106,10 +108,7 @@ public class ExportarExcelContaReceber extends javax.swing.JFrame {
         }
     }
     
-    public ExportarExcelContaReceber(ArrayList<MesContaPagar> mesesContaPagar){
-        initComponents();
-        
-    }
+    
     
     public ExportarExcelContaReceber() {
         initComponents();        

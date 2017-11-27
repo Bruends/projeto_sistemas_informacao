@@ -191,7 +191,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 102, 102));
         jLabel2.setText("ESTATÍSTICAS");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(540, 30, 177, 29);
+        jLabel2.setBounds(560, 30, 177, 29);
 
         jTabbedPane2.setBackground(new java.awt.Color(204, 204, 204));
         jTabbedPane2.setForeground(new java.awt.Color(0, 153, 153));
@@ -244,7 +244,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         jTabbedPane2.addTab("Contas a pagar", new javax.swing.ImageIcon(getClass().getResource("/imgs/cash16px.png")), jSplitPane1); // NOI18N
 
         getContentPane().add(jTabbedPane2);
-        jTabbedPane2.setBounds(90, 160, 1100, 510);
+        jTabbedPane2.setBounds(110, 160, 1100, 510);
 
         jToolBar2.setBackground(new java.awt.Color(229, 229, 229));
         jToolBar2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gerar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(153, 153, 153))); // NOI18N
@@ -350,7 +350,7 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         jToolBar2.add(btnCres);
 
         getContentPane().add(jToolBar2);
-        jToolBar2.setBounds(160, 90, 970, 60);
+        jToolBar2.setBounds(180, 90, 970, 60);
 
         btnExportar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/export24px.png"))); // NOI18N
@@ -362,13 +362,13 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnExportar);
-        btnExportar.setBounds(1190, 180, 30, 40);
+        btnExportar.setBounds(1210, 180, 30, 40);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
         jLabel3.setText("CONTAS A PAGAR");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(570, 60, 110, 15);
+        jLabel3.setBounds(590, 60, 110, 15);
 
         jMenu4.setText("Arquivo");
 
@@ -395,6 +395,11 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
         jMenu5.setText("Gerar relatório...");
 
         jMenuItem1.setText("Relatório em PDF");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem1);
 
         jMenu4.add(jMenu5);
@@ -782,15 +787,14 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // item d emenu exportar para excel
-        ExportarExcel janelaExportarExcel = null;
+            // Gerar Excel
+            ExportarExcel janelaExportarExcel = new ExportarExcel();
             if( rbMes.isSelected() ){
                 if( percentuais.size() > 0 ){                                        
                     janelaExportarExcel = new ExportarExcel(null,null,percentuais,null); 
                 }else{                                        
                     janelaExportarExcel = new ExportarExcel(mesesIntervalo,null,null,null); 
-                }
-                
-   
+                }                 
             }else if( percentuaisAno.size() > 0 ){
                 janelaExportarExcel = new ExportarExcel(null,anosContaPagargraf,null,percentuaisAno); 
             }else if( anosContaPagargraf.size() > 0 ){
@@ -798,6 +802,12 @@ public class JanelaDeEstatisticas extends javax.swing.JFrame {
             }               
             janelaExportarExcel.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // menu item pdf
+        JanelaExportarPdf janExportarPdf = new JanelaExportarPdf(usuario);
+        janExportarPdf.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments

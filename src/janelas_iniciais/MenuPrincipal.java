@@ -206,7 +206,7 @@ private Date date = new Date();
         itemContasReceber.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                JanelaDeEstatisticasContasReceber janEstatsContaRecebeer = new JanelaDeEstatisticasContasReceber();
+                JanelaDeEstatisticasContasReceber janEstatsContaRecebeer = new JanelaDeEstatisticasContasReceber(usuario);
                 janEstatsContaRecebeer.setVisible(true);
             }
         });

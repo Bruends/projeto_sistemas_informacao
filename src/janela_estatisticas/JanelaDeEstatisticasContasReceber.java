@@ -103,6 +103,7 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
     }
 
     public JanelaDeEstatisticasContasReceber() throws HeadlessException {
+        initComponents();
     }
 
     
@@ -167,6 +168,10 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         jMenu1.setText("File");
         jMenuBar2.add(jMenu1);
@@ -181,7 +186,7 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/finances (1).png"))); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(480, 10, 64, 64);
+        jLabel1.setBounds(460, 10, 64, 64);
 
         jLabel2.setBackground(new java.awt.Color(102, 255, 102));
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -241,7 +246,7 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
         jTabbedPane2.addTab("Contas a pagar", new javax.swing.ImageIcon(getClass().getResource("/imgs/cash16px.png")), jSplitPane1); // NOI18N
 
         getContentPane().add(jTabbedPane2);
-        jTabbedPane2.setBounds(90, 160, 1100, 510);
+        jTabbedPane2.setBounds(110, 160, 1100, 510);
 
         jToolBar2.setBackground(new java.awt.Color(229, 229, 229));
         jToolBar2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gerar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(153, 153, 153))); // NOI18N
@@ -347,7 +352,7 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
         jToolBar2.add(btnCres);
 
         getContentPane().add(jToolBar2);
-        jToolBar2.setBounds(160, 90, 970, 60);
+        jToolBar2.setBounds(180, 90, 970, 60);
 
         btnExportar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/export24px.png"))); // NOI18N
@@ -359,7 +364,7 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnExportar);
-        btnExportar.setBounds(1190, 180, 30, 40);
+        btnExportar.setBounds(1210, 180, 30, 40);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
@@ -376,6 +381,25 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem2);
+
+        jMenu2.setText("Exportar para...");
+
+        jMenuItem3.setText("Documento do Excel");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        jMenu4.add(jMenu2);
+
+        jMenu5.setText("Gerar relatório...");
+
+        jMenuItem1.setText("Relatório em PDF");
+        jMenu5.add(jMenuItem1);
+
+        jMenu4.add(jMenu5);
 
         jMenuBar1.add(jMenu4);
 
@@ -719,16 +743,17 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
             ExportarExcelContaReceber janelaExportarExcel = new ExportarExcelContaReceber();
             if( rbMes.isSelected() ){
                 if( percentuais.size() > 0 ){                                        
-                    janelaExportarExcel = new ExportarExcelContaReceber(null,null,percentuais,null);                     
+                    janelaExportarExcel.ExportarExcelContaReceber(null,null,percentuais,null);                     
+                  
                 }else{                                        
-                    janelaExportarExcel = new ExportarExcelContaReceber(mesesIntervalo,null,null,null); 
+                    janelaExportarExcel.ExportarExcelContaReceber(mesesIntervalo,null,null,null);                     
                 }
                 
    
             }else if( percentuaisAno.size() > 0 ){
-                janelaExportarExcel = new ExportarExcelContaReceber(null,anosContaPagargraf,null,percentuaisAno); 
+                janelaExportarExcel.ExportarExcelContaReceber(null,anosContaPagargraf,null,percentuaisAno);                 
             }else if( anosContaPagargraf.size() > 0 ){
-                janelaExportarExcel = new ExportarExcelContaReceber(null,anosContaPagargraf,null,null); 
+                janelaExportarExcel.ExportarExcelContaReceber(null,anosContaPagargraf,null,null);                 
             }               
             janelaExportarExcel.setVisible(true);
             }
@@ -757,6 +782,26 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
         pnlGrafico2.revalidate();    
         jTabbedPane2.setVisible(false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+           // Gerar Excel
+            ExportarExcelContaReceber janelaExportarExcel = new ExportarExcelContaReceber();
+            if( rbMes.isSelected() ){
+                if( percentuais.size() > 0 ){                                        
+                    janelaExportarExcel.ExportarExcelContaReceber(null,null,percentuais,null);                     
+                  
+                }else{                                        
+                    janelaExportarExcel.ExportarExcelContaReceber(mesesIntervalo,null,null,null);                     
+                }
+                
+   
+            }else if( percentuaisAno.size() > 0 ){
+                janelaExportarExcel.ExportarExcelContaReceber(null,anosContaPagargraf,null,percentuaisAno);                 
+            }else if( anosContaPagargraf.size() > 0 ){
+                janelaExportarExcel.ExportarExcelContaReceber(null,anosContaPagargraf,null,null);                 
+            }               
+            janelaExportarExcel.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -821,11 +866,15 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JToolBar jToolBar2;
