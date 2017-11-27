@@ -322,25 +322,26 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
             btnNovaImagem.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-                    for (int i = botoes.size()-1; i >= 0; i--) {
-                        if( ae.getActionCommand().equals(botoes.get(i).getText()) ){                            
-                            //botoes.remove(i);                                                                                                                     
-                            pnlImagens.remove(botoes.get(i));
-                            pnlImagens.revalidate();
-                            pnlImagens.repaint();
-                        }
-                        }
-                    
-                /*
-                    for (int i = 0; i < botoes.size(); i++) {
-                        if( ae.getActionCommand().equals(botoes.get(i).getText()) ){                            
-                            //botoes.remove(i);                                                                                                                     
-                            pnlImagens.remove(botoes.get(i));
-                            pnlImagens.revalidate();
-                            pnlImagens.repaint();
-                        }
+                    if( botoes.size() == 1 ){
+                        System.out.println("oi");
+                        botoes.remove(0);
+                        pnlImagens.removeAll();
+                        pnlImagens.revalidate();
+                        pnlImagens.repaint();
                     }
-                    */
+                    for (int i = botoes.size()-1; i >= 0; i--) {
+                        if( ae.getActionCommand().equals(botoes.get(i).getText()) ){                               
+                            botoes.remove(i);                                                                      
+                            //pnlImagens.remove(botoes.get(i));                            
+                            pnlImagens.removeAll();
+                            for (int j = 0; j < botoes.size(); j++) {           
+                               pnlImagens.add(botoes.get(j));
+                               pnlImagens.revalidate();
+                               pnlImagens.repaint();                                         
+                            }
+                        }                    
+                    }
+                    
                 }
             });            
             if ( botoes.size() < 5 ) {
@@ -355,11 +356,16 @@ public class JanelaExportarPdf extends javax.swing.JFrame {
         }
                                                                 
          for (int i = 0; i < botoes.size(); i++) {           
-                pnlImagens.add(botoes.get(i));
-                pnlImagens.revalidate();
-                pnlImagens.repaint();                                         
+                if( botoes.size() > 0 ){
+                    pnlImagens.add(botoes.get(i));
+                    pnlImagens.revalidate();
+                    pnlImagens.repaint();    
+                }else{
+                    pnlImagens.revalidate();
+                    pnlImagens.repaint();    
+                }                                     
         }
-        
+        System.out.println(botoes.size());
            
     }//GEN-LAST:event_btnSelecionarImgsActionPerformed
 
