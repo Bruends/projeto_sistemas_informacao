@@ -495,7 +495,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
            receber.makeTable(this.r_tabela,  contasArray);           
                     
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,  ex);
+            JOptionPane.showMessageDialog(null,  "Preencha os campos corretamente!");
         }
          
     }//GEN-LAST:event_r_btnPesquisaActionPerformed
@@ -593,7 +593,7 @@ public class JanelaPesquisarPrincipal extends javax.swing.JFrame {
            pagar.makeTable(this.p_tabela,  pagarArray);           
                     
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,  ex);
+            JOptionPane.showMessageDialog(null,  "Preencha os campos corretamente!");
         }
     }//GEN-LAST:event_p_btnPesquisaActionPerformed
 

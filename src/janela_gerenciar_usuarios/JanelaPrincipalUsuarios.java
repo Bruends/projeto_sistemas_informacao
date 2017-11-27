@@ -73,11 +73,11 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "E-mail", "Nível de acesso", "CPF", "Ano de nascimento", "Cargo", "Departamento", "Salário", "Telefone"
+                "Código", "Nome", "E-mail", "Nível de acesso", "CPF", "Ano de nascimento", "Cargo", "Departamento", "Salário", "Telefone", "endereco"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -431,8 +431,8 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
         String departamento = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 7).toString();    
         float salario = Float.parseFloat( tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 8).toString() );    
         String telefone = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 9).toString();
-        String endereco = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 10).toString() ;
-        String email = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 2).toString();    
+        String endereco = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 10).toString();
+        String email = tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 2).toString();  
 
         int codUsuario = Integer.parseInt(tabelaUsuarios.getValueAt(this.tabelaUsuarios.getSelectedRow() , 0).toString());            
         JanelaAlteraUsuario janAlterarUsuario = new JanelaAlteraUsuario(nivel_acesso,nome,cpf,ano_nascimento,cargo,departamento,salario,telefone,endereco,email,codUsuario);                
@@ -624,7 +624,7 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
                     indiceUsuario.getDepartamento(),
                     indiceUsuario.getSalario(),
                     indiceUsuario.getTelefone(),                    
-                                       
+                    indiceUsuario.getEndereco(),            
                 };
                 
                 defTableModel.addRow(dados);

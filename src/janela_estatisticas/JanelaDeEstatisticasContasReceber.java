@@ -243,7 +243,7 @@ public class JanelaDeEstatisticasContasReceber extends javax.swing.JFrame {
 
         jSplitPane1.setRightComponent(pnlGrafico2);
 
-        jTabbedPane2.addTab("Contas a pagar", new javax.swing.ImageIcon(getClass().getResource("/imgs/cash16px.png")), jSplitPane1); // NOI18N
+        jTabbedPane2.addTab("Contas a Receber", new javax.swing.ImageIcon(getClass().getResource("/imgs/cash16px.png")), jSplitPane1); // NOI18N
 
         getContentPane().add(jTabbedPane2);
         jTabbedPane2.setBounds(110, 160, 1100, 510);

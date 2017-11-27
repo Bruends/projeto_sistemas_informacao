@@ -63,25 +63,30 @@ public class JanelaAlteraUsuario extends javax.swing.JFrame {
         this.txtDepartamento.setText(departamento);
         this.txtSalario.setText(salario+"");
         this.txtTelefone.setText(telefone);
-        String enderecoCompleto[] = endereco.split(",");
-        String rua = enderecoCompleto[0];
-        this.txtRua.setText(rua);
-        String numero = enderecoCompleto[1].substring(4, enderecoCompleto[1].indexOf("-"));
-        this.txtNum.setText(numero);
-        String complemento = endereco.split("-")[1];        
-        complemento = complemento.substring(0, complemento.indexOf(","));
-        this.txtComplemento.setText(complemento);
-        String bairro = endereco.split(",")[2];
-        this.txtBairro.setText(bairro);
-        String estado = endereco.split(",")[3];
-        estado = estado.substring(0, estado.indexOf("-"));
-        this.txtEstado.setText(estado);
-        String cidade = endereco.split("-")[1];
-        cidade = cidade.substring(1,cidade.indexOf(","));
-        String cep = endereco.split(",")[4];        
-        this.txtCep.setText(cep);
-        this.txtCidade.setText(cidade);
-        this.txtEmail.setText(email);
+        try {
+            String enderecoCompleto[] = endereco.split(",");
+            String rua = enderecoCompleto[0];
+            this.txtRua.setText(rua);
+            String numero = enderecoCompleto[1].substring(4, enderecoCompleto[1].indexOf("-"));
+            this.txtNum.setText(numero);
+            String complemento = endereco.split("-")[1];        
+            complemento = complemento.substring(0, complemento.indexOf(","));
+            this.txtComplemento.setText(complemento);
+            String bairro = endereco.split(",")[2];
+            this.txtBairro.setText(bairro);
+            String estado = endereco.split(",")[3];
+            estado = estado.substring(0, estado.indexOf("-"));
+            this.txtEstado.setText(estado);
+            String cidade = endereco.split("-")[1];
+            cidade = cidade.substring(1,cidade.indexOf(","));
+            String cep = endereco.split(",")[4];        
+            this.txtCep.setText(cep);
+            this.txtCidade.setText(cidade);
+            this.txtEmail.setText(email);
+        } catch (Exception e) {
+            
+        }
+        
     }
     
     
@@ -467,7 +472,8 @@ public class JanelaAlteraUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        if ( validaCampoVazio() ) {
+        try {
+            if ( validaCampoVazio() ) {
                         
             String nomeTxt = txtNome.getText();
             String cpfTxt= txtCpf.getText();
@@ -494,6 +500,9 @@ public class JanelaAlteraUsuario extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Erro ao atualizar usuário!");
             }
             
+        }
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, "Preencha os campos corretamente");
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

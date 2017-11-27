@@ -409,7 +409,8 @@ public class JanelaNovoUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        if ( validaCampoVazio() ) {
+       try{
+            if ( validaCampoVazio() ) {
             
             String nome = txtNome.getText();
             String cpf= txtCpf.getText();
@@ -438,6 +439,9 @@ public class JanelaNovoUsuario extends javax.swing.JFrame {
             }
             
         }
+       } catch (Exception ex) {
+           JOptionPane.showMessageDialog(null, "Preencha os campos corretamente");
+       }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private boolean validaCampoVazio(){

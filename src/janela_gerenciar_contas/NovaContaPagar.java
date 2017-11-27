@@ -151,7 +151,7 @@ JanelaPrincipal jan;
           jan.refreshTablePagar(jan.getP_tabela());
           
         } catch (NumberFormatException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "erro: \n" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Preencha os campos corretamente");
         }    
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
