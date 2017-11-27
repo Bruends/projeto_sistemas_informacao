@@ -432,8 +432,8 @@ public class JanelaNovoUsuario extends javax.swing.JFrame {
             }
             Usuario usuario = new Usuario(email, senha, nivelAcesso, nome, cpf, anoNascimento, cargo, departamento, salario, telefone, endereco,emailDeAcesso);            
             if ( UsuarioDAO.inserirUsuario(usuario) ) {                
-                JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
-                JanelaPrincipalUsuarios.carregaTabelaUsuarios(this.tabelaUsuarios);
+                JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");                
+                JanelaPrincipalUsuarios.carregaTabelaUsuarios(this.tabelaUsuarios);                   
                 this.dispose();
             }
             

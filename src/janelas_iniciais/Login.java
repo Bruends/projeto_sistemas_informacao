@@ -66,7 +66,6 @@ public class Login extends javax.swing.JFrame {
         lblBackground = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -74,12 +73,12 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel1.setText("Senha:");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(420, 260, 50, 30);
+        jLabel1.setBounds(440, 300, 50, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel2.setText("E-Mail:  ");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(420, 210, 50, 30);
+        jLabel2.setBounds(440, 250, 50, 30);
 
         btn_login.setFont(new java.awt.Font("Microsoft JhengHei", 0, 11)); // NOI18N
         btn_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/login-sketch32px.png"))); // NOI18N
@@ -91,12 +90,12 @@ public class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_login);
-        btn_login.setBounds(610, 300, 100, 40);
+        btn_login.setBounds(630, 340, 100, 40);
         getContentPane().add(l_txt_senha);
-        l_txt_senha.setBounds(470, 260, 240, 30);
+        l_txt_senha.setBounds(490, 300, 240, 30);
 
         getContentPane().add(l_txt_email);
-        l_txt_email.setBounds(470, 210, 240, 30);
+        l_txt_email.setBounds(490, 250, 240, 30);
 
         jPanel1.setLayout(null);
 
@@ -147,7 +146,7 @@ public class Login extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Microsoft JhengHei", 1, 11)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(204, 204, 204));
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/circular-shape-silhouette16px.png"))); // NOI18N
-        jLabel13.setText("FELIPE ALGUMA COISA - ");
+        jLabel13.setText("FELIPE MACEDO - ");
         jPanel1.add(jLabel13);
         jLabel13.setBounds(40, 240, 170, 20);
 
@@ -172,11 +171,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/clerk-with-tie128pxBlack.png"))); // NOI18N
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(520, 60, 120, 140);
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/circular-shape-silhouette256px.png"))); // NOI18N
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(460, 50, 260, 150);
+        jLabel9.setBounds(540, 100, 120, 140);
 
         setSize(new java.awt.Dimension(813, 486));
         setLocationRelativeTo(null);
@@ -268,7 +263,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;

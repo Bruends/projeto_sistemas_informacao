@@ -21,18 +21,17 @@ import javax.swing.table.DefaultTableModel;
  * @author Lusca
  */
 public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
-    ArrayList<Cliente> clientes = new ArrayList<>();
-    
+    private static ArrayList<Usuario> usuarios = new ArrayList<>();
+    private String enderecoUsuarioSelecionado;
     
     
     /**
      * Creates new form JanelaPrincipalClientes
      */
     public JanelaPrincipalUsuarios() {
-        initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
-        carregaTabelaUsuarios(this.tabelaUsuarios);
-        
+        initComponents();        
+        this.carregaTabelaUsuarios(this.tabelaUsuarios);
+        lblEndereco.setText("");
     }
 
     /**
@@ -74,11 +73,11 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "E-mail", "Nível de acesso", "CPF", "Ano de nascimento", "Cargo", "Departamento", "Salário", "Telefone", "Endereço"
+                "Código", "Nome", "E-mail", "Nível de acesso", "CPF", "Ano de nascimento", "Cargo", "Departamento", "Salário", "Telefone"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -370,7 +369,15 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
 
     private void tabelaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaUsuariosMouseClicked
         // Exibe infos                
-        lblEndereco.setText("Endereço: "+ tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(),10)+"" );
+        //lblEndereco.setText("Endereço: "+ tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(),10)+"" );
+        this.usuarios =  UsuarioDAO.retornarTodosUsuarios();  
+        if ( usuarios != null ) {
+            for (int i = 0; i < usuarios.size(); i++) {
+                if( Integer.parseInt( tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow() , 0).toString() ) == usuarios.get(i).getCod()  ){
+                    lblEndereco.setText("Endereço: "+ usuarios.get(i).getEndereco() );
+                }
+            }
+        }        
         
     }//GEN-LAST:event_tabelaUsuariosMouseClicked
 
@@ -595,7 +602,7 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
     
     public static void carregaTabelaUsuarios(JTable tabelaUsuarios){        
         ArrayList<Usuario> usuarios = new ArrayList<>();
-        usuarios = UsuarioDAO.retornarTodosUsuarios();        
+        usuarios = UsuarioDAO.retornarTodosUsuarios();                      
         if (  usuarios != null || usuarios.size() > 0 ) {
             DefaultTableModel defTableModel = (DefaultTableModel)tabelaUsuarios.getModel();
             defTableModel.setRowCount(0);
@@ -616,8 +623,7 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
                     indiceUsuario.getCargo(),
                     indiceUsuario.getDepartamento(),
                     indiceUsuario.getSalario(),
-                    indiceUsuario.getTelefone(),
-                    indiceUsuario.getEndereco(),
+                    indiceUsuario.getTelefone(),                    
                                        
                 };
                 
@@ -635,14 +641,7 @@ public class JanelaPrincipalUsuarios extends javax.swing.JFrame {
         }
     }
     
-    //Getters e Setters
-    public ArrayList<Cliente> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(ArrayList<Cliente> clientes) {
-        this.clientes = clientes;
-    }
+    //Getters e Setters   
 
     
        
